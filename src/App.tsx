@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  Globe2, 
   Code2, 
   Users, 
   Mail, 
@@ -18,10 +17,12 @@ import {
   Menu,
   Eye,
   Info,
-  SwitchCamera
+  SwitchCamera,
+  Globe2
 } from 'lucide-react';
 
 // 1. Import your local images
+import shimizuLogo from './assets/ShimizuTechnologyLogo.jpg'; // For header
 import hafalohaImage from './assets/hafaloha_hero.jpg';
 import kingsImage from './assets/kings-guam.jpeg';
 import shirleysImage from './assets/shirleys-coffee-shop.jpg';
@@ -131,14 +132,30 @@ const services = [
     description: "Tailored solutions for your unique business needs"
   },
   {
-    icon: <Globe2 className="w-6 h-6" />,
-    title: "Web Applications",
-    description: "Modern, responsive web applications that scale"
-  },
-  {
     icon: <Settings className="w-6 h-6" />,
     title: "Business Automation",
     description: "Streamline your operations with smart automation"
+  },
+  {
+    icon: <Globe2 className="w-6 h-6" />,
+    title: "Web Applications",
+    description: "Modern, responsive web applications that scale"
+  }
+];
+
+// 2. Extended Services (AI, analytics, etc.)
+const extendedServices = [
+  {
+    title: "AI & Machine Learning",
+    description: "Leverage cutting-edge AI to gain insights and automate workflows."
+  },
+  {
+    title: "Advanced Analytics",
+    description: "Turn raw data into actionable intelligence for smarter decision-making."
+  },
+  {
+    title: "Integration Services",
+    description: "Seamlessly connect your existing platforms and databases."
   }
 ];
 
@@ -175,16 +192,14 @@ function ProjectCard({ project }) {
   const [showPreview, setShowPreview] = useState(false);
   const [currentSiteIndex, setCurrentSiteIndex] = useState(0);
 
-  // If multiple sites exist, pick the site data based on currentSiteIndex
   const currentSite = project.sites?.[currentSiteIndex] || {
     link: project.link,
     image: project.image
   };
 
-  // Decide which image to display based on the current site or the project fallback
   const displayedImage = currentSite.image || project.image;
 
-  const toggleSite = (e) => {
+  const toggleSite = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (project.sites) {
       setCurrentSiteIndex((prev) => (prev + 1) % project.sites.length);
@@ -194,7 +209,6 @@ function ProjectCard({ project }) {
   return (
     <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
       <div className="relative">
-        {/* Preview (iFrame) or Image */}
         {showPreview ? (
           <div className="h-[400px] w-full bg-gray-50">
             <iframe
@@ -246,7 +260,6 @@ function ProjectCard({ project }) {
         )}
       </div>
 
-      {/* Description & Features */}
       {!showPreview && (
         <div className="p-6">
           <p className="text-gray-600 mb-4">{project.description}</p>
@@ -261,7 +274,6 @@ function ProjectCard({ project }) {
         </div>
       )}
 
-      {/* Visit Link */}
       <div className="px-6 pb-6">
         <a
           href={currentSite.link}
@@ -283,57 +295,73 @@ function ProjectCard({ project }) {
 function App() {
   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER / HERO */}
-      <header className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white">
-        <nav className="container mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <Globe2 className="w-8 h-8 text-blue-500" />
-              <span className="text-xl font-bold tracking-tight">Shimizu Technology</span>
-            </div>
-            {/* Navigation */}
-            <div className="hidden md:flex space-x-10">
-              <a href="#services" className="hover:text-blue-400 transition-colors duration-300">Services</a>
-              <a href="#projects" className="hover:text-blue-400 transition-colors duration-300">Projects</a>
-              <a href="#workflow" className="hover:text-blue-400 transition-colors duration-300">Process</a>
-              <a href="#about" className="hover:text-blue-400 transition-colors duration-300">About</a>
-              <a href="#contact" className="hover:text-blue-400 transition-colors duration-300">Contact</a>
-            </div>
+
+      {/* NAVBAR ONLY IS STICKY */}
+      <div className="sticky top-0 z-50 bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white">
+        <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
+          {/* Logo + Name */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src={shimizuLogo} 
+              alt="Shimizu Technology Logo"
+              className="h-10 w-10 object-contain rounded-full"
+            />
+            <span className="text-xl font-bold tracking-tight">Shimizu Technology</span>
+          </div>
+          {/* Navigation */}
+          <div className="hidden md:flex space-x-10">
+            <a href="#services" className="hover:text-blue-400 transition-colors duration-300">Services</a>
+            <a href="#projects" className="hover:text-blue-400 transition-colors duration-300">Projects</a>
+            <a href="#workflow" className="hover:text-blue-400 transition-colors duration-300">Process</a>
+            <a href="#about" className="hover:text-blue-400 transition-colors duration-300">About</a>
+            <a href="#contact" className="hover:text-blue-400 transition-colors duration-300">Contact</a>
           </div>
         </nav>
-        
-        <div className="container mx-auto px-6 py-28">
+      </div>
+
+      {/* HERO SECTION (NOT STICKY) */}
+      <header className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white">
+        <div className="container mx-auto px-6 py-20">
           <div className="max-w-3xl">
-            <h1 className="text-6xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+            <h1 className="text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
               Building Tomorrow's Solutions Today
             </h1>
-            <h2 className="text-3xl text-gray-300 mb-8">
+            <h2 className="text-3xl text-gray-300 mb-6">
               Empowering businesses with streamlined software and automation
             </h2>
-            <p className="text-xl text-gray-400 mb-10 leading-relaxed">
+            <p className="text-xl text-gray-400 mb-8 leading-relaxed">
               From restaurant reservations to payroll systems, we craft custom solutions 
               that make your operations seamless—so you can focus on what you do best.
             </p>
-            <a 
-              href="#contact"
-              className="inline-flex items-center px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-lg"
-            >
-              Get Started
-              <ChevronRight className="ml-2 w-5 h-5" />
-            </a>
+
+            {/* Primary & Secondary CTAs */}
+            <div className="flex items-center space-x-4">
+              <a 
+                href="#contact"
+                className="inline-flex items-center px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-lg"
+              >
+                Get Started
+                <ChevronRight className="ml-2 w-5 h-5" />
+              </a>
+              <a 
+                href="#contact" 
+                className="inline-flex items-center px-8 py-4 border border-white text-white rounded-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+              >
+                Schedule a Call
+              </a>
+            </div>
           </div>
         </div>
       </header>
 
       {/* SERVICES */}
-      <section id="services" className="py-32 bg-gradient-to-b from-gray-50 to-white">
+      <section id="services" className="py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Services</h2>
-          <p className="text-gray-600 text-center mb-20 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
             Empowering businesses with cutting-edge technology solutions
           </p>
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-10 mb-16">
             {services.map((service, index) => (
               <div 
                 key={index} 
@@ -347,29 +375,63 @@ function App() {
               </div>
             ))}
           </div>
+
+          {/* Extended Services */}
+          <div className="max-w-5xl mx-auto text-center">
+            <h3 className="text-3xl font-bold mb-4">Extended Services</h3>
+            <p className="text-gray-600 mb-10">
+              We also offer specialized solutions to help you stay ahead in the modern marketplace.
+            </p>
+            <div className="grid md:grid-cols-3 gap-8">
+              {extendedServices.map((item, i) => (
+                <div 
+                  key={i}
+                  className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
+                >
+                  <h4 className="text-xl font-semibold mb-2">{item.title}</h4>
+                  <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="py-32">
+      <section id="projects" className="py-24">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Projects</h2>
-          <p className="text-gray-600 text-center mb-20 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
             Real solutions we've built for real businesses
           </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
             {projects.map((project, index) => (
               <ProjectCard key={index} project={project} />
             ))}
+          </div>
+
+          {/* Mid-Page CTA */}
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-3xl font-bold mb-3">Ready to streamline your operations?</h3>
+            <p className="text-gray-700 mb-6">
+              Let’s explore how Shimizu Technology can build the perfect solution for you.
+            </p>
+            <a 
+              href="#contact" 
+              className="inline-flex items-center px-8 py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
+            >
+              Let’s Talk
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </a>
           </div>
         </div>
       </section>
 
       {/* PROCESS / WORKFLOW */}
-      <section id="workflow" className="py-32 bg-gradient-to-b from-white to-gray-50">
+      <section id="workflow" className="py-24 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Process</h2>
-          <p className="text-gray-600 text-center mb-20 max-w-2xl mx-auto text-lg">
+          <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
             A streamlined approach to delivering excellence
           </p>
           <div className="grid md:grid-cols-4 gap-12">
@@ -382,6 +444,39 @@ function App() {
                 <p className="text-gray-600 text-lg">{step.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHY WORK WITH US */}
+      <section id="why-us" className="py-24 bg-white text-gray-800">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <h2 className="text-4xl font-bold text-center mb-4">Why Work With Us?</h2>
+          <p className="text-gray-600 text-center mb-16 max-w-2xl mx-auto text-lg">
+            Discover the benefits of partnering with a dedicated, agile team.
+          </p>
+          <div className="grid md:grid-cols-3 gap-10">
+            <div className="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+              <h3 className="text-2xl font-semibold mb-3">Personalized Approach</h3>
+              <p className="text-gray-700 leading-relaxed">
+                We treat every client like a long-term partner, taking the time to understand 
+                your unique challenges and crafting tailored solutions.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+              <h3 className="text-2xl font-semibold mb-3">Future-Ready Solutions</h3>
+              <p className="text-gray-700 leading-relaxed">
+                Our modern tech stack and focus on emerging technologies ensure your business 
+                stays ahead of the curve.
+              </p>
+            </div>
+            <div className="bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
+              <h3 className="text-2xl font-semibold mb-3">Community & Growth</h3>
+              <p className="text-gray-700 leading-relaxed">
+                By partnering with the Code School of Guam, we help grow local tech talent, 
+                ensuring a vibrant future for Guam’s tech ecosystem.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -533,7 +628,11 @@ function App() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-3 mb-6 md:mb-0">
-              <Globe2 className="w-6 h-6 text-blue-500" />
+              <img 
+                src={shimizuLogo} 
+                alt="Shimizu Technology Logo"
+                className="h-8 w-8 object-contain rounded-full"
+              />
               <span className="font-bold tracking-tight">Shimizu Technology</span>
             </div>
             <div className="text-gray-400 text-sm text-center md:text-right">
