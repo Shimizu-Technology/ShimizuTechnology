@@ -3,16 +3,12 @@ import {
   Globe2, 
   Code2, 
   Users, 
-  Calendar, 
   Mail, 
   Phone,
   ChevronRight,
-  Building2,
-  GraduationCap,
   ArrowRight,
   Clock,
   Settings,
-  Workflow,
   Rocket,
   Target,
   CalendarDays,
@@ -25,11 +21,19 @@ import {
   SwitchCamera
 } from 'lucide-react';
 
+// 1. Import your local images
+import hafalohaImage from './assets/hafaloha_hero.jpg';
+import kingsImage from './assets/kings-guam.jpeg';
+import shirleysImage from './assets/shirleys-coffee-shop.jpg';
+
+//
+// PROJECT DATA
+//
 const projects = [
   {
     title: "Hafaloha Online Ordering",
     description: "Complete online ordering and reservation platform with customer-facing and admin interfaces",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800",
+    image: hafalohaImage,
     link: "https://hafaloha.netlify.app/ordering",
     icon: <UtensilsCrossed className="w-6 h-6" />,
     features: [
@@ -68,7 +72,7 @@ const projects = [
   {
     title: "Digital Menu Platform",
     description: "QR code-enabled digital menus for Kings and Shirleys restaurants",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=800",
+    image: kingsImage, // Fallback image for the card if no specific site is selected
     icon: <Menu className="w-6 h-6" />,
     features: [
       "Mobile-optimized menus",
@@ -79,11 +83,13 @@ const projects = [
     sites: [
       {
         name: "Kings",
-        link: "https://kings-guam.netlify.app"
+        link: "https://kings-guam.netlify.app",
+        image: kingsImage
       },
       {
         name: "Shirleys",
-        link: "https://shirleys.netlify.app"
+        link: "https://shirleys.netlify.app",
+        image: shirleysImage
       }
     ]
   },
@@ -115,52 +121,68 @@ const projects = [
   }
 ];
 
+//
+// SERVICES DATA
+//
 const services = [
   {
     icon: <Code2 className="w-6 h-6" />,
     title: "Custom Software Development",
-    description: "Tailored solutions for your unique business needs",
+    description: "Tailored solutions for your unique business needs"
   },
   {
     icon: <Globe2 className="w-6 h-6" />,
     title: "Web Applications",
-    description: "Modern, responsive web applications that scale",
+    description: "Modern, responsive web applications that scale"
   },
   {
     icon: <Settings className="w-6 h-6" />,
     title: "Business Automation",
-    description: "Streamline your operations with smart automation",
-  },
+    description: "Streamline your operations with smart automation"
+  }
 ];
 
+//
+// WORKFLOW STEPS
+//
 const workflowSteps = [
   {
     icon: <Users className="w-6 h-6" />,
     title: "Discovery",
-    description: "Understanding your needs",
+    description: "We start by understanding your needs"
   },
   {
     icon: <Code2 className="w-6 h-6" />,
     title: "Mockup",
-    description: "Design and planning",
+    description: "We create a quick prototype to finalize requirements"
   },
   {
     icon: <Settings className="w-6 h-6" />,
     title: "Development",
-    description: "Building your solution",
+    description: "We build your solution with modern tech stacks"
   },
   {
     icon: <Clock className="w-6 h-6" />,
     title: "Maintenance",
-    description: "Ongoing support",
-  },
+    description: "We offer ongoing support to keep everything running"
+  }
 ];
 
+//
+// PROJECT CARD COMPONENT
+//
 function ProjectCard({ project }) {
   const [showPreview, setShowPreview] = useState(false);
   const [currentSiteIndex, setCurrentSiteIndex] = useState(0);
 
-  const currentSite = project.sites?.[currentSiteIndex] || { link: project.link };
+  // If multiple sites exist, pick the site data based on currentSiteIndex
+  const currentSite = project.sites?.[currentSiteIndex] || {
+    link: project.link,
+    image: project.image
+  };
+
+  // Decide which image to display based on the current site or the project fallback
+  const displayedImage = currentSite.image || project.image;
 
   const toggleSite = (e) => {
     e.stopPropagation();
@@ -172,6 +194,7 @@ function ProjectCard({ project }) {
   return (
     <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
       <div className="relative">
+        {/* Preview (iFrame) or Image */}
         {showPreview ? (
           <div className="h-[400px] w-full bg-gray-50">
             <iframe
@@ -184,7 +207,7 @@ function ProjectCard({ project }) {
         ) : (
           <div className="relative h-48 overflow-hidden">
             <img 
-              src={project.image} 
+              src={displayedImage} 
               alt={project.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
@@ -195,13 +218,17 @@ function ProjectCard({ project }) {
                   {project.icon}
                 </div>
                 <h3 className="text-xl font-semibold">
-                  {project.sites ? `${project.title} - ${project.sites[currentSiteIndex].name}` : project.title}
+                  {project.sites 
+                    ? `${project.title} - ${project.sites[currentSiteIndex].name}` 
+                    : project.title
+                  }
                 </h3>
               </div>
             </div>
           </div>
         )}
         
+        {/* Preview & Switch Buttons */}
         <button
           onClick={() => setShowPreview(!showPreview)}
           className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-lg hover:bg-blue-50 transition-colors duration-300"
@@ -219,6 +246,7 @@ function ProjectCard({ project }) {
         )}
       </div>
 
+      {/* Description & Features */}
       {!showPreview && (
         <div className="p-6">
           <p className="text-gray-600 mb-4">{project.description}</p>
@@ -233,6 +261,7 @@ function ProjectCard({ project }) {
         </div>
       )}
 
+      {/* Visit Link */}
       <div className="px-6 pb-6">
         <a
           href={currentSite.link}
@@ -248,33 +277,43 @@ function ProjectCard({ project }) {
   );
 }
 
+//
+// MAIN APP
+//
 function App() {
   return (
     <div className="min-h-screen bg-white">
+      {/* HEADER / HERO */}
       <header className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white">
         <nav className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <div className="flex items-center space-x-3">
               <Globe2 className="w-8 h-8 text-blue-500" />
               <span className="text-xl font-bold tracking-tight">Shimizu Technology</span>
             </div>
+            {/* Navigation */}
             <div className="hidden md:flex space-x-10">
               <a href="#services" className="hover:text-blue-400 transition-colors duration-300">Services</a>
               <a href="#projects" className="hover:text-blue-400 transition-colors duration-300">Projects</a>
               <a href="#workflow" className="hover:text-blue-400 transition-colors duration-300">Process</a>
+              <a href="#about" className="hover:text-blue-400 transition-colors duration-300">About</a>
               <a href="#contact" className="hover:text-blue-400 transition-colors duration-300">Contact</a>
             </div>
           </div>
         </nav>
         
-        <div className="container mx-auto px-6 py-32">
+        <div className="container mx-auto px-6 py-28">
           <div className="max-w-3xl">
-            <h1 className="text-6xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+            <h1 className="text-6xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
               Building Tomorrow's Solutions Today
             </h1>
-            <p className="text-2xl text-gray-300 mb-10 leading-relaxed">
-              We create custom software solutions that streamline your business operations,
-              improve automation, and enhance user experience.
+            <h2 className="text-3xl text-gray-300 mb-8">
+              Empowering businesses with streamlined software and automation
+            </h2>
+            <p className="text-xl text-gray-400 mb-10 leading-relaxed">
+              From restaurant reservations to payroll systems, we craft custom solutions 
+              that make your operations seamless—so you can focus on what you do best.
             </p>
             <a 
               href="#contact"
@@ -287,6 +326,7 @@ function App() {
         </div>
       </header>
 
+      {/* SERVICES */}
       <section id="services" className="py-32 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Services</h2>
@@ -295,8 +335,13 @@ function App() {
           </p>
           <div className="grid md:grid-cols-3 gap-10">
             {services.map((service, index) => (
-              <div key={index} className="group bg-white p-10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:translate-y-[-8px] border border-gray-100">
-                <div className="text-blue-500 mb-6 transform transition-transform duration-300 group-hover:scale-110">{service.icon}</div>
+              <div 
+                key={index} 
+                className="group bg-white p-10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:translate-y-[-8px] border border-gray-100"
+              >
+                <div className="text-blue-500 mb-6 transform transition-transform duration-300 group-hover:scale-110">
+                  {service.icon}
+                </div>
                 <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
                 <p className="text-gray-600 leading-relaxed">{service.description}</p>
               </div>
@@ -305,6 +350,7 @@ function App() {
         </div>
       </section>
 
+      {/* PROJECTS */}
       <section id="projects" className="py-32">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Projects</h2>
@@ -319,6 +365,7 @@ function App() {
         </div>
       </section>
 
+      {/* PROCESS / WORKFLOW */}
       <section id="workflow" className="py-32 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Our Process</h2>
@@ -339,6 +386,61 @@ function App() {
         </div>
       </section>
 
+      {/* ABOUT (FOUNDER & INTERNSHIP MENTION) */}
+      <section id="about" className="py-24 bg-white text-gray-800">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-5xl font-bold mb-6">About Shimizu Technology</h2>
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Founded by <span className="font-semibold">Leon Shimizu</span>, our mission is 
+              to simplify workflows, automate tedious tasks, and empower organizations to 
+              focus on what they do best. 
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="bg-gray-50 p-8 rounded-2xl shadow-md">
+              <div className="mb-4">
+                <h3 className="text-2xl font-bold">Small Team, Big Vision</h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed mb-4">
+                Shimizu Technology is a close-knit, rapidly growing software firm. Our 
+                compact size means we can focus on building genuine relationships with 
+                clients and delivering tailored solutions that align perfectly with their needs.
+              </p>
+              <p className="text-gray-700 leading-relaxed">
+                Whether you need an existing product customized or a 
+                brand-new system built from the ground up, we’re ready to help bring your 
+                vision to life—on time and on budget.
+              </p>
+            </div>
+            
+            <div className="bg-gray-50 p-8 rounded-2xl shadow-md">
+              <div className="mb-4">
+                <h3 className="text-2xl font-bold">Investing in Future Talent</h3>
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                We proudly partner with the <span className="font-semibold">Code School of Guam</span> to provide 
+                internship opportunities for graduates. This real-world experience bridges 
+                the gap between education and industry, fostering the next generation of 
+                software engineers right here in Guam.
+              </p>
+              <p className="text-gray-700 leading-relaxed mt-4">
+                <a 
+                  href="https://codeschoolofguam.com" 
+                  className="underline text-blue-500 hover:text-blue-600"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Learn more about the Code School of Guam
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CODE SCHOOL SECTION (OPTIONAL) */}
       <section className="py-24 bg-[#1a1f2e] text-white">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center mb-16">
@@ -392,6 +494,7 @@ function App() {
         </div>
       </section>
 
+      {/* CONTACT */}
       <section id="contact" className="py-32">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center mb-4">Get In Touch</h2>
@@ -425,6 +528,7 @@ function App() {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white py-16">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
@@ -432,7 +536,7 @@ function App() {
               <Globe2 className="w-6 h-6 text-blue-500" />
               <span className="font-bold tracking-tight">Shimizu Technology</span>
             </div>
-            <div className="text-gray-400 text-sm">
+            <div className="text-gray-400 text-sm text-center md:text-right">
               © {new Date().getFullYear()} Shimizu Technology. All rights reserved.
             </div>
           </div>
