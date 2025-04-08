@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import {
   Code2,
   Users,
@@ -216,6 +217,7 @@ interface Project {
 // PROJECT CARD COMPONENT
 //
 function ProjectCard({ project }: { project: Project }) {
+  const posthog = usePostHog();
   const [showPreview, setShowPreview] = useState(false);
   const [currentSiteIndex, setCurrentSiteIndex] = useState(0);
 
@@ -229,7 +231,12 @@ function ProjectCard({ project }: { project: Project }) {
   const toggleSite = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (project.sites && project.sites.length > 0) {
-      setCurrentSiteIndex((prev) => (prev + 1) % (project.sites?.length || 1));
+      const nextIndex = (currentSiteIndex + 1) % project.sites.length;
+      setCurrentSiteIndex(nextIndex);
+      posthog.capture('project_site_toggled', { 
+        project_title: project.title,
+        site_name: project.sites[nextIndex].name
+      });
     }
   };
 
@@ -271,7 +278,14 @@ function ProjectCard({ project }: { project: Project }) {
         
         {/* Preview & Switch Buttons */}
         <button
-          onClick={() => setShowPreview(!showPreview)}
+          onClick={() => {
+            const newPreviewState = !showPreview;
+            setShowPreview(newPreviewState);
+            posthog.capture('project_preview_toggled', { 
+              project_title: project.title,
+              preview_state: newPreviewState ? 'shown' : 'hidden'
+            });
+          }}
           className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-lg hover:bg-blue-50 transition-colors duration-300"
         >
           {showPreview ? <Info className="w-4 h-4 text-blue-500" /> : <Eye className="w-4 h-4 text-blue-500" />}
@@ -306,6 +320,13 @@ function ProjectCard({ project }: { project: Project }) {
           href={currentSite.link}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => {
+            posthog.capture('project_link_clicked', { 
+              project_title: project.title,
+              site_name: project.sites ? project.sites[currentSiteIndex].name : project.title,
+              url: currentSite.link
+            });
+          }}
           className="inline-flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300 text-sm sm:text-base"
         >
           Visit Site
@@ -320,10 +341,16 @@ function ProjectCard({ project }: { project: Project }) {
 // MAIN APP
 //
 function App() {
+  const posthog = usePostHog();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // For mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // Track page view on component mount
+  useEffect(() => {
+    posthog.capture('page_viewed', { page: 'homepage' });
+  }, [posthog]);
 
   // Detect scroll position to show/hide the "Back to Top" button
   useEffect(() => {
@@ -339,11 +366,14 @@ function App() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
+    posthog.capture('scrolled_to_top');
   };
 
   // Toggle mobile menu open/close
   const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
+    const newState = !mobileMenuOpen;
+    setMobileMenuOpen(newState);
+    posthog.capture('mobile_menu_toggled', { state: newState ? 'opened' : 'closed' });
   };
 
   /**
@@ -1053,6 +1083,12 @@ function App() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
               <a 
                 href="mailto:ShimizuTechnology@gmail.com"
+                onClick={() => {
+                  posthog.capture('contact_email_clicked', { 
+                    method: 'email',
+                    email: 'ShimizuTechnology@gmail.com'
+                  });
+                }}
                 className="flex items-center p-6 sm:p-10 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:translate-y-[-4px] hover:shadow-xl group"
               >
                 <Mail className="w-6 sm:w-10 h-6 sm:h-10 text-blue-500 mr-4 sm:mr-8 transform transition-transform duration-300 group-hover:scale-110" />
@@ -1063,6 +1099,12 @@ function App() {
               </a>
               <a 
                 href="tel:+16714830219"
+                onClick={() => {
+                  posthog.capture('contact_phone_clicked', { 
+                    method: 'phone',
+                    phone: '+16714830219'
+                  });
+                }}
                 className="flex items-center p-6 sm:p-10 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:translate-y-[-4px] hover:shadow-xl group"
               >
                 <Phone className="w-6 sm:w-10 h-6 sm:h-10 text-blue-500 mr-4 sm:mr-8 transform transition-transform duration-300 group-hover:scale-110" />
