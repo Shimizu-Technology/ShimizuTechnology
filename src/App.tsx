@@ -19,14 +19,18 @@ import {
   Eye,
   Info,
   SwitchCamera,
-  Globe2
+  Globe2,
+  ShoppingBag,
+  BarChart
 } from 'lucide-react';
 
 // 1. Import your local images
 import shimizuLogo from './assets/ShimizuTechnologyLogo.jpg'; // For header
 import hafalohaImage from './assets/hafaloha_hero.jpg';
-import kingsImage from './assets/kings-guam.jpeg';
-import shirleysImage from './assets/shirleys-coffee-shop.jpg';
+import restaurantAImage from './assets/sunrise-diner-generic-image.png';
+import restaurantBImage from './assets/cozy-coffee-shop-generic-image.png';
+import orderSuiteImage from './assets/Shimizu-Order-Suite-img.png';
+// Using require for PNG files with uppercase extensions to avoid Vite import issues
 
 // Global Smooth Scrolling
 document.documentElement.style.scrollBehavior = 'smooth';
@@ -39,7 +43,7 @@ const projects = [
     title: "Hafaloha Online Ordering",
     description: "Complete online ordering and reservation platform with customer-facing and admin interfaces",
     image: hafalohaImage,
-    link: "https://hafaloha.netlify.app/ordering",
+    link: "https://hafaloha-orders.com",
     icon: <UtensilsCrossed className="w-6 h-6" />,
     features: [
       "Online food ordering system",
@@ -49,10 +53,10 @@ const projects = [
     ]
   },
   {
-    title: "Isa Dental Appointments",
+    title: "Dental Appointments",
     description: "Comprehensive dental practice management system with automated notifications",
     image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
-    link: "https://isa-dental-appt.netlify.app",
+    link: "https://dental-appt.netlify.app/",
     icon: <CalendarDays className="w-6 h-6" />,
     features: [
       "Online appointment scheduling",
@@ -62,10 +66,10 @@ const projects = [
     ]
   },
   {
-    title: "Rotary Sushi Reservations",
+    title: "Conveyor Sushi Bar",
     description: "Seat-based reservation system for a modern sushi restaurant",
     image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&q=80&w=800",
-    link: "https://rotary-sushi.netlify.app",
+    link: "https://sushi-guam.netlify.app/",
     icon: <UtensilsCrossed className="w-6 h-6" />,
     features: [
       "Interactive seat selection",
@@ -76,8 +80,8 @@ const projects = [
   },
   {
     title: "Digital Menu Platform",
-    description: "QR code-enabled digital menus for Kings and Shirleys restaurants",
-    image: kingsImage, // Fallback image for the card if no specific site is selected
+    description: "QR code-enabled digital menus for restaurants",
+    image: restaurantAImage, // Fallback image for the card if no specific site is selected
     icon: <MenuIcon className="w-6 h-6" />,
     features: [
       "Mobile-optimized menus",
@@ -87,14 +91,14 @@ const projects = [
     ],
     sites: [
       {
-        name: "Kings",
-        link: "https://kings-guam.netlify.app",
-        image: kingsImage
+        name: "Cozy Coffee Shop",
+        link: "https://cozy-coffee-shop-guam.netlify.app/",
+        image: restaurantBImage
       },
       {
-        name: "Shirleys",
-        link: "https://shirleys.netlify.app",
-        image: shirleysImage
+        name: "Sunrise Diner",
+        link: "https://sunrise-diner.netlify.app/",
+        image: restaurantAImage
       }
     ]
   },
@@ -191,15 +195,32 @@ const workflowSteps = [
   }
 ];
 
+// Define TypeScript interfaces for our data structures
+interface ProjectSite {
+  name: string;
+  link: string;
+  image: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  link?: string;
+  icon: React.ReactNode;
+  features: string[];
+  sites?: ProjectSite[];
+}
+
 //
 // PROJECT CARD COMPONENT
 //
-function ProjectCard({ project }) {
+function ProjectCard({ project }: { project: Project }) {
   const [showPreview, setShowPreview] = useState(false);
   const [currentSiteIndex, setCurrentSiteIndex] = useState(0);
 
   const currentSite = project.sites?.[currentSiteIndex] || {
-    link: project.link,
+    link: project.link || '',
     image: project.image
   };
 
@@ -207,8 +228,8 @@ function ProjectCard({ project }) {
 
   const toggleSite = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (project.sites) {
-      setCurrentSiteIndex((prev) => (prev + 1) % project.sites.length);
+    if (project.sites && project.sites.length > 0) {
+      setCurrentSiteIndex((prev) => (prev + 1) % (project.sites?.length || 1));
     }
   };
 
@@ -238,7 +259,7 @@ function ProjectCard({ project }) {
                   {project.icon}
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold leading-tight">
-                  {project.sites 
+                  {project.sites && project.sites.length > 0
                     ? `${project.title} - ${project.sites[currentSiteIndex].name}` 
                     : project.title
                   }
@@ -270,7 +291,7 @@ function ProjectCard({ project }) {
         <div className="p-4 sm:p-6">
           <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">{project.description}</p>
           <ul className="space-y-2">
-            {project.features.map((feature, idx) => (
+            {project.features.map((feature: string, idx: number) => (
               <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-600">
                 <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
                 {feature}
@@ -475,27 +496,26 @@ function App() {
               Building Tomorrow's Solutions Today
             </h1>
             <h2 className="text-2xl sm:text-3xl text-gray-300 mb-4 sm:mb-6 leading-snug">
-              Empowering businesses with streamlined software and automation
+              Featuring <span className="text-blue-400">Shimizu Order Suite</span>: Modern Restaurant Technology Designed for Guam
             </h2>
             <p className="text-base sm:text-xl text-gray-400 mb-6 sm:mb-8 leading-relaxed">
-              From restaurant reservations to payroll systems, we craft custom solutions
-              that make your operations seamless—so you can focus on what you do best.
+              We build custom software for any business need, with specialized expertise in restaurant technology. Our Order Suite integrates seamlessly with your existing POS to boost sales, streamline service, and delight customers.
             </p>
 
             {/* Primary & Secondary CTAs with stronger hover animations */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
               <a
-                href="#contact"
+                href="#demo-request"
                 className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
               >
-                Get Started
+                Request a Demo
                 <ChevronRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
               </a>
               <a
                 href="#contact"
                 className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 border border-white text-white rounded-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
               >
-                Schedule a Call
+                Discuss Your Project
               </a>
             </div>
           </div>
@@ -540,6 +560,222 @@ function App() {
                   <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.description}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SHIMIZU ORDER SUITE */}
+      <section id="order-suite" className="py-16 sm:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Shimizu Order Suite</h2>
+          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
+            A powerful, flexible platform designed specifically for restaurants in Guam
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center mb-16">
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Modernize Your Restaurant Operations</h3>
+              <p className="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed">
+                Shimizu Order Suite is a comprehensive platform that integrates seamlessly with your existing POS system to enhance your restaurant operations. From online ordering to table-side service and powerful analytics, our solution helps you boost sales, streamline service, and delight customers.
+              </p>
+              <a 
+                href="#demo-request" 
+                className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
+              >
+                Learn More
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </a>
+            </div>
+            <div className="bg-gray-100 rounded-xl p-6 shadow-lg">
+              <img 
+                src={orderSuiteImage} 
+                alt="Shimizu Order Suite in action" 
+                className="w-full h-auto rounded-lg shadow-md"
+              />
+            </div>
+          </div>
+          
+          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Key Features</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <Globe2 className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Online Ordering</h4>
+              <p className="text-gray-600 text-sm">Customer-friendly interface with easy menu management and real-time updates</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <UtensilsCrossed className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Table-Side Ordering</h4>
+              <p className="text-gray-600 text-sm">Reduce wait times and increase order accuracy with digital table-side ordering</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <Settings className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">POS Augmentation</h4>
+              <p className="text-gray-600 text-sm">Works with your current system and centralizes order management</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <Target className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">VIP & Loyalty Tools</h4>
+              <p className="text-gray-600 text-sm">Engage your best customers and drive repeat business with loyalty features</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <ShoppingBag className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Merchandise Sales</h4>
+              <p className="text-gray-600 text-sm">Integrated merchandise sales for new revenue streams with easy management</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <BarChart className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Powerful Analytics</h4>
+              <p className="text-gray-600 text-sm">Understand sales, customers, and performance with detailed reporting</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <Users className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Staff Management</h4>
+              <p className="text-gray-600 text-sm">Manage staff discounts, house accounts, and permissions easily</p>
+            </div>
+            
+            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
+              <Clock className="w-12 h-12 text-blue-500 mb-4" />
+              <h4 className="text-xl font-semibold mb-2">Quick Setup</h4>
+              <p className="text-gray-600 text-sm">Standard 1-week setup time to get your restaurant online quickly</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      {/* YOUR BRAND, YOUR PORTAL */}
+      <section className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Your Brand, Your Portal</h2>
+            <p className="text-gray-600 text-center mb-10 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-lg">
+              A seamless extension of your restaurant's identity
+            </p>
+            
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+              <p className="text-gray-700 mb-6 text-base sm:text-lg leading-relaxed">
+                We set up a fully customized and branded online ordering portal specifically for your restaurant, powered by the robust Shimizu Order Suite platform. Your customers get a seamless experience that reflects your identity.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-blue-500 text-2xl font-bold">1</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Discovery</h4>
+                  <p className="text-gray-600 text-sm">We learn about your brand and requirements</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-blue-500 text-2xl font-bold">2</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Customization</h4>
+                  <p className="text-gray-600 text-sm">We tailor the platform to match your brand identity</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <span className="text-blue-500 text-2xl font-bold">3</span>
+                  </div>
+                  <h4 className="font-semibold mb-2">Launch</h4>
+                  <p className="text-gray-600 text-sm">Your branded portal goes live within one week</p>
+                </div>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-gray-700 font-semibold mb-4">Standard setup time: Just 1 week</p>
+                <a 
+                  href="#demo-request" 
+                  className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
+                >
+                  Request Your Custom Portal
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* HAFALOHA CASE STUDY */}
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                <div className="p-8 sm:p-10 flex flex-col justify-center">
+                  <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">Proven Success Under Pressure</h2>
+                  <h3 className="text-xl sm:text-2xl font-semibold mb-6 text-blue-600">Hafaloha's Concert VIP Experience powered by Shimizu Order Suite</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <h4 className="font-bold text-gray-700 mb-1">The Challenge:</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">Manage 850 VIP's and their orders efficiently during a high-profile concert event while reducing lines for food and merchandise.</p>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-bold text-gray-700 mb-1">The Solution:</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">Implemented Shimizu Order Suite with custom VIP codes, online ordering and payment, and order notifications.</p>
+                    </div>
+                    
+                    <div>
+                      <h4 className="font-bold text-gray-700 mb-1">The Results:</h4>
+                      <p className="text-gray-600 text-sm sm:text-base">Flawless execution with smooth operations and enhanced VIP experience. The system handled all orders seamlessly, even during peak demand.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-lg border border-gray-200 italic text-gray-700 text-sm sm:text-base mb-6">
+                    "It was soooo incredible being able to see what was only a discussion of an idea, come to life. No doubt that the online ordering option is a valuable perk & adds to the VIP experience. I'm excited to sit with the team and you to discuss how we can make it better!!!"
+                    <div className="mt-2 font-semibold text-gray-800 not-italic">— Hafaloha Owner</div>
+                  </div>
+                  
+                  <a 
+                    href="#demo-request" 
+                    className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base self-start"
+                  >
+                    See How It Works For You
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </a>
+                </div>
+                
+                <div className="relative">
+                  <img 
+                    src="/images/mobile-hafaloha-orders.com.PNG"
+                    alt="Mobile Hafaloha Orders Website" 
+                    className="w-full h-full object-cover object-top"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent flex items-center justify-center">
+                    <div className="bg-white/90 rounded-lg p-4 m-6 shadow-lg">
+                      <h4 className="font-bold text-gray-800 mb-2">Key Metrics:</h4>
+                      <ul className="space-y-2">
+                        <li className="flex items-center text-sm">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                          <span>850+ VIP orders processed</span>
+                        </li>
+                        <li className="flex items-center text-sm">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                          <span>Zero system downtime</span>
+                        </li>
+                        <li className="flex items-center text-sm">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                          <span>100% order fulfillment rate</span>
+                        </li>
+                        <li className="flex items-center text-sm">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
+                          <span>Minimal wait times</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -596,35 +832,52 @@ function App() {
         </div>
       </section>
 
-      {/* WHY WORK WITH US */}
+      {/* WHY CHOOSE SHIMIZU TECHNOLOGY */}
       <section id="why-us" className="py-16 sm:py-24 bg-white text-gray-800">
         <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Why Work With Us?</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Why Choose Shimizu Technology?</h2>
           <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            Discover the benefits of partnering with a dedicated, agile team.
+            Whether you need a restaurant platform or custom software, we deliver excellence
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-10">
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Personalized Approach</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
+            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Local Guam Expertise & Support</h3>
               <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                We treat every client like a long-term partner, taking the time to understand 
-                your unique challenges and crafting tailored solutions.
+                We're right here on Guam, providing responsive, dedicated support. When you need help, 
+                you'll speak with someone who understands the local market and your specific needs.
               </p>
             </div>
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Future-Ready Solutions</h3>
+            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Flexibility & Customization</h3>
               <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                Our modern tech stack and focus on emerging technologies ensure your business 
-                stays ahead of the curve.
+                Need a specific feature? We work with you to tailor our platforms to your unique workflow. 
+                Our solutions adapt to your business, not the other way around.
               </p>
             </div>
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Community & Growth</h3>
+            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Partnership Approach</h3>
               <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                By partnering with the Code School of Guam, we help grow local tech talent, 
-                ensuring a vibrant future for Guam’s tech ecosystem.
+                We're more than a vendor; we're your technology partner. We invest in understanding your 
+                business goals and challenges to provide solutions that drive real results.
               </p>
             </div>
+            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
+              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Seamless Integration</h3>
+              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
+                Our Order Suite is designed to complement your existing POS, not force a costly replacement. 
+                We work with your current systems to enhance capabilities without disruption.
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-12 sm:mt-16 text-center">
+            <a 
+              href="#demo-request" 
+              className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
+            >
+              Experience the Difference
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </a>
           </div>
         </div>
       </section>
@@ -732,6 +985,58 @@ function App() {
                 Apply Now
                 <ArrowRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* DEMO REQUEST FORM */}
+      <section id="demo-request" className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Request a Free Demo</h2>
+            <p className="text-gray-600 text-center mb-10 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-lg">
+              See how Shimizu Order Suite can transform your restaurant operations
+            </p>
+            
+            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+              <div className="text-center mb-8">
+                <h3 className="text-xl font-semibold mb-4">Interested in a personalized demo?</h3>
+                <p className="text-gray-600 mb-6">
+                  Email us at <a href="mailto:ShimizuTechnology@gmail.com" className="text-blue-500 font-semibold hover:underline">ShimizuTechnology@gmail.com</a> with the following information:
+                </p>
+                
+                <div className="bg-gray-50 p-6 rounded-lg text-left max-w-lg mx-auto">
+                  <ul className="space-y-3 text-gray-700">
+                    <li><span className="font-medium">• Your name</span></li>
+                    <li><span className="font-medium">• Restaurant name</span></li>
+                    <li><span className="font-medium">• Contact information</span> (email and phone)</li>
+                    <li><span className="font-medium">• Challenges you're hoping to solve</span></li>
+                    <li><span className="font-medium">• Best time to contact you</span></li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="flex justify-center mb-8">
+                <a 
+                  href="mailto:ShimizuTechnology@gmail.com?subject=Order Suite Demo Request&body=Hello Shimizu Technology Team,%0A%0AI'm interested in a demo of the Shimizu Order Suite.%0A%0AName: %0ARestaurant: %0APhone: %0A%0AChallenges I'm hoping to solve:%0A%0ABest time to contact me:%0A%0AThank you!"
+                  className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base flex items-center"
+                >
+                  <Mail className="mr-2 h-5 w-5" />
+                  Email Us Now
+                </a>
+              </div>
+              
+              <div className="bg-blue-50 p-4 rounded-lg text-blue-800 text-sm">
+                <p className="flex items-start">
+                  <Info className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
+                  <span>We'll respond to your demo request within 24 hours to schedule a personalized walkthrough of Shimizu Order Suite tailored to your restaurant's needs.</span>
+                </p>
+              </div>
+              
+              <div className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600 text-sm">
+                <p>Need a different type of solution? <a href="#contact" className="text-blue-500 hover:underline">Contact us</a> to discuss your custom project.</p>
+              </div>
             </div>
           </div>
         </div>
