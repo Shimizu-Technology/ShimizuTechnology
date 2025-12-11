@@ -11,123 +11,138 @@ import {
   Settings,
   Rocket,
   Target,
-  CalendarDays,
-  UtensilsCrossed,
-  Calculator,
-  FileSpreadsheet,
   Menu as MenuIcon,
   X as CloseIcon,
-  Eye,
-  Info,
-  SwitchCamera,
   Globe2,
-  ShoppingBag,
-  BarChart
+  Brain,
+  Smartphone,
+  ShoppingCart,
+  Plane,
+  BookOpen,
+  Utensils,
+  Languages,
+  GraduationCap,
+  ExternalLink,
+  CheckCircle,
+  Star,
+  Zap,
+  Quote,
 } from 'lucide-react';
 
-// 1. Import your local images
-import shimizuLogo from './assets/ShimizuTechnologyLogo.jpg'; // For header
+// Import your local images
+import shimizuLogo from './assets/ShimizuTechnologyLogo.jpg';
 import hafalohaImage from './assets/hafaloha_hero.jpg';
-import restaurantAImage from './assets/sunrise-diner-generic-image.png';
-import restaurantBImage from './assets/cozy-coffee-shop-generic-image.png';
-import orderSuiteImage from './assets/Shimizu-Order-Suite-img.png';
-// Using require for PNG files with uppercase extensions to avoid Vite import issues
 
 // Global Smooth Scrolling
 document.documentElement.style.scrollBehavior = 'smooth';
 
 //
-// PROJECT DATA
+// FEATURED PROJECTS DATA
 //
 const projects = [
   {
-    title: "Hafaloha Online Ordering",
-    description: "Complete online ordering and reservation platform with customer-facing and admin interfaces",
+    title: "HåfaGPT",
+    subtitle: "Chamorro Language Learning",
+    description: "AI-powered platform for learning Chamorro, the indigenous language of Guam. Combines modern AI with traditional learning methods.",
+    image: "/images/HafaGPT-icon1.png",
+    imageStyle: "object-contain bg-[#f5f0e6] p-6", // Light cream background to match icon
+    link: "https://hafagpt.com",
+    icon: <Languages className="w-5 h-5" />,
+    accentColor: "bg-amber-500",
+    features: [
+      "AI Tutor with 45,000+ knowledge chunks",
+      "Interactive flashcards & quizzes",
+      "24 bilingual stories"
+    ],
+    tags: ["AI/ML", "React", "FastAPI"],
+    isNew: true,
+    isFeatured: true
+  },
+  {
+    title: "Håfa Recipes",
+    subtitle: "AI Recipe Extraction",
+    description: "Mobile app using AI to transform cooking videos from TikTok, YouTube, and Instagram into organized recipes.",
+    image: "/images/HafaRecipes-icon.png",
+    imageStyle: "object-contain bg-gray-50 p-4", // Clean white background
+    link: "https://hafa-recipes.com",
+    appStoreLink: "https://apps.apple.com/us/app/recipe-extractor-gu/id6755892896",
+    icon: <Utensils className="w-5 h-5" />,
+    accentColor: "bg-orange-500",
+    features: [
+      "Video-to-recipe AI extraction",
+      "Photo OCR for handwritten recipes",
+      "AI Recipe Chat with GPT-4o"
+    ],
+    tags: ["iOS", "React Native", "AI/ML"],
+    isNew: true,
+    isFeatured: true
+  },
+  {
+    title: "Hafaloha Orders",
+    subtitle: "Online Ordering & VIP",
+    description: "Complete ordering and VIP platform. Expanding to handle retail merchandise and wholesale ordering.",
     image: hafalohaImage,
+    imageStyle: "object-cover",
     link: "https://hafaloha-orders.com",
-    icon: <UtensilsCrossed className="w-6 h-6" />,
+    icon: <ShoppingCart className="w-5 h-5" />,
+    accentColor: "bg-cyan-500",
     features: [
       "Online food ordering system",
-      "Table & event reservations",
-      "Staff administration portal",
-      "Real-time order tracking"
-    ]
-  },
-  {
-    title: "Dental Appointments",
-    description: "Comprehensive dental practice management system with automated notifications",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
-    link: "https://dental-appt.netlify.app/",
-    icon: <CalendarDays className="w-6 h-6" />,
-    features: [
-      "Online appointment scheduling",
-      "Automated reminders",
-      "Staff schedule management",
-      "Patient portal"
-    ]
-  },
-  {
-    title: "Conveyor Sushi Bar",
-    description: "Seat-based reservation system for a modern sushi restaurant",
-    image: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&q=80&w=800",
-    link: "https://sushi-guam.netlify.app/",
-    icon: <UtensilsCrossed className="w-6 h-6" />,
-    features: [
-      "Interactive seat selection",
-      "Walk-in management",
-      "Real-time availability",
-      "Custom seating layouts"
-    ]
-  },
-  {
-    title: "Digital Menu Platform",
-    description: "QR code-enabled digital menus for restaurants",
-    image: restaurantAImage, // Fallback image for the card if no specific site is selected
-    icon: <MenuIcon className="w-6 h-6" />,
-    features: [
-      "Mobile-optimized menus",
-      "QR code integration",
-      "Easy menu updates",
-      "Multiple restaurant support"
+      "Concert VIP (850+ orders)",
+      "Retail & wholesale expansion"
     ],
-    sites: [
-      {
-        name: "Cozy Coffee Shop",
-        link: "https://cozy-coffee-shop-guam.netlify.app/",
-        image: restaurantBImage
-      },
-      {
-        name: "Sunrise Diner",
-        link: "https://sunrise-diner.netlify.app/",
-        image: restaurantAImage
-      }
-    ]
+    tags: ["E-commerce", "React", "Rails"],
+    isFeatured: true
   },
   {
-    title: "Tax Calculator",
-    description: "Automated payroll tax calculation system with document processing",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=800",
-    link: "https://tax-calculator-frontend.netlify.app",
-    icon: <Calculator className="w-6 h-6" />,
+    title: "GIAA Golf Tournament",
+    subtitle: "Airport Authority Event",
+    description: "Custom registration and admin dashboard for the annual Edward A.P. Muna II Memorial Golf Tournament. Built for reuse year after year.",
+    image: "/images/giaa-logo.png",
+    imageStyle: "object-contain bg-gradient-to-b from-sky-50 to-blue-100 p-6", // Light blue gradient for visibility
+    link: "https://giaa-tournament.com",
+    icon: <Plane className="w-5 h-5" />,
+    accentColor: "bg-blue-600",
     features: [
-      "Document upload system",
-      "Automated calculations",
-      "Employee record management",
-      "Payroll period tracking"
-    ]
+      "Online registration & payments",
+      "Admin event dashboard",
+      "Tournament day check-in"
+    ],
+    tags: ["Events", "Stripe", "React"],
+    isNew: true
+  },
+  {
+    title: "Guahan Grocer",
+    subtitle: "Grocery Delivery",
+    description: "Guam's local grocery delivery platform connecting shoppers with stores. Currently on pause.",
+    image: "/images/Guahan-Grocer-Logo.png",
+    imageStyle: "object-contain bg-[#f5f0e6] p-6", // Cream background to match logo
+    appStoreLink: "https://apps.apple.com/us/app/guahan-grocer/id6749652653",
+    icon: <ShoppingCart className="w-5 h-5" />,
+    accentColor: "bg-green-500",
+    features: [
+      "Multi-store grocery browsing",
+      "Real-time delivery tracking",
+      "Shopper & driver management"
+    ],
+    tags: ["Mobile", "React Native", "Rails"],
+    isPaused: true
   },
   {
     title: "Cornerstone Accounting",
-    description: "Educational platform for QuickBooks training courses",
+    subtitle: "QuickBooks Training",
+    description: "Educational platform for QuickBooks training, helping businesses master accounting software.",
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
+    imageStyle: "object-cover",
     link: "https://cornerstone-accounting.netlify.app",
-    icon: <FileSpreadsheet className="w-6 h-6" />,
+    icon: <BookOpen className="w-5 h-5" />,
+    accentColor: "bg-violet-500",
     features: [
-      "Course registration",
-      "Program information",
-      "Student portal",
-      "Training materials"
-    ]
+      "Structured QuickBooks curriculum",
+      "Course registration system",
+      "Student progress tracking"
+    ],
+    tags: ["Education", "React", "Rails"]
   }
 ];
 
@@ -136,38 +151,41 @@ const projects = [
 //
 const services = [
   {
-    icon: <Code2 className="w-6 h-6" />,
-    title: "Custom Software Development",
-    description: "Tailored solutions for your unique business needs"
+    icon: <Brain className="w-7 h-7" />,
+    title: "AI & Machine Learning",
+    description: "Build intelligent applications with RAG systems, chatbots, and custom AI solutions. We've deployed production AI with Whisper, GPT-4o, Gemini, and more.",
+    iconBg: "bg-purple-100",
+    iconColor: "text-purple-600"
   },
   {
-    icon: <Settings className="w-6 h-6" />,
-    title: "Business Automation",
-    description: "Streamline your operations with smart automation"
+    icon: <Smartphone className="w-7 h-7" />,
+    title: "Mobile App Development",
+    description: "Cross-platform iOS and Android apps using React Native. From concept to App Store deployment with ongoing maintenance.",
+    iconBg: "bg-blue-100",
+    iconColor: "text-blue-600"
   },
   {
-    icon: <Globe2 className="w-6 h-6" />,
+    icon: <Globe2 className="w-7 h-7" />,
     title: "Web Applications",
-    description: "Modern, responsive web applications that scale"
+    description: "Modern, responsive web applications built with React, TypeScript, and Ruby on Rails. Scalable architecture that grows with your business.",
+    iconBg: "bg-green-100",
+    iconColor: "text-green-600"
+  },
+  {
+    icon: <Settings className="w-7 h-7" />,
+    title: "Business Automation",
+    description: "Streamline operations with custom automation tools, integrations, and workflow optimization. Save time and reduce errors.",
+    iconBg: "bg-orange-100",
+    iconColor: "text-orange-600"
   }
 ];
 
 //
-// Extended Services
+// TECH STACK
 //
-const extendedServices = [
-  {
-    title: "AI & Machine Learning",
-    description: "Leverage cutting-edge AI to gain insights and automate workflows."
-  },
-  {
-    title: "Advanced Analytics",
-    description: "Turn raw data into actionable intelligence for smarter decision-making."
-  },
-  {
-    title: "Integration Services",
-    description: "Seamlessly connect your existing platforms and databases."
-  }
+const techStack = [
+  "React", "React Native", "TypeScript", "Ruby on Rails", "FastAPI", 
+  "Python", "PostgreSQL", "OpenAI", "Gemini", "Stripe"
 ];
 
 //
@@ -177,161 +195,147 @@ const workflowSteps = [
   {
     icon: <Users className="w-6 h-6" />,
     title: "Discovery",
-    description: "We start by understanding your needs"
+    description: "We dive deep into your business needs, challenges, and goals to craft the perfect solution."
   },
   {
     icon: <Code2 className="w-6 h-6" />,
-    title: "Mockup",
-    description: "We create a quick prototype to finalize requirements"
+    title: "Design & Prototype",
+    description: "We create interactive prototypes so you can see and feel your product before we build it."
   },
   {
-    icon: <Settings className="w-6 h-6" />,
-    title: "Development",
-    description: "We build your solution with modern tech stacks"
+    icon: <Zap className="w-6 h-6" />,
+    title: "Agile Development",
+    description: "We build in sprints with regular check-ins, so you're always in the loop on progress."
   },
   {
-    icon: <Clock className="w-6 h-6" />,
-    title: "Maintenance",
-    description: "We offer ongoing support to keep everything running"
+    icon: <Rocket className="w-6 h-6" />,
+    title: "Launch & Support",
+    description: "We deploy your solution and provide ongoing support to keep everything running smoothly."
   }
 ];
 
-// Define TypeScript interfaces for our data structures
-interface ProjectSite {
-  name: string;
-  link: string;
-  image: string;
+//
+// PROJECT CARD COMPONENT - Fixed height with uniform layout
+//
+interface ProjectCardProps {
+  project: typeof projects[0];
 }
 
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  link?: string;
-  icon: React.ReactNode;
-  features: string[];
-  sites?: ProjectSite[];
-}
-
-//
-// PROJECT CARD COMPONENT
-//
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project }: ProjectCardProps) {
   const posthog = usePostHog();
-  const [showPreview, setShowPreview] = useState(false);
-  const [currentSiteIndex, setCurrentSiteIndex] = useState(0);
-
-  const currentSite = project.sites?.[currentSiteIndex] || {
-    link: project.link || '',
-    image: project.image
-  };
-
-  const displayedImage = currentSite.image || project.image;
-
-  const toggleSite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (project.sites && project.sites.length > 0) {
-      const nextIndex = (currentSiteIndex + 1) % project.sites.length;
-      setCurrentSiteIndex(nextIndex);
-      posthog.capture('project_site_toggled', { 
-        project_title: project.title,
-        site_name: project.sites[nextIndex].name
-      });
-    }
-  };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden">
-      <div className="relative">
-        {showPreview ? (
-          <div className="h-[300px] sm:h-[400px] w-full bg-gray-50">
-            <iframe
-              src={currentSite.link}
-              title={project.title}
-              className="w-full h-full border-0"
-              loading="lazy"
-            />
-          </div>
-        ) : (
-          <div className="relative h-40 sm:h-48 overflow-hidden">
-            <img 
-              src={displayedImage} 
-              alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute bottom-3 left-3 right-3 text-white">
-              <div className="flex items-center gap-2 mb-1 sm:mb-2">
-                <div className="p-2 bg-blue-500 rounded-lg">
-                  {project.icon}
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold leading-tight">
-                  {project.sites && project.sites.length > 0
-                    ? `${project.title} - ${project.sites[currentSiteIndex].name}` 
-                    : project.title
-                  }
-                </h3>
-              </div>
-            </div>
-          </div>
+    <div 
+      className={`group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col h-full ${project.isPaused ? 'opacity-75' : ''}`}
+    >
+      {/* Image Header - Fixed height */}
+      <div className="relative h-44 overflow-hidden flex-shrink-0">
+        <img 
+          src={project.image} 
+          alt={project.title}
+          className={`w-full h-full ${project.imageStyle || 'object-cover'} group-hover:scale-105 transition-transform duration-500`}
+        />
+        {/* Only add overlay for photos, not for icon/logo images */}
+        {project.imageStyle?.includes('object-cover') && !project.imageStyle?.includes('object-contain') && (
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent" />
         )}
         
-        {/* Preview & Switch Buttons */}
-        <button
-          onClick={() => {
-            const newPreviewState = !showPreview;
-            setShowPreview(newPreviewState);
-            posthog.capture('project_preview_toggled', { 
-              project_title: project.title,
-              preview_state: newPreviewState ? 'shown' : 'hidden'
-            });
-          }}
-          className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-lg hover:bg-blue-50 transition-colors duration-300"
-        >
-          {showPreview ? <Info className="w-4 h-4 text-blue-500" /> : <Eye className="w-4 h-4 text-blue-500" />}
-        </button>
-
-        {project.sites && (
-          <button
-            onClick={toggleSite}
-            className="absolute top-3 right-12 p-2 bg-white rounded-full shadow-lg hover:bg-blue-50 transition-colors duration-300"
-          >
-            <SwitchCamera className="w-4 h-4 text-blue-500" />
-          </button>
-        )}
+        {/* Status badges */}
+        <div className="absolute top-3 left-3 flex gap-1.5 z-10">
+          {project.isNew && (
+            <span className="px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded shadow-sm">
+              NEW
+            </span>
+          )}
+          {project.isFeatured && (
+            <span className="px-2 py-0.5 bg-amber-500 text-white text-xs font-semibold rounded flex items-center gap-1 shadow-sm">
+              <Star className="w-3 h-3" /> FEATURED
+            </span>
+          )}
+          {project.isPaused && (
+            <span className="px-2 py-0.5 bg-gray-500 text-white text-xs font-semibold rounded shadow-sm">
+              PAUSED
+            </span>
+          )}
+        </div>
       </div>
 
-      {!showPreview && (
-        <div className="p-4 sm:p-6">
-          <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">{project.description}</p>
-          <ul className="space-y-2">
-            {project.features.map((feature: string, idx: number) => (
-              <li key={idx} className="flex items-center text-xs sm:text-sm text-gray-600">
-                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2" />
-                {feature}
-              </li>
-            ))}
-          </ul>
+      {/* Content - Flex grow to fill space */}
+      <div className="p-4 flex flex-col flex-grow">
+        {/* Title row */}
+        <div className="flex items-center gap-2 mb-2">
+          <div className={`p-1.5 ${project.accentColor} rounded-md text-white flex-shrink-0`}>
+            {project.icon}
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-base font-bold text-gray-900 truncate">{project.title}</h3>
+            <p className="text-gray-500 text-xs truncate">{project.subtitle}</p>
+          </div>
         </div>
-      )}
 
-      <div className="px-4 sm:px-6 pb-4 sm:pb-6">
-        <a
-          href={currentSite.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => {
-            posthog.capture('project_link_clicked', { 
-              project_title: project.title,
-              site_name: project.sites ? project.sites[currentSiteIndex].name : project.title,
-              url: currentSite.link
-            });
-          }}
-          className="inline-flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300 text-sm sm:text-base"
-        >
-          Visit Site
-          <ArrowRight className="w-4 h-4 ml-1" />
-        </a>
+        {/* Description */}
+        <p className="text-gray-600 text-sm leading-relaxed mb-3">
+          {project.description}
+        </p>
+        
+        {/* Features - Fixed height area */}
+        <ul className="space-y-1.5 mb-3 flex-grow">
+          {project.features.map((feature, idx) => (
+            <li key={idx} className="flex items-start text-sm text-gray-600">
+              <CheckCircle className="w-3.5 h-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
+              <span className="line-clamp-1">{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* Tags - Fixed position from bottom */}
+        <div className="flex flex-wrap gap-1 mb-3">
+          {project.tags.map((tag, idx) => (
+            <span key={idx} className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        {/* Actions - Always at bottom */}
+        <div className="flex items-center gap-2 mt-auto pt-2 border-t border-gray-100">
+          {project.link && !project.isPaused && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                posthog.capture('project_link_clicked', { 
+                  project_title: project.title,
+                  url: project.link
+                });
+              }}
+              className={`inline-flex items-center px-3 py-1.5 ${project.accentColor} text-white rounded-md hover:opacity-90 transition-all text-sm font-medium`}
+            >
+              Visit Site
+              <ExternalLink className="w-3 h-3 ml-1" />
+            </a>
+          )}
+          {project.appStoreLink && (
+            <a
+              href={project.appStoreLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => {
+                posthog.capture('app_store_clicked', { 
+                  project_title: project.title
+                });
+              }}
+              className="inline-flex items-center px-3 py-1.5 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all text-sm font-medium"
+            >
+              <Smartphone className="w-3 h-3 mr-1" />
+              App Store
+            </a>
+          )}
+          {project.isPaused && !project.appStoreLink && (
+            <span className="text-sm text-gray-400 italic">Currently on hold</span>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -343,43 +347,47 @@ function ProjectCard({ project }: { project: Project }) {
 function App() {
   const posthog = usePostHog();
   const [showBackToTop, setShowBackToTop] = useState(false);
-
-  // For mobile menu
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
   
   // Track page view on component mount
   useEffect(() => {
     posthog.capture('page_viewed', { page: 'homepage' });
   }, [posthog]);
 
-  // Detect scroll position to show/hide the "Back to Top" button
+  // Detect scroll position
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300);
+      
+      // Track active section
+      const sections = document.querySelectorAll("section[id]");
+      const scrollPosition = window.scrollY + 100;
+
+      sections.forEach((section) => {
+        if (section instanceof HTMLElement) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          if (sectionTop <= scrollPosition && sectionBottom > scrollPosition) {
+            setActiveSection(section.id);
+          }
+        }
+      });
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll to top
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
-    posthog.capture('scrolled_to_top');
   };
 
-  // Toggle mobile menu open/close
   const toggleMobileMenu = () => {
-    const newState = !mobileMenuOpen;
-    setMobileMenuOpen(newState);
-    posthog.capture('mobile_menu_toggled', { state: newState ? 'opened' : 'closed' });
+    setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  /**
-   * 1. We'll use a ref to track the mobile menu container.
-   * 2. When user clicks anywhere outside that container (and it's open), we close it.
-   */
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Close menu if user clicks outside
@@ -397,761 +405,533 @@ function App() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [mobileMenuOpen]);
 
+  const navItems = [
+    { href: "#services", label: "Services" },
+    { href: "#projects", label: "Projects" },
+    { href: "#process", label: "Process" },
+    { href: "#about", label: "About" },
+    { href: "#contact", label: "Contact" },
+  ];
+
   return (
-    <div className="min-h-screen bg-white relative">
-      {/* NAVBAR (Sticky with Box Shadow) */}
-      <div className="sticky top-0 z-50 bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white shadow-md shadow-gray-900/10">
-        <nav className="container mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between relative">
-          {/* Logo + Name */}
-          <div
-            className="flex items-center space-x-2 sm:space-x-3 cursor-pointer"
-            onClick={scrollToTop}
-          >
-            <img
-              src={shimizuLogo}
-              alt="Shimizu Technology Logo"
-              className="h-8 w-8 sm:h-10 sm:w-10 object-contain rounded-full"
-            />
-            <span className="text-lg sm:text-xl font-bold tracking-tight">
-              Shimizu Technology
-            </span>
-          </div>
+    <div className="min-h-screen bg-white">
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 bg-gray-900 text-white">
+        <nav className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <div
+              className="flex items-center space-x-3 cursor-pointer"
+              onClick={scrollToTop}
+            >
+              <img
+                src={shimizuLogo}
+                alt="Shimizu Technology Logo"
+                className="h-9 w-9 object-contain rounded-full"
+              />
+              <span className="text-lg font-bold">
+                Shimizu Technology
+              </span>
+            </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-5 sm:space-x-8">
-            <a
-              href="#services"
-              className="hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-            >
-              Services
-            </a>
-            <a
-              href="#projects"
-              className="hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-            >
-              Projects
-            </a>
-            <a
-              href="#workflow"
-              className="hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-            >
-              Process
-            </a>
-            <a
-              href="#about"
-              className="hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-            >
-              About
-            </a>
-            <a
-              href="#contact"
-              className="hover:text-blue-400 transition-colors duration-300 text-sm sm:text-base"
-            >
-              Contact
-            </a>
-          </div>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    activeSection === item.href.slice(1)
+                      ? "bg-white/10 text-white"
+                      : "text-gray-300 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href="https://codeschoolofguam.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-3 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md text-sm font-medium transition-colors"
+              >
+                Code School
+              </a>
+            </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={toggleMobileMenu}
-              className="p-2 rounded-md hover:bg-white/10 transition"
-            >
-              {mobileMenuOpen ? (
-                <CloseIcon className="w-6 h-6" />
-              ) : (
-                <MenuIcon className="w-6 h-6" />
-              )}
-            </button>
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={toggleMobileMenu}
+                className="p-2 rounded-md hover:bg-white/10 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <CloseIcon className="w-6 h-6" />
+                ) : (
+                  <MenuIcon className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </nav>
 
-        {/* Mobile Menu + Overlay */}
+        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <>
-            {/* Background overlay for a nicer effect */}
-            <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" />
-
+            <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setMobileMenuOpen(false)} />
             <div
               ref={menuRef}
-              className="md:hidden absolute top-full left-0 w-full bg-gray-900 border-t border-white/10 z-50 animate-slideInDown rounded-b-lg"
+              className="md:hidden absolute top-full left-0 w-full bg-gray-900 border-t border-white/10 z-50"
             >
-              <div className="px-6 py-4 space-y-3 flex flex-col">
+              <div className="px-4 py-3 space-y-1">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-4 py-3 rounded-md text-base font-medium transition-colors ${
+                      activeSection === item.href.slice(1)
+                        ? "bg-white/10 text-white"
+                        : "text-gray-300 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                ))}
                 <a
-                  href="#services"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-blue-300 transition-colors duration-300 text-base"
+                  href="https://codeschoolofguam.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block px-4 py-3 bg-red-500 rounded-md text-base font-medium text-white text-center mt-2"
                 >
-                  Services
-                </a>
-                <a
-                  href="#projects"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-blue-300 transition-colors duration-300 text-base"
-                >
-                  Projects
-                </a>
-                <a
-                  href="#workflow"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-blue-300 transition-colors duration-300 text-base"
-                >
-                  Process
-                </a>
-                <a
-                  href="#about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-blue-300 transition-colors duration-300 text-base"
-                >
-                  About
-                </a>
-                <a
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="hover:text-blue-300 transition-colors duration-300 text-base"
-                >
-                  Contact
+                  Code School of Guam
                 </a>
               </div>
             </div>
           </>
         )}
-      </div>
+      </header>
 
       {/* HERO SECTION */}
-      <header className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white">
-        <div className="container mx-auto px-4 sm:px-6 py-10 sm:py-20">
+      <section className="bg-gray-900 text-white relative overflow-hidden">
+        {/* Subtle gradient orbs */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-3xl" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600 leading-tight">
-              Building Tomorrow's Solutions Today
+            {/* Badge */}
+            <div className="inline-flex items-center px-3 py-1.5 bg-white/10 border border-white/20 rounded-full text-sm font-medium mb-6">
+              <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
+              Building AI-Powered Solutions in Guam
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight">
+              Transforming Ideas
+              <br />
+              <span className="text-blue-400">Into Reality</span>
             </h1>
-            <h2 className="text-2xl sm:text-3xl text-gray-300 mb-4 sm:mb-6 leading-snug">
-              Featuring <span className="text-blue-400">Shimizu Order Suite</span>: Modern Restaurant Technology Designed for Guam
-            </h2>
-            <p className="text-base sm:text-xl text-gray-400 mb-6 sm:mb-8 leading-relaxed">
-              We build custom software for any business need, with specialized expertise in restaurant technology. Our Order Suite integrates seamlessly with your existing POS to boost sales, streamline service, and delight customers.
+            
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-2xl leading-relaxed">
+              We build custom software, AI applications, and mobile apps that solve real problems for businesses in Guam and beyond.
             </p>
 
-            {/* Primary & Secondary CTAs with stronger hover animations */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-              <a
-                href="#demo-request"
-                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
-              >
-                Request a Demo
-                <ChevronRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
-              </a>
+            {/* Stats */}
+            <div className="flex flex-wrap gap-8 mb-10">
+              <div>
+                <div className="text-3xl font-bold text-white">10+</div>
+                <div className="text-sm text-gray-400">Active Projects</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white">5</div>
+                <div className="text-sm text-gray-400">AI Apps Deployed</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold text-white">3</div>
+                <div className="text-sm text-gray-400">Apps on App Store</div>
+              </div>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-3">
               <a
                 href="#contact"
-                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 border border-white text-white rounded-lg hover:bg-white hover:text-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 hover:shadow-lg text-sm sm:text-base"
+                className="inline-flex items-center justify-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
               >
-                Discuss Your Project
+                Start Your Project
+                <ChevronRight className="ml-1 w-4 h-4" />
+              </a>
+              <a
+                href="#projects"
+                className="inline-flex items-center justify-center px-6 py-3 bg-white/10 hover:bg-white/20 border border-white/20 text-white rounded-lg font-medium transition-colors"
+              >
+                View Our Work
+                <ArrowRight className="ml-1 w-4 h-4" />
               </a>
             </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* SERVICES */}
-      <section id="services" className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Our Services</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            Empowering businesses with cutting-edge technology solutions
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-10 mb-10 sm:mb-16">
+      {/* SERVICES SECTION */}
+      <section id="services" className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px'}} />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-blue-600 font-medium mb-2">What We Do</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Services
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              From AI-powered applications to mobile apps, we build technology that makes a difference.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {services.map((service, index) => (
-              <div 
-                key={index} 
-                className="group bg-white p-6 sm:p-10 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:translate-y-[-8px] border border-gray-100"
+              <div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
               >
-                <div className="text-blue-500 mb-4 sm:mb-6 transform transition-transform duration-300 group-hover:scale-110">
+                <div className={`inline-flex p-3 rounded-xl ${service.iconBg} ${service.iconColor} mb-4`}>
                   {service.icon}
                 </div>
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-4">{service.title}</h3>
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{service.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{service.description}</p>
               </div>
             ))}
           </div>
 
-          {/* Extended Services */}
-          <div className="max-w-5xl mx-auto text-center">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4">Extended Services</h3>
-            <p className="text-gray-600 mb-6 sm:mb-10 text-sm sm:text-base">
-              We also offer specialized solutions to help you stay ahead in the modern marketplace.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
-              {extendedServices.map((item, i) => (
-                <div 
-                  key={i}
-                  className="bg-white p-5 sm:p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100"
+          {/* Tech Stack */}
+          <div className="mt-12 text-center">
+            <p className="text-sm font-medium text-gray-500 mb-4">Technologies We Use</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {techStack.map((tech, index) => (
+                <span
+                  key={index}
+                  className="px-3 py-1.5 bg-white border border-gray-200 rounded-md text-sm text-gray-700"
                 >
-                  <h4 className="text-lg sm:text-xl font-semibold mb-2">{item.title}</h4>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{item.description}</p>
-                </div>
+                  {tech}
+                </span>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* SHIMIZU ORDER SUITE */}
-      <section id="order-suite" className="py-16 sm:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Shimizu Order Suite</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            A powerful, flexible platform designed specifically for restaurants in Guam
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 items-center mb-16">
-            <div>
-              <h3 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Modernize Your Restaurant Operations</h3>
-              <p className="text-gray-700 mb-6 text-sm sm:text-base leading-relaxed">
-                Shimizu Order Suite is a comprehensive platform that integrates seamlessly with your existing POS system to enhance your restaurant operations. From online ordering to table-side service and powerful analytics, our solution helps you boost sales, streamline service, and delight customers.
-              </p>
-              <a 
-                href="#demo-request" 
-                className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
-              >
-                Learn More
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </a>
-            </div>
-            <div className="bg-gray-100 rounded-xl p-6 shadow-lg">
-              <img 
-                src={orderSuiteImage} 
-                alt="Shimizu Order Suite in action" 
-                className="w-full h-auto rounded-lg shadow-md"
-              />
-            </div>
-          </div>
-          
-          <h3 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">Key Features</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <Globe2 className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Online Ordering</h4>
-              <p className="text-gray-600 text-sm">Customer-friendly interface with easy menu management and real-time updates</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <UtensilsCrossed className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Table-Side Ordering</h4>
-              <p className="text-gray-600 text-sm">Reduce wait times and increase order accuracy with digital table-side ordering</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <Settings className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">POS Augmentation</h4>
-              <p className="text-gray-600 text-sm">Works with your current system and centralizes order management</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <Target className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">VIP & Loyalty Tools</h4>
-              <p className="text-gray-600 text-sm">Engage your best customers and drive repeat business with loyalty features</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <ShoppingBag className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Merchandise Sales</h4>
-              <p className="text-gray-600 text-sm">Integrated merchandise sales for new revenue streams with easy management</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <BarChart className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Powerful Analytics</h4>
-              <p className="text-gray-600 text-sm">Understand sales, customers, and performance with detailed reporting</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <Users className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Staff Management</h4>
-              <p className="text-gray-600 text-sm">Manage staff discounts, house accounts, and permissions easily</p>
-            </div>
-            
-            <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col items-center text-center">
-              <Clock className="w-12 h-12 text-blue-500 mb-4" />
-              <h4 className="text-xl font-semibold mb-2">Quick Setup</h4>
-              <p className="text-gray-600 text-sm">Standard 1-week setup time to get your restaurant online quickly</p>
-            </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* YOUR BRAND, YOUR PORTAL */}
-      <section className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Your Brand, Your Portal</h2>
-            <p className="text-gray-600 text-center mb-10 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-lg">
-              A seamless extension of your restaurant's identity
+      {/* FEATURED PROJECTS SECTION */}
+      <section id="projects" className="py-16 md:py-24 bg-white relative overflow-hidden">
+        {/* Subtle decorative blobs */}
+        <div className="absolute top-20 -left-32 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-20 -right-32 w-64 h-64 bg-purple-100 rounded-full blur-3xl opacity-50" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-blue-600 font-medium mb-2">Our Work</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Featured Projects
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Real solutions we've built for real businesses in Guam and beyond.
             </p>
-            
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-              <p className="text-gray-700 mb-6 text-base sm:text-lg leading-relaxed">
-                We set up a fully customized and branded online ordering portal specifically for your restaurant, powered by the robust Shimizu Order Suite platform. Your customers get a seamless experience that reflects your identity.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div className="text-center">
-                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-blue-500 text-2xl font-bold">1</span>
-                  </div>
-                  <h4 className="font-semibold mb-2">Discovery</h4>
-                  <p className="text-gray-600 text-sm">We learn about your brand and requirements</p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-blue-500 text-2xl font-bold">2</span>
-                  </div>
-                  <h4 className="font-semibold mb-2">Customization</h4>
-                  <p className="text-gray-600 text-sm">We tailor the platform to match your brand identity</p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="bg-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <span className="text-blue-500 text-2xl font-bold">3</span>
-                  </div>
-                  <h4 className="font-semibold mb-2">Launch</h4>
-                  <p className="text-gray-600 text-sm">Your branded portal goes live within one week</p>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <p className="text-gray-700 font-semibold mb-4">Standard setup time: Just 1 week</p>
-                <a 
-                  href="#demo-request" 
-                  className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
-                >
-                  Request Your Custom Portal
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </a>
-              </div>
-            </div>
           </div>
-        </div>
-      </section>
 
-      {/* HAFALOHA CASE STUDY */}
-      <section className="py-16 sm:py-24 bg-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl shadow-lg overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
-                <div className="p-8 sm:p-10 flex flex-col justify-center">
-                  <h2 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">Proven Success Under Pressure</h2>
-                  <h3 className="text-xl sm:text-2xl font-semibold mb-6 text-blue-600">Hafaloha's Concert VIP Experience powered by Shimizu Order Suite</h3>
-                  
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <h4 className="font-bold text-gray-700 mb-1">The Challenge:</h4>
-                      <p className="text-gray-600 text-sm sm:text-base">Manage 850 VIP's and their orders efficiently during a high-profile concert event while reducing lines for food and merchandise.</p>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-bold text-gray-700 mb-1">The Solution:</h4>
-                      <p className="text-gray-600 text-sm sm:text-base">Implemented Shimizu Order Suite with custom VIP codes, online ordering and payment, and order notifications.</p>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-bold text-gray-700 mb-1">The Results:</h4>
-                      <p className="text-gray-600 text-sm sm:text-base">Flawless execution with smooth operations and enhanced VIP experience. The system handled all orders seamlessly, even during peak demand.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-white p-4 rounded-lg border border-gray-200 italic text-gray-700 text-sm sm:text-base mb-6">
-                    "It was soooo incredible being able to see what was only a discussion of an idea, come to life. No doubt that the online ordering option is a valuable perk & adds to the VIP experience. I'm excited to sit with the team and you to discuss how we can make it better!!!"
-                    <div className="mt-2 font-semibold text-gray-800 not-italic">— Hafaloha Owner</div>
-                  </div>
-                  
-                  <a 
-                    href="#demo-request" 
-                    className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base self-start"
-                  >
-                    See How It Works For You
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </a>
-                </div>
-                
-                <div className="relative">
-                  <img 
-                    src="/images/mobile-hafaloha-orders.com.PNG"
-                    alt="Mobile Hafaloha Orders Website" 
-                    className="w-full h-full object-cover object-top"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent flex items-center justify-center">
-                    <div className="bg-white/90 rounded-lg p-4 m-6 shadow-lg">
-                      <h4 className="font-bold text-gray-800 mb-2">Key Metrics:</h4>
-                      <ul className="space-y-2">
-                        <li className="flex items-center text-sm">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                          <span>850+ VIP orders processed</span>
-                        </li>
-                        <li className="flex items-center text-sm">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                          <span>Zero system downtime</span>
-                        </li>
-                        <li className="flex items-center text-sm">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                          <span>100% order fulfillment rate</span>
-                        </li>
-                        <li className="flex items-center text-sm">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div>
-                          <span>Minimal wait times</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className="py-16 sm:py-24">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Our Projects</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            Real solutions we've built for real businesses
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 mb-10 sm:mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project, index) => (
               <ProjectCard key={index} project={project} />
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Mid-Page CTA */}
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3">Ready to streamline your operations?</h3>
-            <p className="text-gray-700 mb-4 sm:mb-6 text-sm sm:text-base">
-              Let’s explore how Shimizu Technology can build the perfect solution for you.
+      {/* HAFALOHA TESTIMONIAL - Compact version */}
+      <section className="py-16 md:py-20 bg-gray-900 text-white relative overflow-hidden">
+        {/* Subtle glow behind metrics */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 rounded-full blur-3xl" />
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-1 mb-3">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+              ))}
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold mb-2">
+              Proven Success Under Pressure
+            </h2>
+            <p className="text-blue-400 font-medium">
+              Hafaloha's Concert VIP Experience
             </p>
+          </div>
+
+          {/* Metrics row */}
+          <div className="grid grid-cols-3 gap-4 mb-10">
+            <div className="text-center p-4 bg-white/5 rounded-xl">
+              <div className="text-3xl md:text-4xl font-bold text-blue-400">850+</div>
+              <div className="text-sm text-gray-400 mt-1">VIP Orders</div>
+            </div>
+            <div className="text-center p-4 bg-white/5 rounded-xl">
+              <div className="text-3xl md:text-4xl font-bold text-green-400">100%</div>
+              <div className="text-sm text-gray-400 mt-1">Fulfillment</div>
+            </div>
+            <div className="text-center p-4 bg-white/5 rounded-xl">
+              <div className="text-3xl md:text-4xl font-bold text-purple-400">Zero</div>
+              <div className="text-sm text-gray-400 mt-1">Downtime</div>
+            </div>
+          </div>
+
+          {/* Quote */}
+          <div className="max-w-3xl mx-auto">
+            <div className="relative">
+              <Quote className="absolute -top-2 -left-2 w-10 h-10 text-blue-500/30" />
+              <blockquote className="text-center text-lg md:text-xl text-gray-300 leading-relaxed pl-6">
+                "It was soooo incredible being able to see what was only a discussion of an idea, come to life. No doubt that the online ordering option is a valuable perk & adds to the VIP experience. I'm excited to sit with the team and you to discuss how we can make it better!!!"
+              </blockquote>
+            </div>
+            <p className="text-center mt-4 text-gray-400">
+              — <span className="text-white font-medium">Hafaloha Owner</span>
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="text-center mt-10">
             <a 
               href="#contact" 
-              className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
+              className="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
             >
-              Let’s Talk
-              <ArrowRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS / WORKFLOW */}
-      <section id="workflow" className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Our Process</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            A streamlined approach to delivering excellence
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
-            {workflowSteps.map((step, index) => (
-              <div key={index} className="text-center group px-4">
-                <div className="bg-white w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-2xl flex items-center justify-center shadow-lg mb-4 sm:mb-8 transform transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 border border-gray-100">
-                  <div className="text-blue-500">{step.icon}</div>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-semibold mb-2">{step.title}</h3>
-                <p className="text-gray-600 text-sm sm:text-base">{step.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE SHIMIZU TECHNOLOGY */}
-      <section id="why-us" className="py-16 sm:py-24 bg-white text-gray-800">
-        <div className="container mx-auto px-4 sm:px-6 max-w-5xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Why Choose Shimizu Technology?</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-16 max-w-2xl mx-auto text-sm sm:text-lg">
-            Whether you need a restaurant platform or custom software, we deliver excellence
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Local Guam Expertise & Support</h3>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                We're right here on Guam, providing responsive, dedicated support. When you need help, 
-                you'll speak with someone who understands the local market and your specific needs.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Flexibility & Customization</h3>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                Need a specific feature? We work with you to tailor our platforms to your unique workflow. 
-                Our solutions adapt to your business, not the other way around.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Partnership Approach</h3>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                We're more than a vendor; we're your technology partner. We invest in understanding your 
-                business goals and challenges to provide solutions that drive real results.
-              </p>
-            </div>
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-blue-500">
-              <h3 className="text-xl sm:text-2xl font-semibold mb-3">Seamless Integration</h3>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                Our Order Suite is designed to complement your existing POS, not force a costly replacement. 
-                We work with your current systems to enhance capabilities without disruption.
-              </p>
-            </div>
-          </div>
-          
-          <div className="mt-12 sm:mt-16 text-center">
-            <a 
-              href="#demo-request" 
-              className="inline-flex items-center px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base"
-            >
-              Experience the Difference
+              Let's Build Your Solution
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
           </div>
         </div>
       </section>
 
-      {/* ABOUT (FOUNDER & INTERNSHIP MENTION) */}
-      <section id="about" className="py-16 sm:py-24 bg-white text-gray-800">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-6">About Shimizu Technology</h2>
-            <p className="text-base sm:text-xl text-gray-600 leading-relaxed">
-              Founded by <span className="font-semibold">Leon Shimizu</span>, our mission is 
-              to simplify workflows, automate tedious tasks, and empower organizations to 
-              focus on what they do best. 
+      {/* PROCESS SECTION */}
+      <section id="process" className="py-16 md:py-24 bg-white relative overflow-hidden">
+        {/* Subtle accent line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12">
+            <p className="text-blue-600 font-medium mb-2">How We Work</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Our Process
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              A proven approach that delivers results, on time and on budget.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 items-center">
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-md">
-              <div className="mb-3 sm:mb-4">
-                <h3 className="text-xl sm:text-2xl font-bold">Small Team, Big Vision</h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {workflowSteps.map((step, index) => (
+              <div key={index} className="text-center p-6">
+                <div className="w-14 h-14 mx-auto mb-4 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
+                  {step.icon}
+                </div>
+                <div className="text-sm text-blue-600 font-medium mb-1">Step {index + 1}</div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{step.title}</h3>
+                <p className="text-gray-600 text-sm">{step.description}</p>
               </div>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-3">
-                Shimizu Technology is a close-knit, rapidly growing software firm. Our 
-                compact size means we can focus on building genuine relationships with 
-                clients and delivering tailored solutions that align perfectly with their needs.
-              </p>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                Whether you need an existing product customized or a 
-                brand-new system built from the ground up, we’re ready to help bring your 
-                vision to life—on time and on budget.
-              </p>
-            </div>
-            
-            <div className="bg-gray-50 p-6 sm:p-8 rounded-2xl shadow-md">
-              <div className="mb-3 sm:mb-4">
-                <h3 className="text-xl sm:text-2xl font-bold">Investing in Future Talent</h3>
-              </div>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-                We proudly partner with the <span className="font-semibold">Code School of Guam</span> to provide 
-                internship opportunities for graduates. This real-world experience bridges 
-                the gap between education and industry, fostering the next generation of 
-                software engineers right here in Guam.
-              </p>
-              <p className="text-gray-700 text-sm sm:text-base leading-relaxed mt-3">
-                <a 
-                  href="https://codeschoolofguam.com" 
-                  className="underline text-blue-500 hover:text-blue-600"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Learn more about the Code School of Guam
-                </a>
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CODE SCHOOL SECTION (OPTIONAL) */}
-      <section className="py-16 sm:py-24 bg-[#1a1f2e] text-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-5xl font-bold mb-3 sm:mb-6">Launch Your Tech Career in Guam</h2>
-            <p className="text-sm sm:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
-              Join our partnership with the Code School of Guam and transform your passion for technology into a powerful career.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-12 items-center mb-10 sm:mb-16">
-            <div className="bg-[#232836] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <Rocket className="w-6 sm:w-8 h-6 sm:h-8 text-[#f26d3d] mr-3 sm:mr-4" />
-                <h3 className="text-lg sm:text-2xl font-bold">Our Mission</h3>
-              </div>
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                To provide high-quality, accessible coding education to the people of Guam and beyond, 
-                ensuring graduates are prepared to enter the job market as software engineers. Through our 
-                internship program, we empower individuals with real-world experience in the rapidly growing tech industry.
+      {/* ABOUT SECTION */}
+      <section id="about" className="py-16 md:py-24 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 relative">
+        {/* Subtle grid pattern */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '32px 32px'}} />
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            {/* Left content */}
+            <div>
+              <p className="text-blue-600 font-medium mb-2">About Us</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Proudly Building in <span className="text-blue-600">Guam</span>
+              </h2>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                Founded by <strong>Leon Shimizu</strong>, Shimizu Technology is a software development company focused on building practical, impactful solutions for businesses in Guam and beyond.
               </p>
-            </div>
-            
-            <div className="bg-[#232836] p-6 sm:p-8 rounded-2xl">
-              <div className="flex items-center mb-4 sm:mb-6">
-                <Target className="w-6 sm:w-8 h-6 sm:h-8 text-[#f26d3d] mr-3 sm:mr-4" />
-                <h3 className="text-lg sm:text-2xl font-bold">Our Vision</h3>
-              </div>
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                We envision transforming Guam into a tech hub by equipping local residents with the skills 
-                and real-world experience needed to succeed in the global software industry. Through our 
-                partnership, we're building a pipeline of tech talent and contributing to the island's 
-                economic growth and innovation.
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                We specialize in AI-powered applications, mobile apps, and custom web solutions. Our work ranges from language learning platforms to recipe extraction apps, from golf tournament systems to full e-commerce platforms.
               </p>
-            </div>
-          </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Whether you need an existing product customized or a brand-new system built from the ground up, we're ready to help bring your vision to life.
+              </p>
 
-          <div className="text-center">
-            <div className="inline-flex flex-col items-center">
-              <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Begin your journey today. No prior experience required.</p>
-              <a 
-                href="https://codeschoolofguam.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-[#f26d3d] text-white rounded-lg hover:bg-[#e85d2d] transition-all duration-300 transform hover:translate-y-[-2px] hover:shadow-lg text-sm sm:text-base"
-              >
-                Apply Now
-                <ArrowRight className="ml-2 w-4 sm:w-5 h-4 sm:h-5" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DEMO REQUEST FORM */}
-      <section id="demo-request" className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Request a Free Demo</h2>
-            <p className="text-gray-600 text-center mb-10 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-lg">
-              See how Shimizu Order Suite can transform your restaurant operations
-            </p>
-            
-            <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
-              <div className="text-center mb-8">
-                <h3 className="text-xl font-semibold mb-4">Interested in a personalized demo?</h3>
-                <p className="text-gray-600 mb-6">
-                  Email us at <a href="mailto:ShimizuTechnology@gmail.com" className="text-blue-500 font-semibold hover:underline">ShimizuTechnology@gmail.com</a> with the following information:
-                </p>
-                
-                <div className="bg-gray-50 p-6 rounded-lg text-left max-w-lg mx-auto">
-                  <ul className="space-y-3 text-gray-700">
-                    <li><span className="font-medium">• Your name</span></li>
-                    <li><span className="font-medium">• Restaurant name</span></li>
-                    <li><span className="font-medium">• Contact information</span> (email and phone)</li>
-                    <li><span className="font-medium">• Challenges you're hoping to solve</span></li>
-                    <li><span className="font-medium">• Best time to contact you</span></li>
-                  </ul>
+              {/* Code School Connection */}
+              <div className="bg-red-500 rounded-xl p-5 text-white">
+                <div className="flex items-start gap-3">
+                  <div className="p-2 bg-white/20 rounded-lg">
+                    <GraduationCap className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Code School of Guam Partnership</h3>
+                    <p className="text-white/90 text-sm mb-3">
+                      We proudly partner with the Code School of Guam to provide internship opportunities for graduates, fostering the next generation of software engineers.
+                    </p>
+                    <a
+                      href="https://codeschoolofguam.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm font-medium hover:underline"
+                    >
+                      Learn more about Code School
+                      <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                    </a>
+                  </div>
                 </div>
               </div>
-              
-              <div className="flex justify-center mb-8">
-                <a 
-                  href="mailto:ShimizuTechnology@gmail.com?subject=Order Suite Demo Request&body=Hello Shimizu Technology Team,%0A%0AI'm interested in a demo of the Shimizu Order Suite.%0A%0AName: %0ARestaurant: %0APhone: %0A%0AChallenges I'm hoping to solve:%0A%0ABest time to contact me:%0A%0AThank you!"
-                  className="px-8 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-sm sm:text-base flex items-center"
-                >
-                  <Mail className="mr-2 h-5 w-5" />
-                  Email Us Now
-                </a>
-              </div>
-              
-              <div className="bg-blue-50 p-4 rounded-lg text-blue-800 text-sm">
-                <p className="flex items-start">
-                  <Info className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
-                  <span>We'll respond to your demo request within 24 hours to schedule a personalized walkthrough of Shimizu Order Suite tailored to your restaurant's needs.</span>
+            </div>
+
+            {/* Right content - Values */}
+            <div className="space-y-4">
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+                    <Target className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Local Expertise</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  We understand the Guam market and provide responsive, dedicated support. When you need help, you'll work with someone who knows your specific needs.
                 </p>
               </div>
-              
-              <div className="mt-8 pt-6 border-t border-gray-200 text-center text-gray-600 text-sm">
-                <p>Need a different type of solution? <a href="#contact" className="text-blue-500 hover:underline">Contact us</a> to discuss your custom project.</p>
+
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
+                    <Brain className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">AI-First Approach</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  We leverage cutting-edge AI models like GPT-4o, Gemini, and Whisper to build intelligent applications that solve real problems.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-green-100 rounded-lg text-green-600">
+                    <Rocket className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">End-to-End Delivery</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  From concept to App Store deployment, we handle everything. Design, development, deployment, and ongoing support — all under one roof.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="py-16 sm:py-32">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 sm:mb-4">Get In Touch</h2>
-          <p className="text-gray-600 text-center mb-10 sm:mb-20 max-w-2xl mx-auto text-sm sm:text-lg">
-            Let's discuss how we can help transform your business
+      {/* CONTACT SECTION */}
+      <section id="contact" className="py-16 md:py-24 bg-gray-900 text-white relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
+          <p className="text-blue-400 font-medium mb-2">Get In Touch</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Let's Build Something Amazing
+          </h2>
+          <p className="text-lg text-gray-300 mb-10 max-w-2xl mx-auto">
+            Ready to start your project? Reach out and let's discuss how we can help.
           </p>
-          <div className="max-w-3xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10">
-              <a 
-                href="mailto:ShimizuTechnology@gmail.com"
-                onClick={() => {
-                  posthog.capture('contact_email_clicked', { 
-                    method: 'email',
-                    email: 'ShimizuTechnology@gmail.com'
-                  });
-                }}
-                className="flex items-center p-6 sm:p-10 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:translate-y-[-4px] hover:shadow-xl group"
-              >
-                <Mail className="w-6 sm:w-10 h-6 sm:h-10 text-blue-500 mr-4 sm:mr-8 transform transition-transform duration-300 group-hover:scale-110" />
-                <div>
-                  <h3 className="font-semibold mb-1 sm:mb-2 text-base sm:text-xl">Email Us</h3>
-                  <p className="text-gray-600 text-sm sm:text-lg">ShimizuTechnology@gmail.com</p>
-                </div>
-              </a>
-              <a 
-                href="tel:+16714830219"
-                onClick={() => {
-                  posthog.capture('contact_phone_clicked', { 
-                    method: 'phone',
-                    phone: '+16714830219'
-                  });
-                }}
-                className="flex items-center p-6 sm:p-10 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:translate-y-[-4px] hover:shadow-xl group"
-              >
-                <Phone className="w-6 sm:w-10 h-6 sm:h-10 text-blue-500 mr-4 sm:mr-8 transform transition-transform duration-300 group-hover:scale-110" />
-                <div>
-                  <h3 className="font-semibold mb-1 sm:mb-2 text-base sm:text-xl">Call Us</h3>
-                  <p className="text-gray-600 text-sm sm:text-lg">(671) 483-0219</p>
-                </div>
-              </a>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 max-w-2xl mx-auto">
+            <a
+              href="mailto:ShimizuTechnology@gmail.com"
+              onClick={() => {
+                posthog.capture('contact_email_clicked');
+              }}
+              className="flex items-center gap-4 p-5 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm"
+            >
+              <div className="p-3 bg-blue-500 rounded-xl flex-shrink-0">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold">Email Us</div>
+                <div className="text-gray-400 text-sm break-all">ShimizuTechnology@gmail.com</div>
+              </div>
+            </a>
+
+            <a
+              href="tel:+16714830219"
+              onClick={() => {
+                posthog.capture('contact_phone_clicked');
+              }}
+              className="flex items-center gap-4 p-5 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors backdrop-blur-sm"
+            >
+              <div className="p-3 bg-green-500 rounded-xl flex-shrink-0">
+                <Phone className="w-5 h-5" />
+              </div>
+              <div className="text-left">
+                <div className="font-semibold">Call Us</div>
+                <div className="text-gray-400 text-sm">(671) 483-0219</div>
+              </div>
+            </a>
+          </div>
+
+          {/* Additional CTA */}
+          <p className="text-gray-400 text-sm mb-4">
+            Looking to learn coding? Check out our partner program:
+          </p>
+          <a
+            href="https://codeschoolofguam.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-lg font-medium transition-colors"
+          >
+            <GraduationCap className="w-4 h-4 mr-2" />
+            Visit Code School of Guam
+          </a>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-gray-950 text-white py-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center space-x-3">
+              <img
+                src={shimizuLogo}
+                alt="Shimizu Technology Logo"
+                className="h-9 w-9 object-contain rounded-full cursor-pointer"
+                onClick={scrollToTop}
+              />
+              <div>
+                <span className="font-semibold block">Shimizu Technology</span>
+                <span className="text-sm text-gray-400">Building the future in Guam</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-6 text-sm">
+              <a href="#services" className="text-gray-400 hover:text-white transition-colors">Services</a>
+              <a href="#projects" className="text-gray-400 hover:text-white transition-colors">Projects</a>
+              <a href="#about" className="text-gray-400 hover:text-white transition-colors">About</a>
+              <a href="#contact" className="text-gray-400 hover:text-white transition-colors">Contact</a>
+            </div>
+
+            <div className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} Shimizu Technology
             </div>
           </div>
         </div>
-      </section>
+      </footer>
 
       {/* BACK TO TOP BUTTON */}
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition-transform transform hover:scale-105 z-50"
+          className="fixed bottom-6 right-6 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition-all z-50"
+          aria-label="Back to top"
         >
-          ↑
+          <ArrowRight className="w-5 h-5 -rotate-90" />
         </button>
       )}
-
-      {/* FOOTER */}
-      <footer className="bg-gradient-to-br from-gray-900 via-[#1a1f2e] to-gray-900 text-white py-10 sm:py-16">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-3 mb-4 md:mb-0">
-              <img
-                src={shimizuLogo}
-                alt="Shimizu Technology Logo"
-                className="h-6 w-6 sm:h-8 sm:w-8 object-contain rounded-full cursor-pointer"
-                onClick={scrollToTop} // LOGO SCROLLS TO TOP
-              />
-              <span
-                className="font-bold tracking-tight text-sm sm:text-base cursor-pointer"
-                onClick={scrollToTop} // TEXT SCROLLS TO TOP
-              >
-                Shimizu Technology
-              </span>
-            </div>
-            <div className="text-gray-400 text-xs sm:text-sm text-center md:text-right">
-              © {new Date().getFullYear()} Shimizu Technology. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

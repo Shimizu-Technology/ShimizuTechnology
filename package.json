@@ -1,7 +1,8 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "shimizu-technology",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
+  "description": "Shimizu Technology - Custom software, AI applications, and mobile apps for businesses in Guam and beyond",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -30,5 +31,15 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.3.0",
     "vite": "^5.4.2"
-  }
+  },
+  "keywords": [
+    "shimizu-technology",
+    "guam",
+    "software-development",
+    "ai-applications",
+    "mobile-apps",
+    "react",
+    "ruby-on-rails"
+  ],
+  "author": "Leon Shimizu"
 }
