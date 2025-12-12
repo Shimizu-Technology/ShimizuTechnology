@@ -747,14 +747,28 @@ function App() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Proudly Building in <span className="text-blue-600">Guam</span>
               </h2>
+              
+              {/* Founder intro with photo */}
+              <div className="flex items-center gap-4 mb-6 pb-6 border-b border-gray-200">
+                <img 
+                  src="/images/NationalsPic2.jpg" 
+                  alt="Leon Shimizu" 
+                  className="w-20 h-20 rounded-full object-cover border-2 border-blue-500/30"
+                />
+                <div>
+                  <p className="font-bold text-gray-900 text-lg">Leon Shimizu</p>
+                  <p className="text-sm text-blue-600 font-medium">Founder</p>
+                </div>
+              </div>
+
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Founded by <strong>Leon Shimizu</strong>, Shimizu Technology is a software development company focused on building practical, impactful solutions for businesses in Guam and beyond.
+                I started Shimizu Technology because I saw a problem: <strong>employers want engineers with experience, but new engineers can't get experience if no one gives them a chance.</strong> As the founder of the <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium">Code School of Guam</a>, I wanted to ensure every graduate had access to real-world projects — so I started building software for local businesses.
               </p>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                We specialize in AI-powered applications, mobile apps, and custom web solutions. Our work ranges from language learning platforms to recipe extraction apps, from golf tournament systems to full e-commerce platforms.
+                Along the way, I discovered something: <strong>I genuinely love building custom software.</strong> There's something incredibly rewarding about seeing ideas come to life and helping businesses solve real problems with technology.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                Whether you need an existing product customized or a brand-new system built from the ground up, we're ready to help bring your vision to life.
+                What started as a way to give students real-world experience has grown into a full-fledged software firm. Today, we specialize in AI-powered applications, mobile apps, and custom web solutions — and we genuinely enjoy every project we take on.
               </p>
 
               {/* Code School Connection */}
@@ -766,7 +780,7 @@ function App() {
                   <div>
                     <h3 className="font-semibold mb-1">Code School of Guam Partnership</h3>
                     <p className="text-white/90 text-sm mb-3">
-                      We proudly partner with the Code School of Guam to provide internship opportunities for graduates, fostering the next generation of software engineers.
+                      We provide internship opportunities for Code School graduates, giving them the real-world experience employers want to see. Our team includes talented junior developers from our program.
                     </p>
                     <a
                       href="https://codeschoolofguam.com"
