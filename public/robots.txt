@@ -1,0 +1,8 @@
+# robots.txt for Shimizu Technology
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://shimizu-technology.com/sitemap.xml
+
