@@ -27,6 +27,8 @@ import {
   Star,
   Zap,
   Quote,
+  FileText,
+  Wrench,
 } from 'lucide-react';
 
 // Import your local images
@@ -130,19 +132,52 @@ const projects = [
   },
   {
     title: "Cornerstone Accounting",
-    subtitle: "QuickBooks Training",
-    description: "Educational platform for QuickBooks training, helping businesses master accounting software.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
-    imageStyle: "object-cover",
-    link: "https://cornerstone-accounting.netlify.app",
+    subtitle: "Tax & Accounting Platform",
+    description: "Full-service accounting platform with digital client intake, workflow management, and admin dashboard. Transformed their paper-based process into a streamlined digital system.",
+    image: "/images/cornerstone-logo.jpeg",
+    imageStyle: "object-contain bg-[#f5f0e6]",
+    link: "https://cornerstone-accounting.tax",
     icon: <BookOpen className="w-5 h-5" />,
-    accentColor: "bg-violet-500",
+    accentColor: "bg-amber-700",
     features: [
-      "Structured QuickBooks curriculum",
-      "Course registration system",
-      "Student progress tracking"
+      "8-step digital intake form",
+      "Workflow & status dashboard",
+      "Employee time tracking"
     ],
-    tags: ["Education", "React", "Rails"]
+    tags: ["Business Platform", "React", "Rails"],
+    isNew: true
+  }
+];
+
+//
+// INTERNAL TOOLS DATA - Tools we built for ourselves
+//
+const internalTools = [
+  {
+    title: "Invoice Maker",
+    description: "AI-powered invoice generation. Describe what you need in plain English or paste timesheet screenshots — the AI extracts hours and creates professional invoices.",
+    link: "https://invoice-maker-gu.netlify.app/chat",
+    icon: <FileText className="w-5 h-5" />,
+    accentColor: "bg-teal-500",
+    features: [
+      "Natural language invoice creation",
+      "Vision AI extracts hours from screenshots",
+      "Client templates & PDF generation"
+    ],
+    tags: ["AI/ML", "React", "FastAPI"]
+  },
+  {
+    title: "Hafa Timezones",
+    description: "Instantly convert times across multiple timezones. Find overlapping business hours for scheduling meetings with teams around the world.",
+    link: "https://hafa-timezones.com",
+    icon: <Clock className="w-5 h-5" />,
+    accentColor: "bg-purple-500",
+    features: [
+      "Multi-timezone conversion",
+      "Meeting time finder",
+      "Shareable URL state"
+    ],
+    tags: ["React", "TypeScript", "Luxon"]
   }
 ];
 
@@ -641,6 +676,74 @@ function App() {
               <ProjectCard key={index} project={project} />
             ))}
           </div>
+
+          {/* INTERNAL TOOLS SECTION */}
+          <div className="mt-20 pt-16 border-t border-gray-200">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-sm font-medium text-gray-600 mb-4">
+                <Wrench className="w-4 h-4" />
+                Built for Us
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                Tools We Build for Ourselves
+              </h3>
+              <p className="text-gray-600 max-w-xl mx-auto">
+                When we have a problem, we solve it with code. These internal tools help us work smarter.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {internalTools.map((tool, index) => (
+                <div 
+                  key={index}
+                  className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-md transition-shadow"
+                >
+                  {/* Header */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2.5 ${tool.accentColor} rounded-lg text-white`}>
+                      {tool.icon}
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900">{tool.title}</h4>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                    {tool.description}
+                  </p>
+
+                  {/* Features */}
+                  <ul className="space-y-1.5 mb-4">
+                    {tool.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start text-sm text-gray-600">
+                        <CheckCircle className="w-3.5 h-3.5 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Tags & Link */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="flex flex-wrap gap-1">
+                      {tool.tags.map((tag, idx) => (
+                        <span key={idx} className="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <a
+                      href={tool.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`inline-flex items-center px-3 py-1.5 ${tool.accentColor} text-white rounded-md hover:opacity-90 transition-all text-sm font-medium`}
+                    >
+                      Try It
+                      <ExternalLink className="w-3 h-3 ml-1" />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -701,6 +804,144 @@ function App() {
               Let's Build Your Solution
               <ArrowRight className="ml-2 w-4 h-4" />
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* GIAA TESTIMONIAL */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl" />
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Header */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full text-blue-300 text-sm font-medium mb-4">
+              <Plane className="w-4 h-4" />
+              Guam International Airport Authority
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold">
+              Digital Transformation Success
+            </h2>
+          </div>
+
+          {/* Testimonial Card */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
+            <Quote className="w-10 h-10 text-blue-400/40 mb-4" />
+            
+            <blockquote className="text-lg md:text-xl text-gray-200 leading-relaxed mb-6">
+              "Transitioning to a digital system is a <span className="text-white font-semibold">significant milestone</span> for us, and we are incredibly impressed with how smoothly the rollout went. Your technical expertise and attention to detail ensured that the process is <span className="text-white font-semibold">user-friendly for our registrants and efficient for our team</span>. We already see the benefits of the streamlined workflow. Thank you for the excellent work!"
+            </blockquote>
+
+            {/* Source */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-white/10">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-600 rounded-full flex items-center justify-center">
+                  <Plane className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <p className="font-semibold text-white">Guam International Airport Authority</p>
+                  <p className="text-sm text-gray-400">Golf Tournament Registration System</p>
+                </div>
+              </div>
+              
+              {/* Project link */}
+              <a
+                href="https://giaa-tournament.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
+              >
+                View Project
+                <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+              </a>
+            </div>
+          </div>
+
+          {/* Additional praise - the follow-up message */}
+          <div className="mt-6 text-center">
+            <p className="text-gray-400 italic">
+              "Check in process was awesome!" <span className="text-gray-500">— Follow-up message after tournament day</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* UOG AI WORKSHOP */}
+      <section className="py-16 md:py-20 bg-white relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          {/* Header */}
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-green-700 text-sm font-medium mb-4">
+              <Brain className="w-4 h-4" />
+              AI Training & Workshops
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+              Empowering Organizations with AI
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Beyond building software, we help teams understand and leverage AI effectively.
+            </p>
+          </div>
+
+          {/* Content Grid */}
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Image */}
+            <div className="rounded-2xl overflow-hidden shadow-lg">
+              <img 
+                src="/images/uog-intro-to-ai.jpeg" 
+                alt="UOG Intro to AI Workshop attendees"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
+            {/* Details */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                  UOG
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900">University of Guam</h3>
+                  <p className="text-sm text-gray-500">Office of the Senior Vice President & Provost</p>
+                </div>
+              </div>
+
+              <h4 className="text-xl font-semibold text-gray-900 mb-3">
+                Intro to AI Workshop
+              </h4>
+              <p className="text-gray-600 mb-4">
+                A two-day seminar (July 9-10, 2025) introducing UOG staff to AI fundamentals — what it is, how to use it effectively, and what to watch out for.
+              </p>
+
+              {/* Topics covered */}
+              <ul className="space-y-2 mb-6">
+                <li className="flex items-start text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>What is AI & how does ChatGPT work</span>
+                </li>
+                <li className="flex items-start text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Practical use cases: brainstorming, analysis, proofreading</span>
+                </li>
+                <li className="flex items-start text-sm text-gray-600">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                  <span>Risks & limitations: hallucinations, security, privacy</span>
+                </li>
+              </ul>
+
+              {/* Quote */}
+              <div className="bg-green-50 rounded-xl p-4 border border-green-100">
+                <Quote className="w-6 h-6 text-green-400 mb-2" />
+                <p className="text-gray-700 italic mb-2">
+                  "The staff are raving about the training! Thanks again for a wonderful seminar."
+                </p>
+                <p className="text-sm text-gray-500">
+                  — Office of the Senior Vice President & Provost, UOG
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
