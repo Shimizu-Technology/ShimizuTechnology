@@ -16,6 +16,7 @@ import {
   FileText,
   Target,
   Clock,
+  Swords,
 } from 'lucide-react';
 import hafalohaImage from '../assets/hafaloha_hero.jpg';
 
@@ -101,6 +102,24 @@ export const projects: Project[] = [
       "AI Recipe Chat with GPT-4o"
     ],
     tags: ["iOS", "React Native", "AI/ML"],
+    isNew: true,
+    isFeatured: true
+  },
+  {
+    title: "Marianas Open",
+    subtitle: "International BJJ Tournament Platform",
+    description: "Official platform for the largest Brazilian Jiu-Jitsu tournament in Southeast Asia. Multi-country event management across Guam, Korea, Japan, and more — with 1,300+ competitors from 6 countries.",
+    image: "/images/mo-logo-white.png",
+    imageStyle: "object-contain bg-slate-900 p-6",
+    link: "https://marianasopen.com",
+    icon: <Swords className="w-5 h-5" />,
+    accentColor: "bg-red-600",
+    features: [
+      "Multi-country event calendar & scheduling",
+      "Competitor profiles & rankings",
+      "Live stream integration & event results"
+    ],
+    tags: ["Sports Platform", "React", "Rails"],
     isNew: true,
     isFeatured: true
   },
