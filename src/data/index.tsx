@@ -109,7 +109,7 @@ export const projects: Project[] = [
     title: "Marianas Open",
     subtitle: "International BJJ Tournament Platform",
     description: "Official platform for the largest Brazilian Jiu-Jitsu tournament in Southeast Asia. Multi-country event management across Guam, Korea, Japan, and more — with 1,300+ competitors from 6 countries.",
-    image: "/images/mo-logo-black.png",
+    image: "/images/mo-logo-white.png",
     imageStyle: "object-contain bg-slate-900 p-6",
     link: "https://marianasopen.com",
     icon: <Swords className="w-5 h-5" />,
