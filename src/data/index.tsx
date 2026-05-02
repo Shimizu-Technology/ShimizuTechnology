@@ -210,8 +210,7 @@ export const projects: Project[] = [
     title: "Three Squares Grill",
     subtitle: "Restaurant & Catering Ordering",
     description: "Modern ordering platform for Three Squares and B&G Pacific, designed for catering, dine-in/takeout, and repeat restaurant workflows.",
-    image: "/images/three-squares-grill.svg",
-    imageStyle: "object-contain bg-emerald-50 p-6",
+    gradientBg: "from-emerald-500 to-emerald-700",
     link: "https://three-squares-web.netlify.app",
     icon: <Utensils className="w-5 h-5" />,
     accentColor: "bg-emerald-600",
@@ -270,8 +269,7 @@ export const projects: Project[] = [
       "Built for Guam's local market"
     ],
     tags: ["Mobile", "React Native", "Rails"],
-    isPaused: true,
-    isComingSoon: "Paused"
+    isPaused: true
   }
 ];
 
