@@ -163,7 +163,7 @@ export const projects: Project[] = [
     subtitle: "Live Operations Platform",
     description: "A production operations system for AIRE Services Guam, already used by employees for clock-in/clock-out and daily business workflows.",
     image: "/images/aire-logo.png",
-    imageStyle: "object-contain bg-slate-950 p-8",
+    imageStyle: "object-contain bg-slate-50 p-8",
     link: "https://aire-services-guam.netlify.app",
     icon: <Clock className="w-5 h-5" />,
     accentColor: "bg-cyan-700",
