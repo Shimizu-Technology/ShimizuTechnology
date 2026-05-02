@@ -24,11 +24,11 @@ export default function Hero() {
 
           <div className="flex flex-wrap gap-8 mb-10">
             <div>
-              <div className="text-3xl font-bold text-white">12+</div>
-              <div className="text-sm text-slate-400">Projects Delivered</div>
+              <div className="text-3xl font-bold text-white">13+</div>
+              <div className="text-sm text-slate-400">Production Apps</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-white">6</div>
+              <div className="text-3xl font-bold text-white">4</div>
               <div className="text-sm text-slate-400">AI Apps Deployed</div>
             </div>
             <div>
