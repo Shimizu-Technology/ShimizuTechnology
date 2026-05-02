@@ -7,7 +7,7 @@ import {
   Wrench,
   Clock,
 } from 'lucide-react';
-import { projects, internalTools, Project, InternalTool } from '../data';
+import { projectGroups, internalTools, Project, InternalTool } from '../data';
 
 function ProjectCard({ project }: { project: Project }) {
   const posthog = usePostHog();
@@ -146,11 +146,20 @@ function ProjectCard({ project }: { project: Project }) {
 
 function InternalToolCard({ tool }: { tool: InternalTool }) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md transition-shadow">
-      <div className="flex items-center gap-3 mb-4">
-        <div className={`p-2.5 ${tool.accentColor} rounded-lg text-white`}>
-          {tool.icon}
-        </div>
+    <div className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md transition-shadow relative overflow-hidden">
+      {tool.isComingSoon && (
+        <span className="absolute right-4 top-4 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">
+          {tool.isComingSoon}
+        </span>
+      )}
+      <div className="flex items-center gap-3 mb-4 pr-20">
+        {tool.image ? (
+          <img src={tool.image} alt={`${tool.title} icon`} className="h-11 w-11 rounded-xl object-contain bg-slate-100 p-1" />
+        ) : (
+          <div className={`p-2.5 ${tool.accentColor} rounded-lg text-white`}>
+            {tool.icon}
+          </div>
+        )}
         <h4 className="text-lg font-bold text-slate-900">{tool.title}</h4>
       </div>
 
@@ -207,9 +216,22 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+        <div className="space-y-14">
+          {projectGroups.map((group) => (
+            <div key={group.title}>
+              <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold text-slate-900">{group.title}</h3>
+                  <p className="mt-1 max-w-2xl text-sm md:text-base text-slate-600">{group.description}</p>
+                </div>
+                <span className="text-sm font-medium text-slate-400">{group.projects.length} projects</span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {group.projects.map((project) => (
+                  <ProjectCard key={project.title} project={project} />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
 
@@ -224,7 +246,7 @@ export default function Projects() {
               Tools We Build for Ourselves
             </h3>
             <p className="text-slate-600 max-w-xl mx-auto">
-              When we have a problem, we solve it with code. These internal tools help us work smarter.
+              When we have a problem, we solve it with code. These internal tools help us work faster, automate the boring parts, and prototype what should exist next.
             </p>
           </div>
 
