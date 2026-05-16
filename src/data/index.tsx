@@ -92,8 +92,8 @@ export const projects: Project[] = [
     title: "Hafa Code",
     subtitle: "Lightweight Coding Playground",
     description: "A simple Replit alternative for Code School of Guam, FD students, alumni, and anyone learning to code — fast, approachable, and distraction-free.",
-    image: "/images/hafa-code-icon.svg",
-    imageStyle: "object-contain bg-sky-50 p-8",
+    image: "/images/hafa-code.svg",
+    imageStyle: "object-contain bg-[#f8efe0] p-6",
     link: "https://hafa-code.netlify.app",
     icon: <Code2 className="w-5 h-5" />,
     accentColor: "bg-sky-600",
@@ -107,11 +107,29 @@ export const projects: Project[] = [
     isFeatured: true
   },
   {
+    title: "CSG Learning Hub",
+    subtitle: "Code School Learning Platform",
+    description: "The private learning platform behind Code School of Guam: prework, class content, workshops, recordings, grading, progress tracking, and cohort management.",
+    image: "/images/csg-learning-hub.svg",
+    imageStyle: "object-contain bg-slate-50 p-6",
+    link: "https://learn.codeschoolofguam.com",
+    icon: <BookOpen className="w-5 h-5" />,
+    accentColor: "bg-red-600",
+    features: [
+      "Lessons, exercises, recordings, and workshops",
+      "Student progress and instructor workflows",
+      "Real production platform powering the school"
+    ],
+    tags: ["Education", "React", "Rails"],
+    isNew: true,
+    isFeatured: true
+  },
+  {
     title: "Cornerstone Payroll",
     subtitle: "Guam Payroll Platform",
     description: "A Guam-specific payroll system built as a better local alternative to generic mainland payroll tools and QuickBooks workflows.",
-    image: "/images/cornerstone-logo.jpeg",
-    imageStyle: "object-contain bg-[#f5f0e6] p-6",
+    image: "/images/cornerstone-payroll-cp.svg",
+    imageStyle: "object-contain bg-blue-50 p-8",
     link: "https://cornerstone-payroll.netlify.app",
     icon: <BookOpen className="w-5 h-5" />,
     accentColor: "bg-amber-700",
@@ -128,8 +146,8 @@ export const projects: Project[] = [
     title: "Golf for Wishes",
     subtitle: "Make-A-Wish Event Platform",
     description: "Registration and event management platform for Make-A-Wish Guam & CNMI, supporting charity events from signup through tournament day.",
-    image: "/images/golf-for-wishes-logo.png",
-    imageStyle: "object-contain bg-sky-50 p-6",
+    image: "/images/make-a-wish-guam.svg",
+    imageStyle: "object-contain bg-[#0057b8] p-6",
     link: "https://golfforwishes.com",
     icon: <HeartHandshake className="w-5 h-5" />,
     accentColor: "bg-blue-600",
@@ -213,7 +231,8 @@ export const projects: Project[] = [
     title: "Three Squares Grill",
     subtitle: "Restaurant & Catering Ordering",
     description: "Modern ordering platform for Three Squares and B&G Pacific, designed for catering, dine-in/takeout, and repeat restaurant workflows.",
-    gradientBg: "from-emerald-500 to-emerald-700",
+    image: "/images/three-squares-grill.svg",
+    imageStyle: "object-contain bg-slate-50 p-8",
     link: "https://three-squares-web.netlify.app",
     icon: <Utensils className="w-5 h-5" />,
     accentColor: "bg-emerald-600",
@@ -280,7 +299,7 @@ export const projectGroups = [
   {
     title: "AI, Education & Local Culture",
     description: "Learning platforms, language tools, and student-friendly software built for Guam.",
-    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "Hafa Recipes"].includes(project.title))
+    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes"].includes(project.title))
   },
   {
     title: "Business Operations",
