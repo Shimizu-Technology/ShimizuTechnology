@@ -6,6 +6,7 @@ import {
   Plane,
   BookOpen,
   Brain,
+  GraduationCap,
   Smartphone,
   Globe2,
   Settings,
@@ -113,7 +114,7 @@ export const projects: Project[] = [
     image: "/images/csg-learning-hub.svg",
     imageStyle: "object-contain bg-slate-50 p-6",
     link: "https://learn.codeschoolofguam.com",
-    icon: <BookOpen className="w-5 h-5" />,
+    icon: <GraduationCap className="w-5 h-5" />,
     accentColor: "bg-red-600",
     features: [
       "Lessons, exercises, recordings, and workshops",

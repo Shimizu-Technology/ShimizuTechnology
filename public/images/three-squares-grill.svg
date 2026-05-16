@@ -6,5 +6,5 @@
   <rect x="230" y="80" width="50" height="50" rx="8" fill="#22c55e" opacity="0.8"/>
   <text x="200" y="175" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">Three Squares</text>
   <text x="200" y="200" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">Grill</text>
-  <text x="200" y="240" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#f59e0b" font-weight="600">Coming Soon</text>
+  <!-- "Coming Soon" is rendered by the ProjectCard UI badge. -->
 </svg>
