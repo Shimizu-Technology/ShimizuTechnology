@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Three Squares Grill</title>
+  <rect width="400" height="300" fill="#f8fafc"/>
+  <rect x="120" y="80" width="50" height="50" rx="8" fill="#ef4444" opacity="0.8"/>
+  <rect x="175" y="80" width="50" height="50" rx="8" fill="#f59e0b" opacity="0.8"/>
+  <rect x="230" y="80" width="50" height="50" rx="8" fill="#22c55e" opacity="0.8"/>
+  <text x="200" y="175" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" font-weight="bold" fill="#1e293b">Three Squares</text>
+  <text x="200" y="200" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">Grill</text>
+  <!-- "Coming Soon" is rendered by the ProjectCard UI badge. -->
+</svg>
