@@ -36,7 +36,6 @@ export interface Project {
   accentColor: string;
   features: string[];
   tags: string[];
-  isNew?: boolean;
   isFeatured?: boolean;
   isComingSoon?: string;
   status?: "Live" | "Seasonal" | "In Development" | "Paused";
@@ -105,7 +104,6 @@ export const projects: Project[] = [
       "Share links and checkpoints for students"
     ],
     tags: ["Education", "TypeScript", "WASM"],
-    isNew: true,
     isFeatured: true,
     status: "Live"
   },
@@ -124,7 +122,6 @@ export const projects: Project[] = [
       "Real production platform powering the school"
     ],
     tags: ["Education", "React", "Rails"],
-    isNew: true,
     isFeatured: true,
     status: "Live"
   },
@@ -143,7 +140,6 @@ export const projects: Project[] = [
       "Check printing and employee records"
     ],
     tags: ["Payroll", "React", "Rails"],
-    isNew: true,
     isFeatured: true,
     status: "Live"
   },
@@ -162,7 +158,6 @@ export const projects: Project[] = [
       "Admin tools for event-day operations"
     ],
     tags: ["Events", "Stripe", "React"],
-    isNew: true,
     isFeatured: true,
     status: "Seasonal"
   },
@@ -199,7 +194,6 @@ export const projects: Project[] = [
       "Payroll-oriented summaries and exports"
     ],
     tags: ["Operations", "React", "Rails"],
-    isNew: true,
     status: "Live"
   },
   {
@@ -252,7 +246,6 @@ export const projects: Project[] = [
       "Built for multi-location restaurant operations"
     ],
     tags: ["Restaurant", "React", "Rails"],
-    isComingSoon: "Coming Soon",
     status: "In Development"
   },
   {
