@@ -38,7 +38,6 @@ export interface Project {
   tags: string[];
   isNew?: boolean;
   isFeatured?: boolean;
-  isPaused?: boolean;
   isComingSoon?: string;
   status?: "Live" | "Seasonal" | "In Development" | "Paused";
 }
@@ -370,7 +369,6 @@ export const projects: Project[] = [
       "Built for Guam's local market"
     ],
     tags: ["Mobile", "React Native", "Rails"],
-    isPaused: true,
     status: "Paused"
   }
 ];

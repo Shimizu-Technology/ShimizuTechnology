@@ -16,10 +16,11 @@ const statusStyles: Record<NonNullable<Project['status']>, string> = {
 
 function ProjectCard({ project }: { project: Project }) {
   const posthog = usePostHog();
+  const isPaused = project.status === 'Paused';
 
   return (
     <div
-      className={`group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${project.isPaused ? 'opacity-75' : ''}`}
+      className={`group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${isPaused ? 'opacity-75' : ''}`}
     >
       {/* Image Header */}
       <div className="relative h-44 overflow-hidden flex-shrink-0">
@@ -88,7 +89,7 @@ function ProjectCard({ project }: { project: Project }) {
             <span className="text-sm text-slate-400 italic">{project.isComingSoon}</span>
           ) : (
             <>
-              {project.link && !project.isPaused && (
+              {project.link && !isPaused && (
                 <a
                   href={project.link}
                   target="_blank"
@@ -121,7 +122,7 @@ function ProjectCard({ project }: { project: Project }) {
                   App Store
                 </a>
               )}
-              {project.isPaused && !project.appStoreLink && (
+              {isPaused && !project.appStoreLink && (
                 <span className="text-sm text-slate-400 italic">Currently on hold</span>
               )}
             </>
