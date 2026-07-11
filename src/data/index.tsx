@@ -40,6 +40,7 @@ export interface Project {
   isFeatured?: boolean;
   isPaused?: boolean;
   isComingSoon?: string;
+  status?: "Live" | "Seasonal" | "In Development" | "Paused";
 }
 
 export interface InternalTool {
@@ -87,7 +88,8 @@ export const projects: Project[] = [
       "Built for Guam's language learners"
     ],
     tags: ["AI/ML", "React", "FastAPI"],
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "Hafa Code",
@@ -105,7 +107,8 @@ export const projects: Project[] = [
     ],
     tags: ["Education", "TypeScript", "WASM"],
     isNew: true,
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "CSG Learning Hub",
@@ -123,7 +126,8 @@ export const projects: Project[] = [
     ],
     tags: ["Education", "React", "Rails"],
     isNew: true,
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "Cornerstone Payroll",
@@ -141,7 +145,8 @@ export const projects: Project[] = [
     ],
     tags: ["Payroll", "React", "Rails"],
     isNew: true,
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "Golf for Wishes",
@@ -159,7 +164,8 @@ export const projects: Project[] = [
     ],
     tags: ["Events", "Stripe", "React"],
     isNew: true,
-    isFeatured: true
+    isFeatured: true,
+    status: "Seasonal"
   },
   {
     title: "Marianas Open",
@@ -176,7 +182,8 @@ export const projects: Project[] = [
       "Live stream integration and event results"
     ],
     tags: ["Sports", "React", "Rails"],
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "AIRE Services",
@@ -193,7 +200,8 @@ export const projects: Project[] = [
       "Payroll-oriented summaries and exports"
     ],
     tags: ["Operations", "React", "Rails"],
-    isNew: true
+    isNew: true,
+    status: "Live"
   },
   {
     title: "Hafaloha Orders",
@@ -210,7 +218,8 @@ export const projects: Project[] = [
       "Real-time order tracking and admin dashboard"
     ],
     tags: ["E-commerce", "React", "Rails"],
-    isFeatured: true
+    isFeatured: true,
+    status: "Live"
   },
   {
     title: "Cornerstone Accounting",
@@ -226,7 +235,8 @@ export const projects: Project[] = [
       "Workflow, status, and operations dashboards",
       "Time tracking and recurring task systems"
     ],
-    tags: ["Business", "React", "Rails"]
+    tags: ["Business", "React", "Rails"],
+    status: "Live"
   },
   {
     title: "Three Squares Grill",
@@ -243,7 +253,8 @@ export const projects: Project[] = [
       "Built for multi-location restaurant operations"
     ],
     tags: ["Restaurant", "React", "Rails"],
-    isComingSoon: "Coming Soon"
+    isComingSoon: "Coming Soon",
+    status: "In Development"
   },
   {
     title: "GIAA Golf Tournament",
@@ -259,7 +270,8 @@ export const projects: Project[] = [
       "Admin event dashboard",
       "Tournament day check-in workflows"
     ],
-    tags: ["Events", "Stripe", "React"]
+    tags: ["Events", "Stripe", "React"],
+    status: "Seasonal"
   },
   {
     title: "Hafa Recipes",
@@ -276,7 +288,73 @@ export const projects: Project[] = [
       "Photo OCR for handwritten recipes",
       "Available on the iOS App Store"
     ],
-    tags: ["iOS", "React Native", "AI/ML"]
+    tags: ["iOS", "React Native", "AI/ML"],
+    status: "Live"
+  },
+  {
+    title: "Household CFO",
+    subtitle: "AI Financial Workspace",
+    description: "A private household finance workspace that combines documents, accounts, planning, and an AI assistant in one secure operating system.",
+    gradientBg: "from-emerald-700 via-teal-700 to-slate-900",
+    link: "https://householdcfomethod.com",
+    icon: <Brain className="w-5 h-5" />,
+    accentColor: "bg-emerald-700",
+    features: [
+      "AI-assisted household financial organization",
+      "Secure document and account workflows",
+      "Planning tools built around real decisions"
+    ],
+    tags: ["FinTech", "AI/ML", "React"],
+    isFeatured: true,
+    status: "Live"
+  },
+  {
+    title: "Hafa Homes",
+    subtitle: "Guam Property Platform",
+    description: "A Guam-first property platform for listings, rentals, neighborhood discovery, and the operational workflows behind local real estate.",
+    gradientBg: "from-emerald-800 via-green-800 to-slate-950",
+    link: "https://hafahomes.com",
+    icon: <Globe2 className="w-5 h-5" />,
+    accentColor: "bg-emerald-800",
+    features: [
+      "Property and neighborhood discovery",
+      "Owner and operator workflows",
+      "Designed around Guam's housing market"
+    ],
+    tags: ["Real Estate", "React", "Rails"],
+    status: "In Development"
+  },
+  {
+    title: "TraceBuddy",
+    subtitle: "Camera-Assisted Drawing Practice",
+    description: "A mobile-friendly drawing practice tool that helps learners trace real references onto paper using their device camera.",
+    gradientBg: "from-amber-100 via-orange-100 to-stone-200",
+    link: "https://tracebuddy-gu.netlify.app",
+    icon: <Smartphone className="w-5 h-5" />,
+    accentColor: "bg-orange-600",
+    features: [
+      "Live camera reference overlays",
+      "Touch-friendly alignment controls",
+      "Works without accounts or complex setup"
+    ],
+    tags: ["Creative", "Mobile Web", "React"],
+    status: "Live"
+  },
+  {
+    title: "JMI Dispatch",
+    subtitle: "Field Service Scheduling",
+    description: "A dispatch and scheduling workspace for field-service teams, designed to make daily assignments, recurring work, and operational visibility easier.",
+    gradientBg: "from-blue-900 via-indigo-900 to-slate-950",
+    link: "https://jmi-dispatch.netlify.app",
+    icon: <Settings className="w-5 h-5" />,
+    accentColor: "bg-indigo-700",
+    features: [
+      "Dispatcher-friendly schedule planning",
+      "Recurring and preventive work tracking",
+      "Role-based operational dashboards"
+    ],
+    tags: ["Operations", "React", "Rails"],
+    status: "In Development"
   },
   {
     title: "Guahan Grocer",
@@ -292,7 +370,8 @@ export const projects: Project[] = [
       "Built for Guam's local market"
     ],
     tags: ["Mobile", "React Native", "Rails"],
-    isPaused: true
+    isPaused: true,
+    status: "Paused"
   }
 ];
 
@@ -300,12 +379,12 @@ export const projectGroups = [
   {
     title: "AI, Education & Local Culture",
     description: "Learning platforms, language tools, and student-friendly software built for Guam.",
-    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes"].includes(project.title))
+    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "TraceBuddy"].includes(project.title))
   },
   {
     title: "Business Operations",
     description: "Production systems that help local teams replace spreadsheets, paper workflows, and tools that were never designed for Guam.",
-    projects: projects.filter((project) => ["Cornerstone Payroll", "AIRE Services", "Cornerstone Accounting"].includes(project.title))
+    projects: projects.filter((project) => ["Cornerstone Payroll", "AIRE Services", "Cornerstone Accounting", "Household CFO", "Hafa Homes", "JMI Dispatch"].includes(project.title))
   },
   {
     title: "Commerce & Ordering",
