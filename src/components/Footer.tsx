@@ -6,8 +6,8 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-slate-950 text-white py-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <footer className="bg-[#07101f] py-10 text-white">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center space-x-3">
             <img
@@ -17,8 +17,8 @@ export default function Footer() {
               onClick={scrollToTop}
             />
             <div>
-              <span className="font-semibold block">Shimizu Technology</span>
-              <span className="text-sm text-slate-400">Building the future in Guam</span>
+              <span className="block font-semibold">Shimizu Technology</span>
+              <span className="text-sm text-slate-400">Custom software · Guam</span>
             </div>
           </div>
 

@@ -1,8 +1,4 @@
-/* 
-  Clean, professional styling for Shimizu Technology
-*/
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,10 +10,34 @@ html {
 }
 
 body {
-  @apply antialiased text-slate-800;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  @apply antialiased text-slate-800 bg-[#f7f8fa];
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
   font-size: 16px;
   line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.035em;
+}
+
+.font-mono-label {
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.surface-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.premium-shadow {
+  box-shadow: 0 30px 80px -40px rgba(15, 23, 42, 0.5);
 }
 
 /* Smooth transitions for links */

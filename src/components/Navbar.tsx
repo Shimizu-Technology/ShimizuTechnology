@@ -52,29 +52,29 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-900 text-white">
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07101f]/95 text-white backdrop-blur-xl">
+      <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="flex h-[72px] items-center justify-between">
           <div
-            className="flex items-center space-x-3 cursor-pointer"
+            className="flex cursor-pointer items-center space-x-3"
             onClick={scrollToTop}
           >
             <img
               src={shimizuLogo}
               alt="Shimizu Technology Logo"
-              className="h-9 w-9 object-contain rounded-full"
+              className="h-9 w-9 rounded-full border border-white/10 object-contain"
             />
-            <span className="text-lg font-bold">
+            <span className="whitespace-nowrap text-base font-bold tracking-tight sm:text-lg">
               Shimizu Technology
             </span>
           </div>
 
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   activeSection === item.href.slice(1)
                     ? "bg-white/10 text-white"
                     : "text-slate-300 hover:text-white hover:bg-white/5"
@@ -87,13 +87,13 @@ export default function Navbar() {
               href="https://codeschoolofguam.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-md text-sm font-medium transition-colors"
+              className="ml-3 rounded-md border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium transition-colors hover:bg-white/10"
             >
               Code School
             </a>
           </div>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-white/10 transition-colors"
@@ -114,7 +114,7 @@ export default function Navbar() {
           <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setMobileMenuOpen(false)} />
           <div
             ref={menuRef}
-            className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-t border-white/10 z-50"
+            className="absolute left-0 top-full z-50 w-full border-t border-white/10 bg-[#07101f] lg:hidden"
           >
             <div className="px-4 py-3 space-y-1">
               {navItems.map((item) => (

@@ -1,198 +1,79 @@
-import {
-  Star,
-  Quote,
-  ArrowRight,
-  Plane,
-  ExternalLink,
-  Brain,
-  CheckCircle,
-} from 'lucide-react';
+import { ArrowUpRight, CheckCircle, Quote } from 'lucide-react';
+
+const outcomes = [
+  ['850+', 'VIP orders processed'],
+  ['100%', 'Fulfillment completed'],
+  ['Zero', 'Event-day downtime'],
+];
 
 export default function Testimonials() {
   return (
-    <>
-      {/* HAFALOHA TESTIMONIAL */}
-      <section className="py-24 lg:py-32 bg-slate-900 text-white relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-blue-500/5 rounded-full blur-3xl" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-1 mb-3">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+    <section className="relative overflow-hidden bg-[#07101f] py-16 text-white md:py-24 lg:py-28">
+      <div className="surface-grid absolute inset-0 opacity-20" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          <div>
+            <p className="font-mono-label text-xs text-blue-300">Client outcomes</p>
+            <h2 className="mt-4 text-3xl font-bold leading-tight md:text-5xl">Built for the moments when the system has to work.</h2>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-300">
+              Hafaloha used its custom ordering platform to manage a high-volume concert VIP experience without downtime or fulfillment gaps.
+            </p>
+
+            <div className="mt-9 grid grid-cols-3 border-y border-white/10 py-6">
+              {outcomes.map(([value, label]) => (
+                <div key={label} className="pr-3">
+                  <div className="text-2xl font-bold text-blue-300 md:text-3xl">{value}</div>
+                  <div className="mt-1 text-[11px] leading-tight text-slate-400 sm:text-xs">{label}</div>
+                </div>
               ))}
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-2">
-              Proven Success Under Pressure
-            </h2>
-            <p className="text-blue-400 font-medium">
-              Hafaloha's Concert VIP Experience
-            </p>
-          </div>
 
-          <div className="grid grid-cols-3 gap-4 mb-10">
-            <div className="text-center p-4 bg-white/5 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-blue-400">850+</div>
-              <div className="text-sm text-slate-400 mt-1">VIP Orders</div>
-            </div>
-            <div className="text-center p-4 bg-white/5 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-green-400">100%</div>
-              <div className="text-sm text-slate-400 mt-1">Fulfillment</div>
-            </div>
-            <div className="text-center p-4 bg-white/5 rounded-2xl">
-              <div className="text-3xl md:text-4xl font-bold text-purple-400">Zero</div>
-              <div className="text-sm text-slate-400 mt-1">Downtime</div>
-            </div>
-          </div>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="relative">
-              <Quote className="absolute -top-2 -left-2 w-10 h-10 text-blue-500/30" />
-              <blockquote className="text-center text-lg md:text-xl text-slate-300 leading-relaxed pl-6">
-                "It was soooo incredible being able to see what was only a discussion of an idea, come to life. No doubt that the online ordering option is a valuable perk & adds to the VIP experience. I'm excited to sit with the team and you to discuss how we can make it better!!!"
-              </blockquote>
-            </div>
-            <p className="text-center mt-4 text-slate-400">
-              — <span className="text-white font-medium">Hafaloha Owner</span>
-            </p>
-          </div>
-
-          <div className="text-center mt-10">
-            <a
-              href="#contact"
-              className="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg font-medium transition-colors"
-            >
-              Let's Build Your Solution
-              <ArrowRight className="ml-2 w-4 h-4" />
+            <a href="#contact" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-white hover:text-blue-300">
+              Plan a dependable launch <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
-        </div>
-      </section>
 
-      {/* GIAA TESTIMONIAL */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-slate-900 to-slate-800 text-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl" />
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full text-blue-300 text-sm font-medium mb-4">
-              <Plane className="w-4 h-4" />
-              Guam International Airport Authority
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold">
-              Digital Transformation Success
-            </h2>
-          </div>
-
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10">
-            <Quote className="w-10 h-10 text-blue-400/40 mb-4" />
-
-            <blockquote className="text-lg md:text-xl text-slate-200 leading-relaxed mb-6">
-              "Transitioning to a digital system is a <span className="text-white font-semibold">significant milestone</span> for us, and we are incredibly impressed with how smoothly the rollout went. Your technical expertise and attention to detail ensured that the process is <span className="text-white font-semibold">user-friendly for our registrants and efficient for our team</span>. We already see the benefits of the streamlined workflow. Thank you for the excellent work!"
+          <div className="rounded-xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+            <Quote className="h-8 w-8 text-blue-400" />
+            <blockquote className="mt-6 text-xl font-medium leading-relaxed text-slate-100 md:text-2xl">
+              “It was incredible seeing what was only a discussion of an idea come to life. The online ordering option is a valuable perk and adds to the VIP experience.”
             </blockquote>
+            <div className="mt-8 border-t border-white/10 pt-5">
+              <p className="font-bold">Hafaloha</p>
+              <p className="text-sm text-slate-400">Owner feedback after the concert launch</p>
+            </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-600 rounded-full flex items-center justify-center">
-                  <Plane className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-semibold text-white">Guam International Airport Authority</p>
-                  <p className="text-sm text-slate-400">Golf Tournament Registration System</p>
-                </div>
-              </div>
-
-              <a
-                href="https://giaa-tournament.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors"
-              >
-                View Project
-                <ExternalLink className="w-3.5 h-3.5 ml-1.5" />
+            <div className="mt-8 rounded-lg bg-white/[0.04] p-5">
+              <p className="font-mono-label text-[10px] text-slate-400">Additional client proof</p>
+              <p className="mt-3 leading-relaxed text-slate-300">
+                “Your technical expertise and attention to detail ensured the process was user-friendly for our registrants and efficient for our team.”
+              </p>
+              <p className="mt-3 text-sm font-semibold text-white">Guam International Airport Authority</p>
+              <a href="https://giaa-tournament.com" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-blue-300">
+                View registration platform <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             </div>
           </div>
+        </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-slate-400 italic">
-              "Check in process was awesome!" <span className="text-slate-500">— Follow-up message after tournament day</span>
-            </p>
+        <div className="mt-20 grid gap-10 border-t border-white/10 pt-16 lg:grid-cols-2 lg:items-center">
+          <div className="overflow-hidden rounded-xl">
+            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" className="aspect-[4/3] w-full object-cover" />
+          </div>
+          <div>
+            <p className="font-mono-label text-xs text-blue-300">AI enablement</p>
+            <h3 className="mt-4 text-3xl font-bold">Technology is more valuable when the team understands it.</h3>
+            <p className="mt-5 leading-relaxed text-slate-300">We also help organizations build practical AI fluency through tailored workshops covering use cases, limitations, privacy, and responsible adoption.</p>
+            <ul className="mt-6 space-y-3 text-sm text-slate-300">
+              {['Practical workflows for daily work', 'Clear guidance on risk and privacy', 'Training tailored to the organization'].map((item) => (
+                <li key={item} className="flex items-center gap-3"><CheckCircle className="h-4 w-4 text-blue-400" />{item}</li>
+              ))}
+            </ul>
+            <blockquote className="mt-7 border-l-2 border-blue-400 pl-5 text-lg italic text-white">“The staff are raving about the training.”</blockquote>
+            <p className="mt-2 pl-5 text-xs text-slate-400">Office of the Senior Vice President &amp; Provost, University of Guam</p>
           </div>
         </div>
-      </section>
-
-      {/* UOG AI WORKSHOP */}
-      <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 rounded-full text-green-700 text-sm font-medium mb-4">
-              <Brain className="w-4 h-4" />
-              AI Training & Workshops
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3">
-              Empowering Organizations with AI
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Beyond building software, we help teams understand and leverage AI effectively.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="rounded-2xl overflow-hidden shadow-lg">
-              <img
-                src="/images/uog-intro-to-ai.jpeg"
-                alt="UOG Intro to AI Workshop attendees"
-                className="w-full h-auto object-cover"
-              />
-            </div>
-
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-                  UOG
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900">University of Guam</h3>
-                  <p className="text-sm text-slate-500">Office of the Senior Vice President & Provost</p>
-                </div>
-              </div>
-
-              <h4 className="text-xl font-semibold text-slate-900 mb-3">
-                Intro to AI Workshop
-              </h4>
-              <p className="text-slate-600 mb-4">
-                A two-day seminar (July 9-10, 2025) introducing UOG staff to AI fundamentals — what it is, how to use it effectively, and what to watch out for.
-              </p>
-
-              <ul className="space-y-2 mb-6">
-                <li className="flex items-start text-sm text-slate-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>What is AI & how does ChatGPT work</span>
-                </li>
-                <li className="flex items-start text-sm text-slate-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Practical use cases: brainstorming, analysis, proofreading</span>
-                </li>
-                <li className="flex items-start text-sm text-slate-600">
-                  <CheckCircle className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Risks & limitations: hallucinations, security, privacy</span>
-                </li>
-              </ul>
-
-              <div className="bg-green-50 rounded-2xl p-4 border border-green-100">
-                <Quote className="w-6 h-6 text-green-400 mb-2" />
-                <p className="text-slate-700 italic mb-2">
-                  "The staff are raving about the training! Thanks again for a wonderful seminar."
-                </p>
-                <p className="text-sm text-slate-500">
-                  — Office of the Senior Vice President & Provost, UOG
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
