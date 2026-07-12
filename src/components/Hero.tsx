@@ -1,5 +1,6 @@
 import { ChevronRight, ArrowRight } from 'lucide-react';
 import desktopProduct from '../assets/hafaloha-orders-hero.webp';
+import mobileProduct from '../assets/hafaloha-orders-mobile.webp';
 
 export default function Hero() {
   return (
@@ -61,7 +62,7 @@ export default function Hero() {
             <img src={desktopProduct} alt="Hafaloha Orders desktop interface" className="aspect-[16/10] w-full rounded-md object-cover object-top" />
           </div>
           <div className="premium-shadow absolute -bottom-14 -right-3 w-[29%] overflow-hidden rounded-[1.6rem] border-[6px] border-slate-950 bg-slate-950">
-            <img src="/images/mobile-hafaloha-orders.com.PNG" alt="Hafaloha Orders mobile interface" className="aspect-[9/18] w-full object-cover object-top" />
+            <img src={mobileProduct} alt="Hafaloha Orders mobile interface" className="aspect-[9/18] w-full object-cover object-top" />
           </div>
           <div className="absolute -bottom-10 left-8 rounded-lg border border-white/10 bg-[#0d192d]/95 p-4 backdrop-blur">
             <div className="font-mono-label text-[10px] text-blue-300">Live-event reliability</div>

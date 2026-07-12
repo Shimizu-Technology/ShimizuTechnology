@@ -14,7 +14,7 @@ export default function Process() {
 
         <div className="mt-12 grid border-y border-slate-200 md:grid-cols-2 lg:grid-cols-4">
           {workflowSteps.map((step, index) => (
-            <div key={step.title} className="border-b border-slate-200 p-6 md:border-r lg:border-b-0 lg:p-8 last:border-r-0">
+            <div key={step.title} className="border-b border-slate-200 p-6 md:border-r md:even:border-r-0 lg:border-b-0 lg:border-r lg:even:border-r lg:p-8 last:border-r-0">
               <div className="font-mono-label text-xs text-blue-600">0{index + 1}</div>
               <h3 className="mt-8 text-xl font-bold text-slate-950">{step.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-600">{step.description}</p>
