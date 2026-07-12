@@ -1,20 +1,26 @@
 import { usePostHog } from 'posthog-js/react';
 import {
   CheckCircle,
-  Star,
   ExternalLink,
   Smartphone,
   Wrench,
-  Clock,
 } from 'lucide-react';
-import { projectGroups, internalTools, Project, InternalTool } from '../data';
+import { projects, projectGroups, internalTools, Project, InternalTool } from '../data';
+
+const statusStyles: Record<NonNullable<Project['status']>, string> = {
+  Live: 'bg-emerald-600 text-white',
+  Seasonal: 'bg-blue-700 text-white',
+  'In Development': 'bg-amber-500 text-white',
+  Paused: 'bg-slate-600 text-white',
+};
 
 function ProjectCard({ project }: { project: Project }) {
   const posthog = usePostHog();
+  const isPaused = project.status === 'Paused';
 
   return (
     <div
-      className={`group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${project.isPaused ? 'opacity-75' : ''}`}
+      className={`group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col h-full ${isPaused ? 'opacity-75' : ''}`}
     >
       {/* Image Header */}
       <div className="relative h-44 overflow-hidden flex-shrink-0">
@@ -35,27 +41,10 @@ function ProjectCard({ project }: { project: Project }) {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent" />
         )}
 
-        {/* Status badges */}
-        <div className="absolute top-3 left-3 flex gap-1.5 z-10">
-          {project.isNew && !project.isComingSoon && (
-            <span className="px-2 py-0.5 bg-green-500 text-white text-xs font-semibold rounded shadow-sm">
-              NEW
-            </span>
-          )}
-          {project.isComingSoon && (
-            <span className="px-2 py-0.5 bg-amber-500 text-white text-xs font-semibold rounded shadow-sm flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              {project.isComingSoon}
-            </span>
-          )}
-          {project.isFeatured && (
-            <span className="px-2 py-0.5 bg-amber-500 text-white text-xs font-semibold rounded flex items-center gap-1 shadow-sm">
-              <Star className="w-3 h-3" /> FEATURED
-            </span>
-          )}
-          {project.isPaused && (
-            <span className="px-2 py-0.5 bg-slate-500 text-white text-xs font-semibold rounded shadow-sm">
-              PAUSED
+        <div className="absolute top-3 left-3 z-10">
+          {project.status && (
+            <span className={`px-2.5 py-1 text-xs font-semibold rounded-full shadow-sm ${statusStyles[project.status]}`}>
+              {project.status}
             </span>
           )}
         </div>
@@ -100,7 +89,7 @@ function ProjectCard({ project }: { project: Project }) {
             <span className="text-sm text-slate-400 italic">{project.isComingSoon}</span>
           ) : (
             <>
-              {project.link && !project.isPaused && (
+              {project.link && !isPaused && (
                 <a
                   href={project.link}
                   target="_blank"
@@ -133,7 +122,7 @@ function ProjectCard({ project }: { project: Project }) {
                   App Store
                 </a>
               )}
-              {project.isPaused && !project.appStoreLink && (
+              {isPaused && !project.appStoreLink && (
                 <span className="text-sm text-slate-400 italic">Currently on hold</span>
               )}
             </>
@@ -201,6 +190,11 @@ function InternalToolCard({ tool }: { tool: InternalTool }) {
 }
 
 export default function Projects() {
+  const flagshipProjects = projects.filter((project) => project.isFeatured);
+  const remainingGroups = projectGroups
+    .map((group) => ({ ...group, projects: group.projects.filter((project) => !project.isFeatured) }))
+    .filter((group) => group.projects.length > 0);
+
   return (
     <section id="projects" className="py-24 lg:py-32 bg-white relative overflow-hidden">
       <div className="absolute top-20 -left-32 w-64 h-64 bg-blue-100 rounded-full blur-3xl opacity-50" />
@@ -209,15 +203,34 @@ export default function Projects() {
         <div className="text-center mb-12">
           <p className="text-blue-600 font-medium mb-2">Our Work</p>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            Featured Projects
+            A portfolio built around real operations
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Real solutions we've built for real businesses in Guam and beyond.
+            Start with the products that best represent our work, then explore the complete collection by industry.
           </p>
         </div>
 
-        <div className="space-y-14">
-          {projectGroups.map((group) => (
+        <div>
+          <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">Flagship work</p>
+              <h3 className="mt-1 text-2xl font-bold text-slate-900">Products with proven reach and impact</h3>
+            </div>
+            <span className="text-sm font-medium text-slate-400">{flagshipProjects.length} flagship projects</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {flagshipProjects.map((project) => <ProjectCard key={project.title} project={project} />)}
+          </div>
+        </div>
+
+        <div className="mt-20 border-t border-slate-200 pt-16">
+          <div className="mb-10 max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">Complete portfolio</p>
+            <h3 className="mt-2 text-3xl font-bold text-slate-900">More platforms we are proud to have built</h3>
+            <p className="mt-3 text-slate-600">Live products, seasonal event systems, in-development platforms, and projects currently resting between active periods.</p>
+          </div>
+          <div className="space-y-14">
+          {remainingGroups.map((group) => (
             <div key={group.title}>
               <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -233,6 +246,7 @@ export default function Projects() {
               </div>
             </div>
           ))}
+          </div>
         </div>
 
         {/* Internal Tools Section */}
