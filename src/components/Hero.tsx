@@ -40,7 +40,7 @@ export default function Hero() {
 
           <div className="mt-12 grid grid-cols-3 border-y border-white/10 py-5">
             {[
-              ['13+', 'Production apps'],
+              ['17+', 'Products & platforms'],
               ['4', 'AI systems live'],
               ['2', 'App Store launches'],
             ].map(([value, label]) => (
