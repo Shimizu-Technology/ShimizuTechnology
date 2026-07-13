@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
 import {
   Menu as MenuIcon,
   X as CloseIcon,
@@ -46,7 +46,8 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [mobileMenuOpen]);
 
-  const scrollToTop = () => {
+  const scrollToTop = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setMobileMenuOpen(false);
   };
@@ -97,6 +98,7 @@ export default function Navbar() {
 
           <div className="lg:hidden">
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-white/10 transition-colors"
               aria-label="Toggle menu"
@@ -115,7 +117,7 @@ export default function Navbar() {
 
       {mobileMenuOpen && (
         <>
-          <button className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
+          <button type="button" className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
           <div
             id="mobile-navigation"
             ref={menuRef}
