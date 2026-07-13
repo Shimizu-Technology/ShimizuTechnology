@@ -58,7 +58,7 @@ export default function Testimonials() {
 
         <div className="mt-20 grid gap-10 border-t border-white/10 pt-16 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-xl">
-            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" className="aspect-[4/3] w-full object-cover" />
+            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
           </div>
           <div>
             <p className="font-mono-label text-xs text-blue-300">AI enablement</p>

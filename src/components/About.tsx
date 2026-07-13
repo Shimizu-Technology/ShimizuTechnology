@@ -21,8 +21,10 @@ export default function About() {
             {/* Founder intro with photo */}
             <div className="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200">
               <img
-                src="/images/NationalsPic2.jpg"
+                src="/images/leon-shimizu.webp"
                 alt="Leon Shimizu"
+                loading="lazy"
+                decoding="async"
                 className="h-20 w-20 rounded-lg object-cover grayscale"
               />
               <div>

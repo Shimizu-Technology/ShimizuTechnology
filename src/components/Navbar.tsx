@@ -55,8 +55,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07101f]/95 text-white backdrop-blur-xl">
       <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="flex h-[72px] items-center justify-between">
-          <div
-            className="flex cursor-pointer items-center space-x-3"
+          <a
+            href="#"
+            aria-label="Shimizu Technology home"
+            className="flex items-center space-x-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07101f]"
             onClick={scrollToTop}
           >
             <img
@@ -67,7 +69,7 @@ export default function Navbar() {
             <span className="whitespace-nowrap text-base font-bold tracking-tight sm:text-lg">
               Shimizu Technology
             </span>
-          </div>
+          </a>
 
           <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
@@ -98,6 +100,8 @@ export default function Navbar() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-white/10 transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? (
                 <CloseIcon className="w-6 h-6" />
@@ -111,8 +115,9 @@ export default function Navbar() {
 
       {mobileMenuOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setMobileMenuOpen(false)} />
+          <button className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
           <div
+            id="mobile-navigation"
             ref={menuRef}
             className="absolute left-0 top-full z-50 w-full border-t border-white/10 bg-[#07101f] lg:hidden"
           >
