@@ -116,40 +116,39 @@ export default function Navbar() {
       </nav>
 
       {mobileMenuOpen && (
-        <>
-          <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
-          <div
-            id="mobile-navigation"
-            ref={menuRef}
-            className="absolute left-0 top-full z-50 w-full border-t border-white/10 bg-[#07101f] lg:hidden"
-          >
-            <div className="px-4 py-3 space-y-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-md text-base font-medium transition-colors ${
-                    activeSection === item.href.slice(1)
-                      ? "bg-white/10 text-white"
-                      : "text-slate-300 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="https://codeschoolofguam.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-4 py-3 bg-red-500 rounded-md text-base font-medium text-white text-center mt-2"
-              >
-                Code School of Guam
-              </a>
-            </div>
-          </div>
-        </>
+        <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
       )}
+      <div
+        id="mobile-navigation"
+        ref={menuRef}
+        aria-hidden={!mobileMenuOpen}
+        className={`absolute left-0 top-full z-50 w-full border-t border-white/10 bg-[#07101f] lg:hidden ${mobileMenuOpen ? "block" : "hidden"}`}
+      >
+        <div className="px-4 py-3 space-y-1">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`block px-4 py-3 rounded-md text-base font-medium transition-colors ${
+                activeSection === item.href.slice(1)
+                  ? "bg-white/10 text-white"
+                  : "text-slate-300 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="https://codeschoolofguam.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block px-4 py-3 bg-red-500 rounded-md text-base font-medium text-white text-center mt-2"
+          >
+            Code School of Guam
+          </a>
+        </div>
+      </div>
     </header>
   );
 }
