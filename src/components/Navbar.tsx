@@ -117,7 +117,7 @@ export default function Navbar() {
 
       {mobileMenuOpen && (
         <>
-          <button type="button" className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
+          <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
           <div
             id="mobile-navigation"
             ref={menuRef}
