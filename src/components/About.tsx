@@ -8,15 +8,14 @@ import {
 
 export default function About() {
   return (
-    <section id="about" className="py-24 lg:py-32 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 relative">
-      <div className="absolute inset-0 opacity-[0.02]" style={{backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '32px 32px'}} />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+    <section id="about" className="relative bg-white py-16 md:py-24 lg:py-28">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left content */}
           <div>
-            <p className="text-blue-600 font-medium mb-2">About Us</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-              Proudly Building in <span className="text-blue-600">Guam</span>
+            <p className="font-mono-label text-xs text-blue-600">Built in Guam</p>
+            <h2 className="mt-4 text-3xl font-bold text-slate-950 md:text-5xl">
+              Local context. Global engineering standards.
             </h2>
 
             {/* Founder intro with photo */}
@@ -24,7 +23,7 @@ export default function About() {
               <img
                 src="/images/NationalsPic2.jpg"
                 alt="Leon Shimizu"
-                className="w-20 h-20 rounded-full object-cover border-2 border-blue-500/30"
+                className="h-20 w-20 rounded-lg object-cover grayscale"
               />
               <div>
                 <p className="font-bold text-slate-900 text-lg">Leon Shimizu</p>
@@ -43,21 +42,21 @@ export default function About() {
             </p>
 
             {/* Code School Connection */}
-            <div className="bg-red-500 rounded-2xl p-5 text-white">
+            <div className="rounded-lg border border-red-200 bg-red-50 p-5 text-slate-900">
               <div className="flex items-start gap-3">
-                <div className="p-2 bg-white/20 rounded-lg">
+                <div className="rounded-md bg-red-100 p-2 text-red-700">
                   <GraduationCap className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Code School of Guam Partnership</h3>
-                  <p className="text-white/90 text-sm mb-3">
+                  <p className="mb-3 text-sm text-slate-600">
                     Guam's first AI-native coding bootcamp. Hybrid format with live instruction + async practice. Students learn to build AI-powered applications from scratch — and our team includes talented junior developers from the program.
                   </p>
                   <a
                     href="https://codeschoolofguam.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm font-medium hover:underline"
+                    className="inline-flex items-center text-sm font-bold text-red-700 hover:underline"
                   >
                     Learn more about Code School
                     <ExternalLink className="w-3.5 h-3.5 ml-1" />
@@ -68,8 +67,8 @@ export default function About() {
           </div>
 
           {/* Right content - Values */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+          <div className="divide-y divide-slate-200 border-y border-slate-200">
+            <div className="py-8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
                   <Target className="w-5 h-5" />
@@ -81,7 +80,7 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+            <div className="py-8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
                   <Brain className="w-5 h-5" />
@@ -93,7 +92,7 @@ export default function About() {
               </p>
             </div>
 
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+            <div className="py-8">
               <div className="flex items-center gap-3 mb-3">
                 <div className="p-2 bg-green-100 rounded-lg text-green-600">
                   <Rocket className="w-5 h-5" />
