@@ -75,7 +75,7 @@ export const projects: Project[] = [
     title: "HafaGPT",
     subtitle: "Chamorro Language Learning",
     description: "AI-powered platform for learning Chamorro, the indigenous language of Guam. Combines modern AI with practical lessons, stories, and study tools.",
-    image: "/images/HafaGPT-icon1.png",
+    image: "/images/hafagpt-icon.webp",
     imageStyle: "object-contain bg-[#f5f0e6] p-6",
     link: "https://hafagpt.com",
     icon: <Languages className="w-5 h-5" />,
