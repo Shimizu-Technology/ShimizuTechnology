@@ -19,6 +19,8 @@ import {
   Swords,
   HeartHandshake,
   Mic,
+  ShieldCheck,
+  Ticket,
 } from 'lucide-react';
 import hafalohaImage from '../assets/hafaloha_hero.jpg';
 
@@ -37,8 +39,9 @@ export interface Project {
   features: string[];
   tags: string[];
   isFeatured?: boolean;
+  selectedOrder?: number;
   isComingSoon?: string;
-  status?: "Live" | "Seasonal" | "In Development" | "Paused";
+  status?: "Live" | "Live pilot" | "Live demo" | "Seasonal" | "In development" | "Private deployment" | "Paused";
 }
 
 export interface InternalTool {
@@ -123,25 +126,44 @@ export const projects: Project[] = [
     ],
     tags: ["Education", "React", "Rails"],
     isFeatured: true,
+    selectedOrder: 2,
     status: "Live"
   },
   {
     title: "Cornerstone Payroll",
-    subtitle: "Guam Payroll Platform",
-    description: "A Guam-specific payroll system built as a better local alternative to generic mainland payroll tools and QuickBooks workflows.",
+    subtitle: "Live Guam Payroll & Firm Operations",
+    description: "A production payroll and firm-operations system used by Cornerstone Accounting, translating Guam tax and filing rules into dependable calculations and audited workflows.",
     image: "/images/cornerstone-payroll-cp.svg",
     imageStyle: "object-contain bg-blue-50 p-8",
     link: "https://cornerstone-payroll.netlify.app",
     icon: <BookOpen className="w-5 h-5" />,
     accentColor: "bg-amber-700",
     features: [
-      "Payroll runs, pay periods, and approvals",
-      "Guam tax support and reporting workflows",
-      "Check printing and employee records"
+      "Guam payroll calculations, adjustments, approvals, and commits",
+      "Check printing, pay stubs, tax summaries, and filing support",
+      "Company switching, role controls, and audit history"
     ],
     tags: ["Payroll", "React", "Rails"],
     isFeatured: true,
+    selectedOrder: 1,
     status: "Live"
+  },
+  {
+    title: "Civic Engagement & Campaign Operations",
+    subtitle: "Private Organizational Operations",
+    description: "A family of separately deployed, role-based outreach and field-operations systems used by political organizations in Guam — presented without party or candidate branding.",
+    gradientBg: "from-slate-900 via-indigo-950 to-blue-950",
+    icon: <ShieldCheck className="w-5 h-5" />,
+    accentColor: "bg-indigo-700",
+    features: [
+      "Contact, household, and public voter-file workflows",
+      "Governed outreach, assignments, follow-up, and reporting",
+      "Role-based access, audit trails, and election-day operations"
+    ],
+    tags: ["Civic Tech", "Operations", "Rails", "React"],
+    isFeatured: true,
+    selectedOrder: 3,
+    status: "Private deployment"
   },
   {
     title: "Golf for Wishes",
@@ -164,7 +186,7 @@ export const projects: Project[] = [
   {
     title: "Marianas Open",
     subtitle: "International BJJ Tournament Platform",
-    description: "Official platform for the largest Brazilian Jiu-Jitsu tournament in Southeast Asia, serving competitors and fans across Guam, Korea, Japan, and beyond.",
+    description: "Live multilingual platform for the Marianas Open, serving competitors and fans across Guam, Korea, Japan, and beyond with 3,000+ monthly visitors.",
     image: "/images/mo-logo-white.png",
     imageStyle: "object-contain bg-slate-900 p-6",
     link: "https://marianasopen.com",
@@ -177,6 +199,7 @@ export const projects: Project[] = [
     ],
     tags: ["Sports", "React", "Rails"],
     isFeatured: true,
+    selectedOrder: 4,
     status: "Live"
   },
   {
@@ -199,7 +222,7 @@ export const projects: Project[] = [
   {
     title: "Hafaloha Orders",
     subtitle: "Online Ordering & VIP",
-    description: "Complete ordering, retail, and VIP platform for Hawaiian businesses, with concert VIP, merchandise, shipping, and admin workflows.",
+    description: "Active ordering, retail, and VIP platform for Hawaiian businesses, still used for concert sales and fulfillment — including Hafaloha's June 2026 event.",
     image: hafalohaImage,
     imageStyle: "object-cover",
     link: "https://hafaloha-orders.com",
@@ -246,7 +269,7 @@ export const projects: Project[] = [
       "Built for multi-location restaurant operations"
     ],
     tags: ["Restaurant", "React", "Rails"],
-    status: "In Development"
+    status: "In development"
   },
   {
     title: "GIAA Golf Tournament",
@@ -286,40 +309,40 @@ export const projects: Project[] = [
   {
     title: "Household CFO",
     subtitle: "AI Financial Workspace",
-    description: "A private household finance workspace that combines documents, accounts, planning, and an AI assistant in one secure operating system.",
+    description: "A live financial workspace preparing for its first guided cohort, combining household setup, planning tools, deterministic calculations, and an AI assistant.",
     gradientBg: "from-emerald-700 via-teal-700 to-slate-900",
     link: "https://householdcfomethod.com",
     icon: <Brain className="w-5 h-5" />,
     accentColor: "bg-emerald-700",
     features: [
-      "AI-assisted household financial organization",
-      "Secure document and account workflows",
-      "Planning tools built around real decisions"
+      "Authenticated participant and cohort workspaces",
+      "Deterministic budget, wealth, runway, and decision tools",
+      "AI guidance grounded in each household's saved context"
     ],
     tags: ["FinTech", "AI/ML", "React"],
     isFeatured: true,
-    status: "Live"
+    status: "Live pilot"
   },
   {
     title: "Hafa Homes",
     subtitle: "Guam Property Platform",
-    description: "A Guam-first property platform for listings, rentals, neighborhood discovery, and the operational workflows behind local real estate.",
+    description: "A live Guam-first real-estate proof of concept used by its partners to demonstrate the product to investors and brokerages.",
     gradientBg: "from-emerald-800 via-green-800 to-slate-950",
     link: "https://hafahomes.com",
     icon: <Globe2 className="w-5 h-5" />,
     accentColor: "bg-emerald-800",
     features: [
       "Property and neighborhood discovery",
-      "Owner and operator workflows",
+      "Investor- and brokerage-ready live product demo",
       "Designed around Guam's housing market"
     ],
     tags: ["Real Estate", "React", "Rails"],
-    status: "In Development"
+    status: "Live demo"
   },
   {
     title: "TraceBuddy",
     subtitle: "Camera-Assisted Drawing Practice",
-    description: "A mobile-friendly drawing practice tool that helps learners trace real references onto paper using their device camera.",
+    description: "A live mobile-friendly drawing tool created from a real family need, now used by its intended first user to trace references onto paper with a device camera.",
     gradientBg: "from-amber-100 via-orange-100 to-stone-200",
     link: "https://tracebuddy-gu.netlify.app",
     icon: <Smartphone className="w-5 h-5" />,
@@ -346,7 +369,37 @@ export const projects: Project[] = [
       "Role-based operational dashboards"
     ],
     tags: ["Operations", "React", "Rails"],
-    status: "In Development"
+    status: "In development"
+  },
+  {
+    title: "FD Alumni Hub",
+    subtitle: "Alumni Tournament & Community Hub",
+    description: "A central alumni basketball hub for schedules, standings, watch and ticket links, news, sponsors, and future community engagement workflows.",
+    gradientBg: "from-red-950 via-rose-950 to-slate-950",
+    icon: <GraduationCap className="w-5 h-5" />,
+    accentColor: "bg-red-800",
+    features: [
+      "Schedule, standings, news, and sponsor content",
+      "Partner ticketing, streaming, and coverage links",
+      "Expandable alumni and community foundation"
+    ],
+    tags: ["Alumni", "Community", "React", "Rails"],
+    status: "In development"
+  },
+  {
+    title: "HafaPass",
+    subtitle: "Guam Hospitality Ticketing",
+    description: "A Guam-first event and hospitality ticketing platform for event creation, online sales, QR tickets, and attendee check-in.",
+    gradientBg: "from-violet-800 via-purple-900 to-slate-950",
+    icon: <Ticket className="w-5 h-5" />,
+    accentColor: "bg-violet-700",
+    features: [
+      "Event setup and online ticket sales",
+      "QR ticket generation and mobile check-in",
+      "Venue, organizer, payment, and admin workflows"
+    ],
+    tags: ["Ticketing", "Payments", "React", "Rails"],
+    status: "In development"
   },
   {
     title: "Guahan Grocer",
@@ -373,14 +426,19 @@ export const projectGroups = [
     projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "TraceBuddy"].includes(project.title))
   },
   {
-    title: "Business Operations",
+    title: "Business Operations & Finance",
     description: "Production systems that help local teams replace spreadsheets, paper workflows, and tools that were never designed for Guam.",
-    projects: projects.filter((project) => ["Cornerstone Payroll", "AIRE Services", "Cornerstone Accounting", "Household CFO", "Hafa Homes", "JMI Dispatch"].includes(project.title))
+    projects: projects.filter((project) => ["Cornerstone Payroll", "AIRE Services", "Cornerstone Accounting", "Household CFO", "JMI Dispatch"].includes(project.title))
   },
   {
-    title: "Commerce & Ordering",
-    description: "Ordering, retail, and marketplace-style applications for restaurants, stores, and local customers.",
-    projects: projects.filter((project) => ["Hafaloha Orders", "Three Squares Grill", "Guahan Grocer"].includes(project.title))
+    title: "Commerce, Payments & Ordering",
+    description: "Ordering, retail, marketplace, and financial-decision applications for businesses, partners, and local customers.",
+    projects: projects.filter((project) => ["Hafaloha Orders", "Three Squares Grill", "Guahan Grocer", "Hafa Homes"].includes(project.title))
+  },
+  {
+    title: "Civic, Membership & Community Systems",
+    description: "Role-aware engagement, ticketing, alumni, and community platforms with clear operational boundaries.",
+    projects: projects.filter((project) => ["Civic Engagement & Campaign Operations", "FD Alumni Hub", "HafaPass"].includes(project.title))
   },
   {
     title: "Events & Sports",
