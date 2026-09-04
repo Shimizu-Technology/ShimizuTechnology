@@ -26,8 +26,9 @@ const hafaRemoteRoutes = [
 
 for (const route of hafaRemoteRoutes) {
   test(`${route.path} renders its page and metadata`, async ({ page }) => {
-    await page.goto(route.path);
+    const response = await page.goto(route.path);
 
+    expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', route.description);
@@ -45,8 +46,9 @@ test('unknown Hafa Remote paths render the product 404', async ({ page }) => {
 });
 
 test('non-remote routes preserve the Shimizu Technology site', async ({ page }) => {
-  await page.goto('/');
+  const response = await page.goto('/');
 
+  expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
     'Software built for how your business actually works.',
   );
@@ -57,8 +59,9 @@ test('non-remote routes preserve the Shimizu Technology site', async ({ page }) 
 
 test('a failed company-site chunk offers recovery instead of a blank page', async ({ page }) => {
   await page.route('**/assets/HomeSite-*.js', (route) => route.abort());
-  await page.goto('/');
+  const response = await page.goto('/');
 
+  expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'We couldn’t load the site.',
   );
