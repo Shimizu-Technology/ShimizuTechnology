@@ -1,0 +1,42 @@
+name: Web quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, audit, and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.13.0
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Verify App Store support routes
+        run: |
+          test -f dist/_redirects
+          grep -Fq '/*    /index.html   200' dist/_redirects
+          grep -Fq 'https://shimizu-technology.com/hafa-remote/support' public/sitemap.xml
+          grep -Fq 'https://shimizu-technology.com/hafa-remote/privacy' public/sitemap.xml
