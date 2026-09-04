@@ -77,6 +77,56 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+.hafa-document {
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.hafa-document h2 {
+  margin-top: 2.5rem;
+  color: #0f172a;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.hafa-document h2:first-child {
+  margin-top: 0;
+}
+
+.hafa-document p,
+.hafa-document ul,
+.hafa-document ol {
+  margin-top: 0.85rem;
+  max-width: 70ch;
+}
+
+.hafa-document ul,
+.hafa-document ol {
+  padding-left: 1.35rem;
+}
+
+.hafa-document ul {
+  list-style: disc;
+}
+
+.hafa-document ol {
+  list-style: decimal;
+}
+
+.hafa-document li + li {
+  margin-top: 0.65rem;
+}
+
+.hafa-document a {
+  color: #0e7490;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
