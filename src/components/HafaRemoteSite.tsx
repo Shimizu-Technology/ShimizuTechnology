@@ -102,7 +102,7 @@ function RemotePreview() {
   const directionClass = 'grid h-12 w-12 place-items-center rounded-full text-slate-300';
 
   return (
-    <div className="relative mx-auto w-full max-w-[342px]" aria-label="Illustration of the Hafa Remote controls">
+    <div className="relative mx-auto w-full max-w-[342px]" role="img" aria-label="Illustration of the Hafa Remote controls">
       <div className="absolute -inset-10 rounded-full bg-cyan-300/10 blur-3xl" />
       <div className="premium-shadow relative overflow-hidden rounded-[42px] border border-white/15 bg-[#0d192d] p-6 shadow-2xl shadow-cyan-950/50">
         <div className="flex items-start justify-between border-b border-white/10 pb-5">
