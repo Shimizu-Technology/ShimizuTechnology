@@ -1,6 +1,7 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import HafaRemoteSite from './components/HafaRemoteSite.tsx';
+import HomeSiteErrorBoundary from './components/HomeSiteErrorBoundary.tsx';
 import HomeSite from './components/HomeSiteLoader.tsx';
 import './index.css';
 
@@ -12,9 +13,11 @@ createRoot(document.getElementById('root')!).render(
     {isHafaRemoteRoute ? (
       <HafaRemoteSite pathname={window.location.pathname} />
     ) : (
-      <Suspense fallback={<div className="min-h-screen bg-white" />}>
-        <HomeSite />
-      </Suspense>
+      <HomeSiteErrorBoundary>
+        <Suspense fallback={<div className="min-h-screen bg-white" />}>
+          <HomeSite />
+        </Suspense>
+      </HomeSiteErrorBoundary>
     )}
   </StrictMode>
 );

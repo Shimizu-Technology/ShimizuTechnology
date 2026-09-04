@@ -54,3 +54,14 @@ test('non-remote routes preserve the Shimizu Technology site', async ({ page }) 
     'Shimizu Technology | AI Apps, Mobile Development & Custom Software in Guam',
   );
 });
+
+test('a failed company-site chunk offers recovery instead of a blank page', async ({ page }) => {
+  await page.route('**/assets/HomeSite-*.js', (route) => route.abort());
+  await page.goto('/');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'We couldn’t load the site.',
+  );
+  await expect(page.getByRole('button', { name: 'Try Again' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Return Home' })).toHaveAttribute('href', '/');
+});
