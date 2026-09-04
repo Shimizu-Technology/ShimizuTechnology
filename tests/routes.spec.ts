@@ -35,6 +35,15 @@ for (const route of hafaRemoteRoutes) {
   });
 }
 
+test('unknown Hafa Remote paths render the product 404', async ({ page }) => {
+  await page.goto('/hafa-remote/missing');
+
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'That page is not on this remote.',
+  );
+  await expect(page).toHaveTitle('Page not found — Hafa Remote');
+});
+
 test('non-remote routes preserve the Shimizu Technology site', async ({ page }) => {
   await page.goto('/');
 
