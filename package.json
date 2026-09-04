@@ -9,7 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test:routes": "npm run build && playwright test"
+    "test:routes": "npm run build && playwright test",
+    "test:deployed-routes": "DEPLOY_ROUTE_TEST=1 playwright test"
   },
   "dependencies": {
     "lucide-react": "^0.344.0",

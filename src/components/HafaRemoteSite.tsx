@@ -291,7 +291,7 @@ function SupportPage() {
 function PrivacyPage() {
   return (
     <DocumentPage
-      eyebrow="Privacy policy · Effective September 5, 2026"
+      eyebrow="Privacy policy · Effective September 4, 2026"
       title="Your remote stays in your home."
       intro="Hafa Remote has no account, advertising, tracking, analytics SDK, backend, or subscription. Shimizu Technology does not collect data from the iOS app."
       metadata={{ title: 'Hafa Remote Privacy Policy', description: 'How Hafa Remote handles TV information, pairing credentials, typed text, and local-network access.', path: '/privacy' }}

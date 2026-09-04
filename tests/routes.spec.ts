@@ -37,8 +37,9 @@ for (const route of hafaRemoteRoutes) {
 }
 
 test('unknown Hafa Remote paths render the product 404', async ({ page }) => {
-  await page.goto('/hafa-remote/missing');
+  const response = await page.goto('/hafa-remote/missing');
 
+  expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'That page is not on this remote.',
   );
