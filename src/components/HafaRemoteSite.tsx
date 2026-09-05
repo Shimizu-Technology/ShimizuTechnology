@@ -264,8 +264,8 @@ function SupportPage() {
       <h2>Set up your TV</h2>
       <ol>
         <li>Turn on the Samsung TV and connect your iPhone to the same non-guest Wi-Fi network.</li>
-        <li>On the TV, open <strong>Settings → General → Network → Network Status</strong> and note its private IPv4 address. Menu wording can vary by model.</li>
-        <li>Open Hafa Remote, choose <strong>Add Samsung TV</strong>, and enter that address.</li>
+        <li>Open Hafa Remote, choose <strong>Add Samsung TV</strong>, and allow local-network access when iOS asks.</li>
+        <li>Choose your television when it appears in the nearby Samsung TV list. You should not need to enter an address.</li>
         <li>When the television asks whether to allow Hafa Remote, choose <strong>Allow</strong>.</li>
         <li>Wait for the connected status before using the remote.</li>
       </ol>
@@ -274,7 +274,8 @@ function SupportPage() {
       <ul>
         <li>Confirm both devices are on the same normal Wi-Fi network. Guest networks often prevent devices from seeing each other.</li>
         <li>Keep the TV on during initial pairing. Power on from Hafa Remote is not currently supported.</li>
-        <li>If the TV address changed, check Network Status again and add it with the current address.</li>
+        <li>Choose <strong>Scan Again</strong> if the TV does not appear right away.</li>
+        <li>If discovery still cannot find it, open <strong>TV not showing up?</strong> in Hafa Remote. The manual address option is a troubleshooting fallback; the TV address is under <strong>Settings → General → Network → Network Status</strong> on most models.</li>
         <li>If approval was denied or expired, remove the saved TV in Hafa Remote and pair it again.</li>
         <li>Some Samsung models, firmware versions, and secure text fields may not accept every command.</li>
       </ul>
