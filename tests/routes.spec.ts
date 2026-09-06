@@ -3,9 +3,9 @@ import { expect, test } from '@playwright/test';
 const hafaRemoteRoutes = [
   {
     path: '/hafa-remote',
-    heading: 'Your Samsung TV remote. Nothing in the way.',
-    title: 'Hafa Remote — Simple Samsung TV control',
-    description: 'A straightforward iPhone remote for compatible Samsung smart TVs. No account, ads, tracking, backend, or subscription.',
+    heading: 'Three brands. One remote. Nothing in the way.',
+    title: 'Hafa Remote — Simple Wi-Fi TV remote',
+    description: 'A straightforward iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. No account, ads, tracking, backend, or subscription.',
     canonical: 'https://shimizu-technology.com/hafa-remote',
   },
   {
