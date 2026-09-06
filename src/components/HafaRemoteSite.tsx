@@ -25,7 +25,7 @@ const baseUrl = 'https://shimizu-technology.com/hafa-remote';
 const supportEmail = 'ShimizuTechnology@gmail.com';
 const landingFeatures = [
   { icon: Wifi, title: 'Local by design', copy: 'Commands stay between your iPhone and television on the same Wi-Fi network.' },
-  { icon: Volume2, title: 'Everyday controls', copy: 'D-pad, select, volume, mute, home, back, playback, and power off.' },
+  { icon: Volume2, title: 'Everyday controls', copy: 'D-pad, select, volume, mute, home, back, playback, and saved-TV power controls.' },
   { icon: Keyboard, title: 'Type from iPhone', copy: 'Use the familiar iPhone keyboard when the active TV screen accepts text.' },
   { icon: ShieldCheck, title: 'Honest status', copy: 'Clear pairing, reconnecting, offline, and permission states—never fake success.' },
 ];
@@ -107,8 +107,8 @@ function RemotePreview() {
       <div className="premium-shadow relative overflow-hidden rounded-[42px] border border-white/15 bg-[#0d192d] p-6 shadow-2xl shadow-cyan-950/50">
         <div className="flex items-start justify-between border-b border-white/10 pb-5">
           <div>
-            <p className="font-mono-label text-[9px] text-cyan-300">Living room</p>
-            <p className="mt-1 text-lg font-bold text-white">Samsung Q70A</p>
+            <p className="font-mono-label text-[9px] text-cyan-300">Samsung · Q70AA</p>
+            <p className="mt-1 text-lg font-bold text-white">Living Room TV</p>
             <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> Connected</p>
           </div>
           <div className="grid h-11 w-11 place-items-center rounded-full border border-red-300/20 bg-red-400/10 text-red-200">
@@ -142,8 +142,8 @@ function RemotePreview() {
 
 function LandingPage() {
   usePageMetadata(
-    'Hafa Remote — Simple Samsung TV control',
-    'A straightforward iPhone remote for compatible Samsung smart TVs. No account, ads, tracking, backend, or subscription.',
+    'Hafa Remote — Simple Wi-Fi TV remote',
+    'A straightforward iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. No account, ads, tracking, backend, or subscription.',
     '',
   );
 
@@ -157,7 +157,7 @@ function LandingPage() {
             <div>
               <p className="font-mono-label flex items-center gap-3 text-xs text-cyan-300"><span className="h-px w-8 bg-cyan-300" /> Private iPhone testing</p>
               <h1 className="mt-7 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[4.65rem]">
-                Your Samsung TV remote. <span className="text-cyan-300">Nothing in the way.</span>
+                Three brands. One remote. <span className="text-cyan-300">Nothing in the way.</span>
               </h1>
               <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
                 Hafa Remote puts everyday controls on your iPhone without an account, advertising, tracking, or a weekly subscription.
@@ -207,8 +207,8 @@ function LandingPage() {
           <div className="mx-auto grid max-w-6xl gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <p className="font-mono-label text-xs text-slate-500">Compatibility note</p>
-              <h2 className="mt-3 text-2xl font-extrabold text-slate-950 sm:text-3xl">Samsung-first, tested before promised.</h2>
-              <p className="mt-4 max-w-3xl leading-relaxed text-slate-600">The first release is for compatible Samsung smart TVs with secure local-network control. Power on is not currently supported. Hafa Remote is independent and is not affiliated with or endorsed by Samsung Electronics.</p>
+              <h2 className="mt-3 text-2xl font-extrabold text-slate-950 sm:text-3xl">Three brands, tested before promised.</h2>
+              <p className="mt-4 max-w-3xl leading-relaxed text-slate-600">Internal testing supports compatible Samsung, Sony, and Vizio TVs with local-network control. Power on depends on the TV's standby settings, firmware, and network. Hafa Remote is independently developed and is not affiliated with or endorsed by those manufacturers.</p>
             </div>
             <a href={`mailto:${supportEmail}?subject=Hafa%20Remote%20question`} className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 px-5 py-3 font-bold text-slate-800 hover:border-cyan-700 hover:text-cyan-800">
               Ask a question <Mail className="h-4 w-4" />
@@ -263,21 +263,21 @@ function SupportPage() {
     >
       <h2>Set up your TV</h2>
       <ol>
-        <li>Turn on the Samsung TV and connect your iPhone to the same non-guest Wi-Fi network.</li>
-        <li>Open Hafa Remote, choose <strong>Add Samsung TV</strong>, and allow local-network access when iOS asks.</li>
-        <li>Choose your television when it appears in the nearby Samsung TV list. You should not need to enter an address.</li>
-        <li>When the television asks whether to allow Hafa Remote, choose <strong>Allow</strong>.</li>
+        <li>Turn on your compatible Samsung, Sony, or Vizio TV and connect your iPhone to the same non-guest Wi-Fi network.</li>
+        <li>Open Hafa Remote, choose <strong>Add TV</strong>, and allow local-network access when iOS asks.</li>
+        <li>Choose your television when it appears in the nearby TV list. You should not need to enter an address.</li>
+        <li>Complete the prompt on the TV: choose <strong>Allow</strong> on Samsung, enter the six-character code shown by Sony, or enter the four-digit PIN shown by Vizio.</li>
         <li>Wait for the connected status before using the remote.</li>
       </ol>
 
       <h2>If the TV does not connect</h2>
       <ul>
         <li>Confirm both devices are on the same normal Wi-Fi network. Guest networks often prevent devices from seeing each other.</li>
-        <li>Keep the TV on during initial pairing. Power on from Hafa Remote is not currently supported.</li>
+        <li>Keep the TV on during initial pairing. Hafa Remote can only turn on a saved TV when its standby network setting is enabled: Power On With Mobile on Samsung, Remote Start or network standby on Sony, and Quick Start on Vizio.</li>
         <li>Choose <strong>Scan Again</strong> if the TV does not appear right away.</li>
-        <li>If discovery still cannot find it, open <strong>TV not showing up?</strong> in Hafa Remote. The manual address option is a troubleshooting fallback; the TV address is under <strong>Settings → General → Network → Network Status</strong> on most models.</li>
+        <li>If discovery still cannot find it, open <strong>TV not showing up?</strong> in Hafa Remote. Manual address entry is a troubleshooting fallback; network-menu wording varies by brand and model.</li>
         <li>If approval was denied or expired, remove the saved TV in Hafa Remote and pair it again.</li>
-        <li>Some Samsung models, firmware versions, and secure text fields may not accept every command.</li>
+        <li>Model and firmware support varies. Some TV apps and secure text fields may not accept every command.</li>
       </ul>
 
       <h2>Text entry</h2>
