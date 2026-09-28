@@ -11,9 +11,6 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
-// Global Smooth Scrolling
-document.documentElement.style.scrollBehavior = 'smooth';
-
 function App() {
   const posthog = usePostHog();
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -22,6 +19,14 @@ function App() {
   useEffect(() => {
     posthog.capture('page_viewed', { page: 'homepage' });
   }, [posthog]);
+
+  // The homepage is loaded asynchronously, so the browser may try a direct
+  // hash link before its target exists.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' }));
+  }, []);
 
   // Detect scroll position for back-to-top button
   useEffect(() => {
@@ -33,12 +38,14 @@ function App() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   };
 
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
+      <a href="#main-content" className="skip-link">Skip to content</a>
+      <main id="main-content" tabIndex={-1}>
       <Hero />
       <Services />
       <Projects />
@@ -46,6 +53,7 @@ function App() {
       <Process />
       <About />
       <Contact />
+      </main>
       <Footer />
 
       {/* Back to Top Button */}

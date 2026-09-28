@@ -34,13 +34,13 @@ export default function About() {
             </div>
 
             <p className="text-slate-600 mb-4 leading-relaxed">
-              I started Shimizu Technology because I saw a problem: <strong>employers want engineers with experience, but new engineers can't get experience if no one gives them a chance.</strong> As the founder of the <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium">Code School of Guam</a>, I wanted to ensure every graduate had access to real-world projects — so I started building software for local businesses.
+              I founded <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium">Code School of Guam</a> to open a path into software development here in Guam. Shimizu Technology grew from the same belief: local teams deserve software shaped around their real work, and emerging engineers need real projects to learn from.
             </p>
             <p className="text-slate-600 mb-4 leading-relaxed">
-              Along the way, I discovered something: <strong>I genuinely love building custom software.</strong> There's something incredibly rewarding about seeing ideas come to life and helping businesses solve real problems with technology.
+              Today, our work ranges from payroll and learning platforms to ordering and live-event systems. We start by understanding the workflow, then design, build, and support the product with the people who use it.
             </p>
             <p className="text-slate-600 mb-6 leading-relaxed">
-              What started as a way to give students real-world experience has grown into a full-fledged software firm. Today, we specialize in AI-powered applications, mobile apps, and custom web solutions — and we genuinely enjoy every project we take on.
+              You work with a Guam-based team that can stay close to the problem after launch. We are direct about what is live, what is still being tested, and what a new engagement needs to succeed.
             </p>
 
             {/* Code School Connection */}
@@ -52,7 +52,7 @@ export default function About() {
                 <div>
                   <h3 className="font-semibold mb-1">Code School of Guam Partnership</h3>
                   <p className="mb-3 text-sm text-slate-600">
-                    Guam's first AI-native coding bootcamp. Hybrid format with live instruction + async practice. Students learn to build AI-powered applications from scratch — and our team includes talented junior developers from the program.
+                    Code School of Guam teaches focused courses and a full software development bootcamp. Some graduates have had opportunities to practice on Shimizu projects when the work and their readiness align.
                   </p>
                   <a
                     href="https://codeschoolofguam.com"
@@ -78,7 +78,7 @@ export default function About() {
                 <h3 className="text-lg font-semibold text-slate-900">Local Expertise</h3>
               </div>
               <p className="text-slate-600 text-sm">
-                We understand the Guam market and provide responsive, dedicated support. When you need help, you'll work with someone who knows your specific needs.
+                We build with Guam's rules, teams, and customers in mind. You'll work directly with people who understand your workflow and can support the product after launch.
               </p>
             </div>
 
@@ -87,10 +87,10 @@ export default function About() {
                 <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
                   <Brain className="w-5 h-5" />
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900">AI-First Approach</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Practical AI</h3>
               </div>
               <p className="text-slate-600 text-sm">
-                We leverage cutting-edge AI models like GPT-4o, Gemini, and Whisper to build intelligent applications that solve real problems.
+                We use AI where it makes a workflow more useful: helping people find information, process media, or make sense of complex material. The product still needs clear controls, reliable data, and human judgment.
               </p>
             </div>
 
@@ -102,7 +102,7 @@ export default function About() {
                 <h3 className="text-lg font-semibold text-slate-900">End-to-End Delivery</h3>
               </div>
               <p className="text-slate-600 text-sm">
-                From concept to App Store deployment, we handle everything. Design, development, deployment, and ongoing support — all under one roof.
+                One team carries discovery, design, engineering, launch, and support. You see working software and make decisions at practical checkpoints.
               </p>
             </div>
           </div>

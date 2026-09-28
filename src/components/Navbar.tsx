@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Menu as MenuIcon,
   X as CloseIcon,
@@ -17,6 +17,9 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const isWorkPage = window.location.pathname.replace(/\/$/, '') === '/work';
+  const navHref = (hash: string) => isWorkPage && hash !== '#contact' ? (hash === '#projects' ? '/work/' : `/${hash}`) : hash;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,10 +49,46 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [mobileMenuOpen]);
 
-  const scrollToTop = (event: ReactMouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const priorOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    menuRef.current?.querySelector<HTMLAnchorElement>('a')?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+      if (event.key !== 'Tab') return;
+      const links = Array.from(menuRef.current?.querySelectorAll<HTMLAnchorElement>('a') ?? []);
+      if (!links.length) return;
+      const first = links[0];
+      const last = links[links.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = priorOverflow;
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mobileMenuOpen]);
+
+  const closeMenu = (hash?: string) => {
     setMobileMenuOpen(false);
+    if (!hash || (isWorkPage && hash !== '#contact')) return;
+    requestAnimationFrame(() => {
+      const heading = document.querySelector<HTMLElement>(`${hash} h2`);
+      if (heading) {
+        heading.tabIndex = -1;
+        heading.focus({ preventScroll: true });
+      }
+    });
   };
 
   return (
@@ -57,10 +96,9 @@ export default function Navbar() {
       <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="flex h-[72px] items-center justify-between">
           <a
-            href="#"
+            href="/"
             aria-label="Shimizu Technology home"
             className="flex items-center space-x-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07101f]"
-            onClick={scrollToTop}
           >
             <img
               src={shimizuLogo}
@@ -76,7 +114,7 @@ export default function Navbar() {
             {navItems.map((item) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={navHref(item.href)}
                 className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   activeSection === item.href.slice(1)
                     ? "bg-white/10 text-white"
@@ -98,6 +136,7 @@ export default function Navbar() {
 
           <div className="lg:hidden">
             <button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-md hover:bg-white/10 transition-colors"
@@ -116,20 +155,21 @@ export default function Navbar() {
       </nav>
 
       {mobileMenuOpen && (
-        <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu" />
+        <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => { setMobileMenuOpen(false); menuButtonRef.current?.focus(); }} aria-label="Close menu" />
       )}
-      <div
+      <nav
         id="mobile-navigation"
+        aria-label="Mobile navigation"
         ref={menuRef}
         aria-hidden={!mobileMenuOpen}
-        className={`absolute left-0 top-full z-50 w-full border-t border-white/10 bg-[#07101f] lg:hidden ${mobileMenuOpen ? "block" : "hidden"}`}
+        className={`absolute left-0 top-full z-50 max-h-[calc(100dvh-72px)] w-full overflow-y-auto border-t border-white/10 bg-[#07101f] lg:hidden ${mobileMenuOpen ? "block" : "hidden"}`}
       >
         <div className="px-4 py-3 space-y-1">
           {navItems.map((item) => (
             <a
               key={item.href}
-              href={item.href}
-              onClick={() => setMobileMenuOpen(false)}
+              href={navHref(item.href)}
+              onClick={() => closeMenu(item.href)}
               className={`block px-4 py-3 rounded-md text-base font-medium transition-colors ${
                 activeSection === item.href.slice(1)
                   ? "bg-white/10 text-white"
@@ -148,7 +188,7 @@ export default function Navbar() {
             Code School of Guam
           </a>
         </div>
-      </div>
+      </nav>
     </header>
   );
 }
