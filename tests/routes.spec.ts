@@ -5,7 +5,7 @@ const hafaRemoteRoutes = [
     path: '/hafa-remote',
     heading: 'Three brands. One remote. Nothing in the way.',
     title: 'Hafa Remote — Simple Wi-Fi TV remote',
-    description: 'A straightforward iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. No account, ads, tracking, backend, or subscription.',
+    description: 'A locally used iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. Personal alpha; not yet on the App Store.',
     canonical: 'https://shimizu-technology.com/hafa-remote',
   },
   {
@@ -30,6 +30,10 @@ for (const route of hafaRemoteRoutes) {
 
     expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
+    if (route.path === '/hafa-remote') {
+      await expect(page.getByText('Used locally · personal alpha')).toBeVisible();
+      await expect(page.getByText('Currently used in private testing. It is not available on the App Store yet.')).toBeVisible();
+    }
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', route.description);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', route.canonical);

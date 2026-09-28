@@ -35,7 +35,7 @@ const caseStudies: Record<string, { challenge: string; built: string; result: st
   'Marianas Open': {
     challenge: 'Serve competitors and fans across several countries during live events.',
     built: 'A multilingual platform for schedules, profiles, rankings, streams, and results.',
-    result: 'A live tournament site serving 3,000+ monthly visitors.',
+    result: 'A live tournament site for competitors, fans, and event operations.',
   },
 };
 
@@ -127,7 +127,7 @@ function PortfolioProjectCard({ project }: { project: Project }) {
 export default function Projects({ showSelected = true, showArchive = false }: { showSelected?: boolean; showArchive?: boolean }) {
   const totalProjects = projects.length;
   const liveProjects = projects.filter((project) => ['Live', 'Seasonal', 'Private deployment'].includes(project.status || '')).length;
-  const pilotsAndDemos = projects.filter((project) => ['Live pilot', 'Live demo'].includes(project.status || '')).length;
+  const liveDemos = projects.filter((project) => project.status === 'Live demo').length;
 
   return (
     <section id="projects" className="scroll-mt-20 bg-white py-16 md:py-24 lg:py-28">
@@ -139,21 +139,21 @@ export default function Projects({ showSelected = true, showArchive = false }: {
         </div>
         <div className="mt-10 space-y-5 md:mt-12 md:space-y-6">{selectedProjects.map((project, index) => <SelectedProject key={project.title} project={project} index={index} />)}</div>
 
-        <a href="/work/" className="mt-9 inline-flex items-center gap-2 rounded-md border border-slate-300 px-5 py-3 font-semibold text-slate-900 transition hover:border-blue-500 hover:text-blue-700">Explore the complete portfolio <ArrowUpRight className="h-4 w-4" /></a>
+        <a href="/work/" className="mt-9 inline-flex items-center gap-2 rounded-md border border-slate-300 px-5 py-3 font-semibold text-slate-900 transition hover:border-blue-500 hover:text-blue-700">Explore more projects <ArrowUpRight className="h-4 w-4" /></a>
         </>}
 
         {showArchive && <>
         <div className="rounded-2xl border border-slate-200 bg-[#f7f8fa] p-6 sm:p-8 lg:p-10">
           <div className="grid gap-8 border-b border-slate-200 pb-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="font-mono-label text-xs text-slate-500">Complete portfolio</p>
-              <h2 className="mt-3 text-2xl font-bold text-slate-950 md:text-3xl">{totalProjects} products, pilots, and production systems</h2>
+              <p className="font-mono-label text-xs text-slate-500">Selected portfolio</p>
+              <h2 className="mt-3 text-2xl font-bold text-slate-950 md:text-3xl">{totalProjects} selected products, pilots, and production systems</h2>
             </div>
             <div>
               <p className="text-sm leading-relaxed text-slate-600">A status-aware view of our work across AI, education, operations, finance, civic engagement, commerce, community, sports, and public events.</p>
               <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-slate-600">
                 <span className="rounded-full bg-emerald-100 px-3 py-1.5 text-emerald-800">{liveProjects} live, seasonal, or private deployments</span>
-                <span className="rounded-full bg-cyan-100 px-3 py-1.5 text-cyan-800">{pilotsAndDemos} live pilots or demos</span>
+                <span className="rounded-full bg-cyan-100 px-3 py-1.5 text-cyan-800">{liveDemos} live {liveDemos === 1 ? 'demo' : 'demos'}</span>
                 <span className="rounded-full bg-white px-3 py-1.5 text-slate-600">Clear status on every project</span>
               </div>
             </div>

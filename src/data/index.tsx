@@ -94,15 +94,15 @@ export const projects: Project[] = [
   },
   {
     title: "Hafa Code",
-    subtitle: "Lightweight Coding Playground",
-    description: "A simple Replit alternative for Code School of Guam, FD students, alumni, and anyone learning to code — fast, approachable, and distraction-free.",
+    subtitle: "Browser Coding Playground",
+    description: "A browser-based coding workspace for Code School of Guam students, alumni, and anyone practicing without a local setup.",
     image: "/images/hafa-code-logo.png",
     imageStyle: "object-contain bg-[#f8efe0] p-6",
-    link: "https://hafa-code.netlify.app",
+    link: "https://code.shimizu-technology.com",
     icon: <Code2 className="w-5 h-5" />,
     accentColor: "bg-sky-600",
     features: [
-      "Ruby, JavaScript, and HTML/CSS/JS in-browser",
+      "Ruby, JavaScript, Python, and web projects in-browser",
       "Private local projects with optional cloud sync",
       "Share links and checkpoints for students"
     ],
@@ -185,7 +185,7 @@ export const projects: Project[] = [
   {
     title: "Marianas Open",
     subtitle: "International BJJ Tournament Platform",
-    description: "Live multilingual platform for the Marianas Open, serving competitors and fans across Guam, Korea, Japan, and beyond with 3,000+ monthly visitors.",
+    description: "Live multilingual platform for the Marianas Open, serving competitors and fans across Guam, Korea, Japan, and beyond.",
     image: "/images/mo-logo-white.png",
     imageStyle: "object-contain bg-slate-900 p-6",
     link: "https://marianasopen.com",
@@ -257,7 +257,7 @@ export const projects: Project[] = [
   {
     title: "Three Squares Grill",
     subtitle: "Restaurant & Catering Ordering",
-    description: "Modern ordering platform for Three Squares and B&G Pacific, designed for catering, dine-in/takeout, and repeat restaurant workflows.",
+    description: "Ordering platform for Three Squares and B&G Pacific, designed for catering, dine-in/takeout, and repeat restaurant workflows. The project is currently paused.",
     image: "/images/three-squares-grill.svg",
     imageStyle: "object-contain bg-slate-50 p-8",
     link: "https://three-squares-web.netlify.app",
@@ -269,7 +269,7 @@ export const projects: Project[] = [
       "Built for multi-location restaurant operations"
     ],
     tags: ["Restaurant", "React", "Rails"],
-    status: "In development"
+    status: "Paused"
   },
   {
     title: "GIAA Golf Tournament",
@@ -309,7 +309,7 @@ export const projects: Project[] = [
   {
     title: "Household CFO",
     subtitle: "AI Financial Workspace",
-    description: "A live financial workspace preparing for its first guided cohort, combining household setup, planning tools, deterministic calculations, and an AI assistant.",
+    description: "An in-development financial workspace combining household setup, planning tools, deterministic calculations, and an AI assistant.",
     gradientBg: "from-emerald-700 via-teal-700 to-slate-900",
     link: "https://householdcfomethod.com",
     icon: <Brain className="w-5 h-5" />,
@@ -321,7 +321,7 @@ export const projects: Project[] = [
     ],
     tags: ["FinTech", "AI/ML", "React"],
     isFeatured: true,
-    status: "Live pilot"
+    status: "In development"
   },
   {
     title: "Hafa Homes",
@@ -358,7 +358,7 @@ export const projects: Project[] = [
   {
     title: "JMI Dispatch",
     subtitle: "Field Service Scheduling",
-    description: "A dispatch and scheduling workspace for field-service teams, designed to make daily assignments, recurring work, and operational visibility easier.",
+    description: "An in-development dispatch and scheduling workspace for field-service teams. Pilot work is currently paused.",
     gradientBg: "from-blue-900 via-indigo-900 to-slate-950",
     link: "https://jmi-dispatch.netlify.app",
     icon: <Settings className="w-5 h-5" />,
@@ -467,16 +467,29 @@ export const internalTools: InternalTool[] = [
   },
   {
     title: "Media Tools",
-    description: "Video, audio, and PDF utilities for fast research workflows: transcripts, Whisper transcription, extraction, and AI summaries.",
-    link: "https://media-tools-gu.netlify.app",
+    description: "A searchable workspace that turns videos, recordings, and PDFs into source material you can summarize and question with citations.",
+    link: "https://media.shimizu-technology.com",
     icon: <FileText className="w-5 h-5" />,
     accentColor: "bg-rose-500",
     features: [
-      "YouTube and Vimeo transcript extraction",
-      "Whisper-powered audio transcription",
-      "AI summaries for long-form media"
+      "Video transcripts and audio transcription",
+      "Searchable library for recordings and PDFs",
+      "AI summaries and answers linked to source timestamps or pages"
     ],
     tags: ["AI/ML", "Go", "React"]
+  },
+  {
+    title: "Hafa Remote",
+    description: "A native iPhone remote for compatible Samsung, Sony, and Vizio TVs. Used locally as a personal alpha; not available on the App Store.",
+    link: "/hafa-remote",
+    icon: <Smartphone className="w-5 h-5" />,
+    accentColor: "bg-cyan-700",
+    features: [
+      "Local-network TV discovery and pairing",
+      "Saved TVs and everyday controls",
+      "No account, ads, or subscription"
+    ],
+    tags: ["iOS", "SwiftUI", "Personal alpha"]
   },
   {
     title: "Hafa Timezones",
