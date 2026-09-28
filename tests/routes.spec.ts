@@ -30,6 +30,10 @@ for (const route of hafaRemoteRoutes) {
 
     expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
+    if (route.path === '/hafa-remote') {
+      await expect(page.getByText('Used locally · personal alpha')).toBeVisible();
+      await expect(page.getByText('Currently used in private testing. It is not available on the App Store yet.')).toBeVisible();
+    }
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', route.description);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', route.canonical);
