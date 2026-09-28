@@ -1,5 +1,6 @@
 import { PostHogProvider } from 'posthog-js/react';
 import App from '../App.tsx';
+import WorkPage from './WorkPage.tsx';
 
 export default function HomeSite() {
   return (
@@ -9,7 +10,7 @@ export default function HomeSite() {
         api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST,
       }}
     >
-      <App />
+      {window.location.pathname.replace(/\/$/, '') === '/work' ? <WorkPage /> : <App />}
     </PostHogProvider>
   );
 }

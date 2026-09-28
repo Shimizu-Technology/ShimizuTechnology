@@ -1,21 +1,18 @@
 import shimizuLogo from '../assets/ShimizuTechnologyLogo.jpg';
 
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const isWorkPage = window.location.pathname.replace(/\/$/, '') === '/work';
 
   return (
     <footer className="bg-[#07101f] py-10 text-white">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center space-x-3">
-            <img
+            <a href="/" aria-label="Shimizu Technology home"><img
               src={shimizuLogo}
-              alt="Shimizu Technology Logo"
-              className="h-9 w-9 object-contain rounded-full cursor-pointer"
-              onClick={scrollToTop}
-            />
+              alt=""
+              className="h-9 w-9 rounded-full object-contain"
+            /></a>
             <div>
               <span className="block font-semibold">Shimizu Technology</span>
               <span className="text-sm text-slate-400">Custom software · Guam</span>
@@ -23,10 +20,10 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-6 text-sm">
-            <a href="#services" className="text-slate-400 hover:text-white transition-colors">Services</a>
-            <a href="#projects" className="text-slate-400 hover:text-white transition-colors">Projects</a>
-            <a href="#about" className="text-slate-400 hover:text-white transition-colors">About</a>
-            <a href="#contact" className="text-slate-400 hover:text-white transition-colors">Contact</a>
+            <a href={isWorkPage ? '/#services' : '#services'} className="text-slate-300 hover:text-white transition-colors">Services</a>
+            <a href="/work/" className="text-slate-300 hover:text-white transition-colors">Portfolio</a>
+            <a href={isWorkPage ? '/#about' : '#about'} className="text-slate-300 hover:text-white transition-colors">About</a>
+            <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
           </div>
 
           <div className="text-slate-400 text-sm">

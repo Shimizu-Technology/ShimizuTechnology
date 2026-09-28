@@ -22,7 +22,7 @@ import {
   ShieldCheck,
   Ticket,
 } from 'lucide-react';
-import hafalohaImage from '../assets/hafaloha_hero.jpg';
+import hafalohaProduct from '../assets/hafaloha-orders-hero.webp';
 
 // Types
 export interface Project {
@@ -126,7 +126,7 @@ export const projects: Project[] = [
     ],
     tags: ["Education", "React", "Rails"],
     isFeatured: true,
-    selectedOrder: 2,
+    selectedOrder: 3,
     status: "Live"
   },
   {
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     ],
     tags: ["Payroll", "React", "Rails"],
     isFeatured: true,
-    selectedOrder: 1,
+    selectedOrder: 2,
     status: "Live"
   },
   {
@@ -162,7 +162,6 @@ export const projects: Project[] = [
     ],
     tags: ["Civic Tech", "Operations", "Rails", "React"],
     isFeatured: true,
-    selectedOrder: 3,
     status: "Private deployment"
   },
   {
@@ -223,7 +222,7 @@ export const projects: Project[] = [
     title: "Hafaloha Orders",
     subtitle: "Online Ordering & VIP",
     description: "Active ordering, retail, and VIP platform for Hawaiian businesses, still used for concert sales and fulfillment — including Hafaloha's June 2026 event.",
-    image: hafalohaImage,
+    image: hafalohaProduct,
     imageStyle: "object-cover",
     link: "https://hafaloha-orders.com",
     icon: <ShoppingCart className="w-5 h-5" />,
@@ -235,6 +234,7 @@ export const projects: Project[] = [
     ],
     tags: ["E-commerce", "React", "Rails"],
     isFeatured: true,
+    selectedOrder: 1,
     status: "Live"
   },
   {
@@ -557,21 +557,21 @@ export const workflowSteps: WorkflowStep[] = [
   {
     icon: <Users className="w-6 h-6" />,
     title: "Discovery",
-    description: "We dive deep into your business needs, challenges, and goals to craft the perfect solution."
+    description: "We map the current workflow, the people involved, the constraints, and what success would look like."
   },
   {
     icon: <Code2 className="w-6 h-6" />,
     title: "Design & Prototype",
-    description: "We create interactive prototypes so you can see and feel your product before we build it."
+    description: "We put the important screens and decisions in front of your team before committing to a full build."
   },
   {
     icon: <Zap className="w-6 h-6" />,
     title: "Agile Development",
-    description: "We build in sprints with regular check-ins, so you're always in the loop on progress."
+    description: "You review working software at agreed checkpoints and help resolve the tradeoffs that matter."
   },
   {
     icon: <Rocket className="w-6 h-6" />,
     title: "Launch & Support",
-    description: "We deploy your solution and provide ongoing support to keep everything running smoothly."
+    description: "We test the launch path, hand over the workflows, and stay available as your needs change."
   }
 ];

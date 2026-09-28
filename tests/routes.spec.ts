@@ -58,6 +58,53 @@ test('non-remote routes preserve the Shimizu Technology site', async ({ page }) 
   );
 });
 
+test('portfolio has its own route and links back to selected work', async ({ page }) => {
+  const response = await page.goto('/work/');
+
+  expect(response?.ok()).toBeTruthy();
+  await expect(page).toHaveTitle('Our Work | Shimizu Technology');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Work built for real operations.');
+  await expect(page.getByRole('link', { name: 'Start with selected client stories' })).toHaveAttribute('href', '/#projects');
+  await expect(page.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '#projects');
+  await expect(page.getByRole('link', { name: 'Contact', exact: true }).first()).toHaveAttribute('href', '#contact');
+});
+
+test('portfolio deep link lands on its archive section', async ({ page }) => {
+  await page.goto('/work/#projects');
+  await expect.poll(async () => page.locator('#projects').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(120);
+  await expect.poll(async () => page.locator('#projects').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
+});
+
+test('contact deep link lands on the inquiry panel after the home page loads', async ({ page }) => {
+  await page.goto('/#contact');
+
+  await expect(page.getByRole('heading', { name: 'Start with a short note.' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Email about a project' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Project%20inquiry');
+  await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(120);
+  await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
+});
+
+test('malformed fragments leave the homepage available', async ({ page }) => {
+  await page.goto('/#%');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Software built for how your business actually works.');
+});
+
+test('mobile menu closes on Escape and restores focus to its trigger', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const trigger = page.getByRole('button', { name: 'Toggle menu' });
+  const menu = page.getByRole('navigation', { name: 'Mobile navigation' });
+  await trigger.click();
+  await expect(menu).toBeVisible();
+  const backdrop = page.getByRole('button', { name: 'Close menu' });
+  await expect(backdrop).toBeVisible();
+  expect((await backdrop.boundingBox())?.height).toBe(844);
+  await page.keyboard.press('Escape');
+  await expect(menu).toBeHidden();
+  await expect(trigger).toBeFocused();
+});
+
 test('a failed company-site chunk offers recovery instead of a blank page', async ({ page }) => {
   await page.route('**/assets/HomeSite-*.js', (route) => route.abort());
   const response = await page.goto('/');
