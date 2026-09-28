@@ -5,7 +5,7 @@ const hafaRemoteRoutes = [
     path: '/hafa-remote',
     heading: 'Three brands. One remote. Nothing in the way.',
     title: 'Hafa Remote — Simple Wi-Fi TV remote',
-    description: 'A straightforward iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. No account, ads, tracking, backend, or subscription.',
+    description: 'A locally used iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. Personal alpha; not yet on the App Store.',
     canonical: 'https://shimizu-technology.com/hafa-remote',
   },
   {

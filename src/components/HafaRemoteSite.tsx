@@ -143,7 +143,7 @@ function RemotePreview() {
 function LandingPage() {
   usePageMetadata(
     'Hafa Remote — Simple Wi-Fi TV remote',
-    'A straightforward iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. No account, ads, tracking, backend, or subscription.',
+    'A locally used iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. Personal alpha; not yet on the App Store.',
     '',
   );
 
@@ -155,13 +155,14 @@ function LandingPage() {
           <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-300/[0.07] blur-[120px]" />
           <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
             <div>
-              <p className="font-mono-label flex items-center gap-3 text-xs text-cyan-300"><span className="h-px w-8 bg-cyan-300" /> Private iPhone testing</p>
+              <p className="font-mono-label flex items-center gap-3 text-xs text-cyan-300"><span className="h-px w-8 bg-cyan-300" /> Used locally · personal alpha</p>
               <h1 className="mt-7 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[4.65rem]">
                 Three brands. One remote. <span className="text-cyan-300">Nothing in the way.</span>
               </h1>
               <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
                 Hafa Remote puts everyday controls on your iPhone without an account, advertising, tracking, or a weekly subscription.
               </p>
+              <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">Currently used in private testing. It is not available on the App Store yet.</p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <a href="/hafa-remote/support" className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-300 px-6 py-3.5 font-bold text-[#07101f] transition hover:-translate-y-0.5 hover:bg-cyan-200">
                   Setup and support <ArrowRight className="h-4 w-4" />
