@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { usePostHog } from 'posthog-js/react';
 import { ArrowRight, GraduationCap, Mail, Phone } from 'lucide-react';
 
@@ -7,9 +7,12 @@ type FormStatus = 'idle' | 'sending' | 'sent' | 'error';
 export default function Contact() {
   const posthog = usePostHog();
   const [status, setStatus] = useState<FormStatus>('idle');
+  const submitting = useRef(false);
 
   const submitInquiry = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (submitting.current) return;
+    submitting.current = true;
     const form = event.currentTarget;
     setStatus('sending');
     try {
@@ -26,6 +29,8 @@ export default function Contact() {
       posthog.capture('project_inquiry_submitted');
     } catch {
       setStatus('error');
+    } finally {
+      submitting.current = false;
     }
   };
 

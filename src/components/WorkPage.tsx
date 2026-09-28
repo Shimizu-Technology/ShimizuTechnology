@@ -12,10 +12,20 @@ export default function WorkPage() {
     posthog.capture('page_viewed', { page: 'portfolio' });
   }, [posthog]);
 
+  useEffect(() => {
+    let id: string;
+    try {
+      id = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      return;
+    }
+    if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' }));
+  }, []);
+
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <a href="#main-content" className="skip-link">Skip to content</a>
+      <Navbar />
       <main id="main-content" tabIndex={-1}>
         <section className="relative overflow-hidden bg-[#07101f] py-20 text-white md:py-28">
           <div className="surface-grid absolute inset-0 opacity-20" />

@@ -23,7 +23,7 @@ export default function Footer() {
             <a href={isWorkPage ? '/#services' : '#services'} className="text-slate-300 hover:text-white transition-colors">Services</a>
             <a href="/work/" className="text-slate-300 hover:text-white transition-colors">Portfolio</a>
             <a href={isWorkPage ? '/#about' : '#about'} className="text-slate-300 hover:text-white transition-colors">About</a>
-            <a href={isWorkPage ? '/#contact' : '#contact'} className="text-slate-300 hover:text-white transition-colors">Contact</a>
+            <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
           </div>
 
           <div className="text-slate-400 text-sm">

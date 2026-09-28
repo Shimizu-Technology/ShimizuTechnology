@@ -19,7 +19,7 @@ export default function Navbar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const isWorkPage = window.location.pathname.replace(/\/$/, '') === '/work';
-  const navHref = (hash: string) => isWorkPage && hash !== '#contact' ? (hash === '#projects' ? '/work/' : `/${hash}`) : hash;
+  const navHref = (hash: string) => isWorkPage && hash !== '#contact' && hash !== '#projects' ? `/${hash}` : hash;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -81,7 +81,7 @@ export default function Navbar() {
 
   const closeMenu = (hash?: string) => {
     setMobileMenuOpen(false);
-    if (!hash || (isWorkPage && hash !== '#contact')) return;
+    if (!hash || (isWorkPage && hash !== '#contact' && hash !== '#projects')) return;
     requestAnimationFrame(() => {
       const heading = document.querySelector<HTMLElement>(`${hash} h2`);
       if (heading) {

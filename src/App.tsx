@@ -23,7 +23,12 @@ function App() {
   // The homepage is loaded asynchronously, so the browser may try a direct
   // hash link before its target exists.
   useEffect(() => {
-    const id = decodeURIComponent(window.location.hash.slice(1));
+    let id: string;
+    try {
+      id = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      return;
+    }
     if (!id) return;
     requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' }));
   }, []);
@@ -43,8 +48,8 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <a href="#main-content" className="skip-link">Skip to content</a>
+      <Navbar />
       <main id="main-content" tabIndex={-1}>
       <Hero />
       <Services />
