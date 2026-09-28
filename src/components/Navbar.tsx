@@ -92,6 +92,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#07101f]/95 text-white backdrop-blur-xl">
       <nav className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="flex h-[72px] items-center justify-between">
@@ -154,9 +155,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {mobileMenuOpen && (
-        <button type="button" tabIndex={-1} className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => { setMobileMenuOpen(false); menuButtonRef.current?.focus(); }} aria-label="Close menu" />
-      )}
       <nav
         id="mobile-navigation"
         aria-label="Mobile navigation"
@@ -190,5 +188,9 @@ export default function Navbar() {
         </div>
       </nav>
     </header>
+    {mobileMenuOpen && (
+      <button type="button" tabIndex={-1} className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => { setMobileMenuOpen(false); menuButtonRef.current?.focus(); }} aria-label="Close menu" />
+    )}
+    </>
   );
 }

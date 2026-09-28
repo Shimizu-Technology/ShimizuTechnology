@@ -97,6 +97,9 @@ test('mobile menu closes on Escape and restores focus to its trigger', async ({ 
   const menu = page.getByRole('navigation', { name: 'Mobile navigation' });
   await trigger.click();
   await expect(menu).toBeVisible();
+  const backdrop = page.getByRole('button', { name: 'Close menu' });
+  await expect(backdrop).toBeVisible();
+  expect((await backdrop.boundingBox())?.height).toBe(844);
   await page.keyboard.press('Escape');
   await expect(menu).toBeHidden();
   await expect(trigger).toBeFocused();
