@@ -75,10 +75,11 @@ test('portfolio deep link lands on its archive section', async ({ page }) => {
   await expect.poll(async () => page.locator('#projects').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
 });
 
-test('contact deep link lands on the form after the home page loads', async ({ page }) => {
+test('contact deep link lands on the inquiry panel after the home page loads', async ({ page }) => {
   await page.goto('/#contact');
 
-  await expect(page.getByRole('heading', { name: 'Tell us about your project' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Start with a short note.' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Email about a project' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Project%20inquiry');
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(120);
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
 });
@@ -86,24 +87,6 @@ test('contact deep link lands on the form after the home page loads', async ({ p
 test('malformed fragments leave the homepage available', async ({ page }) => {
   await page.goto('/#%');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Software built for how your business actually works.');
-});
-
-test('project inquiry sends the registered form payload and confirms success', async ({ page }) => {
-  let payload = '';
-  await page.route('**/__forms.html', async (route) => {
-    payload = route.request().postData() ?? '';
-    await route.fulfill({ status: 200, body: 'accepted' });
-  });
-  await page.goto('/#contact');
-  await page.getByRole('textbox', { name: 'Your name' }).fill('QA Tester');
-  await page.getByRole('textbox', { name: 'Email' }).fill('qa@example.com');
-  await page.getByRole('textbox', { name: 'What are you trying to improve?' }).fill('Testing the inquiry flow');
-  await page.getByRole('button', { name: 'Send project inquiry' }).click();
-
-  await expect(page.getByRole('status')).toContainText('Your message was sent.');
-  expect(new URLSearchParams(payload).get('form-name')).toBe('project-inquiry');
-  expect(new URLSearchParams(payload).get('email')).toBe('qa@example.com');
-  expect(new URLSearchParams(payload).get('project')).toBe('Testing the inquiry flow');
 });
 
 test('mobile menu closes on Escape and restores focus to its trigger', async ({ page }) => {
