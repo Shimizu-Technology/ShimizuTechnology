@@ -10,6 +10,7 @@ import Process from './components/Process';
 import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import useInitialHashScroll from './hooks/useInitialHashScroll';
 
 function App() {
   const posthog = usePostHog();
@@ -20,18 +21,7 @@ function App() {
     posthog.capture('page_viewed', { page: 'homepage' });
   }, [posthog]);
 
-  // The homepage is loaded asynchronously, so the browser may try a direct
-  // hash link before its target exists.
-  useEffect(() => {
-    let id: string;
-    try {
-      id = decodeURIComponent(window.location.hash.slice(1));
-    } catch {
-      return;
-    }
-    if (!id) return;
-    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' }));
-  }, []);
+  useInitialHashScroll();
 
   // Detect scroll position for back-to-top button
   useEffect(() => {

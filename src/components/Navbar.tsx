@@ -99,7 +99,7 @@ export default function Navbar() {
           <a
             href="/"
             aria-label="Shimizu Technology home"
-            className="flex items-center space-x-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07101f]"
+            className="flex items-center space-x-3 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07101f]"
           >
             <img
               src={shimizuLogo}

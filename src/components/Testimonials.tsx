@@ -33,7 +33,7 @@ export default function Testimonials() {
             </a>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.04] p-6 sm:p-8 lg:p-10">
+          <div className="rounded-xl border border-white/10 bg-white/4 p-6 sm:p-8 lg:p-10">
             <Quote className="h-8 w-8 text-blue-400" />
             <blockquote className="mt-6 text-xl font-medium leading-relaxed text-slate-100 md:text-2xl">
               “It was incredible seeing what was only a discussion of an idea come to life. The online ordering option is a valuable perk and adds to the VIP experience.”
@@ -43,7 +43,7 @@ export default function Testimonials() {
               <p className="text-sm text-slate-400">Owner feedback after the concert launch</p>
             </div>
 
-            <div className="mt-8 rounded-lg bg-white/[0.04] p-5">
+            <div className="mt-8 rounded-lg bg-white/4 p-5">
               <p className="font-mono-label text-[10px] text-slate-400">Additional client proof</p>
               <p className="mt-3 leading-relaxed text-slate-300">
                 “Your technical expertise and attention to detail ensured the process was user-friendly for our registrants and efficient for our team.”
@@ -58,7 +58,7 @@ export default function Testimonials() {
 
         <div className="mt-20 grid gap-10 border-t border-white/10 pt-16 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-xl">
-            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" loading="lazy" decoding="async" className="aspect-[4/3] w-full object-cover" />
+            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" loading="lazy" decoding="async" className="aspect-4/3 w-full object-cover" />
           </div>
           <div>
             <p className="font-mono-label text-xs text-blue-300">AI enablement</p>

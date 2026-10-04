@@ -11,16 +11,17 @@ export default function Contact() {
         <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-16">
           <div>
             <p className="font-mono-label text-xs text-blue-100">Start a conversation</p>
-            <h2 className="mt-4 max-w-3xl text-3xl font-bold md:text-5xl lg:text-6xl">Bring us the workflow that should work better.</h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-blue-100">Tell us what your team needs. We&apos;ll help clarify the opportunity and map a practical path to launch.</p>
+            <h2 className="mt-4 max-w-3xl text-3xl font-bold md:text-5xl lg:text-6xl">Where could technology make things easier?</h2>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-blue-100">Your website, your tools, or a process that takes too much manual work—tell us what you&apos;d like to improve.</p>
           </div>
 
           <div className="rounded-xl border border-white/20 bg-white p-6 text-slate-950 shadow-xl shadow-blue-950/15 sm:p-8">
-            <p className="font-mono-label text-xs text-blue-700">Project inquiries</p>
+            <p className="font-mono-label text-xs text-blue-700">Talk with us</p>
             <h3 className="mt-3 text-2xl font-bold">Start with a short note.</h3>
-            <p className="mt-3 leading-relaxed text-slate-600">Tell us who uses the current workflow, what takes too much time, and what you want to improve. You don&apos;t need a finished specification.</p>
+            <p className="mt-3 leading-relaxed text-slate-600">Tell us a little about your business and what you&apos;d like help with. We can arrange a 20–30-minute call or meeting. You don&apos;t need a finished specification.</p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">There&apos;s no charge for the first conversation or a concise proposal based on it. If deeper investigation is needed, we agree on its scope and fee first.</p>
             <div className="mt-7 flex flex-col gap-3 border-t border-slate-200 pt-7">
-              <a href="mailto:ShimizuTechnology@gmail.com?subject=Project%20inquiry" onClick={() => posthog.capture('contact_email_clicked')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-blue-700 px-6 py-3 font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"><Mail className="h-4 w-4" /> Email about a project <ArrowRight className="h-4 w-4" /></a>
+              <a href="mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation" onClick={() => posthog.capture('contact_email_clicked')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-blue-700 px-6 py-3 font-semibold text-white transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"><Mail className="h-4 w-4" /> Email to start a conversation <ArrowRight className="h-4 w-4" /></a>
               <a href="tel:+16714830219" onClick={() => posthog.capture('contact_phone_clicked')} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-slate-300 px-6 py-3 font-semibold text-slate-900 transition hover:border-blue-700 hover:text-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"><Phone className="h-4 w-4" /> Call (671) 483-0219</a>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-slate-500">Please leave sensitive account or customer data out of your first message.</p>
