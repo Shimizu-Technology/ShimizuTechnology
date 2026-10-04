@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Projects from './Projects';
 import Contact from './Contact';
 import Footer from './Footer';
+import useInitialHashScroll from '../hooks/useInitialHashScroll';
 
 export default function WorkPage() {
   const posthog = usePostHog();
@@ -12,15 +13,7 @@ export default function WorkPage() {
     posthog.capture('page_viewed', { page: 'portfolio' });
   }, [posthog]);
 
-  useEffect(() => {
-    let id: string;
-    try {
-      id = decodeURIComponent(window.location.hash.slice(1));
-    } catch {
-      return;
-    }
-    if (id) requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: 'instant' }));
-  }, []);
+  useInitialHashScroll();
 
   return (
     <div className="min-h-screen bg-white">
