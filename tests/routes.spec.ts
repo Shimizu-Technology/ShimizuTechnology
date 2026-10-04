@@ -69,7 +69,8 @@ test('portfolio has its own route and links back to selected work', async ({ pag
   await expect(page).toHaveTitle('Our Work | Shimizu Technology');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Work built for real operations.');
   await expect(page.getByRole('link', { name: 'Start with selected client stories' })).toHaveAttribute('href', '/#projects');
-  await expect(page.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '#projects');
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Work', exact: true })).toHaveAttribute('href', '#projects');
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Work', exact: true })).toHaveAttribute('aria-current', 'page');
   await expect(page.getByRole('link', { name: 'Contact', exact: true }).first()).toHaveAttribute('href', '#contact');
 });
 
@@ -119,4 +120,72 @@ test('a failed company-site chunk offers recovery instead of a blank page', asyn
   );
   await expect(page.getByRole('button', { name: 'Try Again' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Return Home' })).toHaveAttribute('href', '/');
+});
+
+test('resizing an open phone menu restores scrolling and visible keyboard focus', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const overflowBefore = await page.locator('body').evaluate((element) => element.style.overflow);
+  await page.getByRole('button', { name: 'Toggle menu' }).click();
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeVisible();
+  await expect.poll(() => page.locator('body').evaluate((element) => element.style.overflow)).toBe('hidden');
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeHidden();
+  await expect.poll(() => page.locator('body').evaluate((element) => element.style.overflow)).toBe(overflowBefore);
+  await expect(page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Work', exact: true })).toBeFocused();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.getByRole('button', { name: 'Toggle menu' })).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('phone navigation reaches the inquiry and restores scroll without overflow', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 760 });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Toggle menu' }).click();
+  await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('link', { name: 'Start a conversation' }).click();
+  await expect(page.getByRole('heading', { name: 'Where could technology make things easier?' })).toBeFocused();
+  await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeHidden();
+  await expect.poll(() => page.locator('body').evaluate((element) => element.style.overflow)).not.toBe('hidden');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
+});
+
+test('primary action is visible in the desktop opening and has readable hover contrast', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await page.goto('/');
+  const action = page.getByRole('link', { name: 'Start a conversation', exact: true });
+  await expect(action).toBeInViewport();
+  const contrast = () => action.evaluate((element) => {
+    const style = getComputedStyle(element);
+    const luminance = (color: string) => {
+      const components = color.match(/[\d.]+/g)?.slice(0, 3).map(Number) || [];
+      const linear = components.map((value) => { const channel = value / 255; return channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4; });
+      return .2126 * linear[0] + .7152 * linear[1] + .0722 * linear[2];
+    };
+    const foreground = luminance(style.color);
+    const background = luminance(style.backgroundColor);
+    return (Math.max(foreground, background) + .05) / (Math.min(foreground, background) + .05);
+  });
+  expect(await contrast()).toBeGreaterThanOrEqual(4.5);
+  await action.hover();
+  await expect(action).toHaveCSS('background-color', 'rgb(25, 68, 180)');
+  await expect.poll(contrast).toBeGreaterThanOrEqual(4.5);
+});
+
+test('case-study details remain keyboard accessible with the held facts', async ({ page }) => {
+  await page.goto('/');
+  const story = page.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Cornerstone Payroll', exact: true }) });
+  await story.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(story.getByText('A production system used by Cornerstone Accounting.', { exact: true })).toBeVisible();
+});
+
+test('failed font and hero image requests preserve the inquiry path under reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.route('**/fonts/*.woff2', (route) => route.abort());
+  await page.route('**/assets/hafaloha-orders-*.webp', (route) => route.abort());
+  await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
+  await page.getByRole('link', { name: 'Start a conversation', exact: true }).click();
+  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toBeVisible();
+  expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
 });

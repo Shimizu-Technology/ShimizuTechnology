@@ -39,16 +39,16 @@ const caseStudies: Record<string, { challenge: string; built: string; result: st
   },
 };
 
-function SelectedProject({ project, index }: { project: Project; index: number }) {
+function SelectedProject({ project }: { project: Project }) {
   const posthog = usePostHog();
   const isPaused = project.status === 'Paused';
   const story = caseStudies[project.title];
 
   return (
-    <article className={`group grid overflow-hidden rounded-xl border border-slate-200 bg-white lg:grid-cols-[1.08fr_0.92fr] ${isPaused ? 'opacity-80' : ''}`}>
-      <div className={`relative min-h-64 overflow-hidden bg-slate-100 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+    <article className={`case-study ${isPaused ? 'opacity-80' : ''}`}>
+      <div className="case-image relative overflow-hidden">
         {project.image ? (
-          <img src={project.image} alt={project.title} loading="lazy" decoding="async" className={`h-full min-h-64 w-full transition duration-700 group-hover:scale-[1.025] ${project.imageStyle || 'object-cover'}`} />
+          <img src={project.image} alt={project.title} loading="lazy" decoding="async" width="640" height="360" className={project.imageStyle || 'object-cover'} />
         ) : (
           <div className={`flex h-full min-h-64 items-center justify-center bg-linear-to-br ${project.gradientBg || 'from-blue-500 to-indigo-700'} text-white [&_svg]:h-16 [&_svg]:w-16`}>
             {project.icon}
@@ -60,19 +60,22 @@ function SelectedProject({ project, index }: { project: Project; index: number }
         </div>
       </div>
 
-      <div className={`flex flex-col justify-center p-6 sm:p-8 lg:p-10 ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+      <div className="case-copy flex flex-col justify-center">
         <div className="font-mono-label text-xs text-blue-700">{project.subtitle}</div>
         <h3 className="mt-3 text-2xl font-bold text-slate-950 md:text-3xl">{project.title}</h3>
         <p className="mt-4 leading-relaxed text-slate-600">{project.description}</p>
-        {story && <dl className="mt-6 space-y-3 border-t border-slate-100 pt-5 text-sm leading-relaxed">
+        {story && <details className="case-details">
+          <summary>Read the case study</summary>
+          <dl className="mt-4 space-y-3 text-sm leading-relaxed">
           <div><dt className="font-semibold text-slate-900">The challenge</dt><dd className="text-slate-600">{story.challenge}</dd></div>
           <div><dt className="font-semibold text-slate-900">What we built</dt><dd className="text-slate-600">{story.built}</dd></div>
           <div><dt className="font-semibold text-slate-900">The result</dt><dd className="text-slate-600">{story.result}</dd></div>
-        </dl>}
-        <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-5">
+          </dl>
+        </details>}
+        <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-4">
           <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs font-semibold text-slate-600">{project.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
           {project.link && !isPaused && (
-            <a href={project.link} target="_blank" rel="noopener noreferrer" onClick={() => posthog.capture('project_link_clicked', { project_title: project.title, url: project.link })} className="ml-auto inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:text-blue-500">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" onClick={() => posthog.capture('project_link_clicked', { project_title: project.title, url: project.link })} className="ml-auto inline-flex min-h-11 items-center gap-1.5 text-sm font-bold text-blue-700 hover:text-blue-800">
               Visit product <ArrowUpRight className="h-4 w-4" />
             </a>
           )}
@@ -94,7 +97,7 @@ function PortfolioProjectCard({ project }: { project: Project }) {
     <>
       <div className="flex items-start gap-4">
         <div className={`flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg ${project.image ? 'border border-slate-200 bg-white p-2' : `bg-linear-to-br ${project.gradientBg || 'from-slate-700 to-slate-950'} text-white [&_svg]:h-7 [&_svg]:w-7`}`}>
-          {project.image ? <img src={project.image} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" /> : project.icon}
+          {project.image ? <img src={project.image} alt="" loading="lazy" decoding="async" width="56" height="56" className="h-full w-full object-contain" /> : project.icon}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-2">
@@ -130,16 +133,16 @@ export default function Projects({ showSelected = true, showArchive = false }: {
   const liveDemos = projects.filter((project) => project.status === 'Live demo').length;
 
   return (
-    <section id="projects" className="scroll-mt-20 bg-white py-16 md:py-24 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+    <section id="projects" className="site-section bg-white">
+      <div className="site-container">
         {showSelected && <>
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-          <div><p className="font-mono-label text-xs text-blue-600">Selected work</p><h2 className="mt-4 text-3xl font-bold text-slate-950 md:text-5xl">Products with real users and measurable stakes.</h2></div>
-          <p className="max-w-2xl text-lg leading-relaxed text-slate-600 lg:justify-self-end">From Guam payroll and education to civic operations and international events, our work turns complicated rules and workflows into software people can use.</p>
+          <div><p className="font-mono-label section-label">Selected work</p><h2 className="section-title mt-4">Products with real users and measurable stakes.</h2></div>
+          <p className="section-intro lg:justify-self-end">From Guam payroll and education to civic operations and international events, our work turns complicated rules and workflows into software people can use.</p>
         </div>
-        <div className="mt-10 space-y-5 md:mt-12 md:space-y-6">{selectedProjects.map((project, index) => <SelectedProject key={project.title} project={project} index={index} />)}</div>
+        <div className="mt-9 space-y-5">{selectedProjects.map((project) => <SelectedProject key={project.title} project={project} />)}</div>
 
-        <a href="/work/" className="mt-9 inline-flex items-center gap-2 rounded-md border border-slate-300 px-5 py-3 font-semibold text-slate-900 transition hover:border-blue-500 hover:text-blue-700">Explore more projects <ArrowUpRight className="h-4 w-4" /></a>
+        <a href="/work/" className="button-secondary mt-7">Explore more projects <ArrowUpRight className="h-4 w-4" /></a>
         </>}
 
         {showArchive && <>

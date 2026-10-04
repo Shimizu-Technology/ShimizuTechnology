@@ -8,13 +8,12 @@ const outcomes = [
 
 export default function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-[#07101f] py-16 text-white md:py-24 lg:py-28">
-      <div className="surface-grid absolute inset-0 opacity-20" />
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+    <section className="relative overflow-hidden bg-[var(--surface-dark)] site-section text-white">
+      <div className="relative site-container">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
             <p className="font-mono-label text-xs text-blue-300">Client outcomes</p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight md:text-5xl">Built for the moments when the system has to work.</h2>
+            <h2 className="mt-4 section-title">Built for the moments when the system has to work.</h2>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-300">
               Hafaloha used its custom ordering platform to manage a high-volume concert VIP experience without downtime or fulfillment gaps.
             </p>
