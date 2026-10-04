@@ -50,13 +50,13 @@ function SelectedProject({ project, index }: { project: Project; index: number }
         {project.image ? (
           <img src={project.image} alt={project.title} loading="lazy" decoding="async" className={`h-full min-h-64 w-full transition duration-700 group-hover:scale-[1.025] ${project.imageStyle || 'object-cover'}`} />
         ) : (
-          <div className={`flex h-full min-h-64 items-center justify-center bg-gradient-to-br ${project.gradientBg || 'from-blue-500 to-indigo-700'} text-white [&_svg]:h-16 [&_svg]:w-16`}>
+          <div className={`flex h-full min-h-64 items-center justify-center bg-linear-to-br ${project.gradientBg || 'from-blue-500 to-indigo-700'} text-white [&_svg]:h-16 [&_svg]:w-16`}>
             {project.icon}
           </div>
         )}
         <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-          {project.status && <span className={`font-mono-label rounded px-2.5 py-1 text-xs shadow-sm ${statusStyles[project.status]}`}>{project.status}</span>}
-          <span className="font-mono-label rounded bg-[#07101f]/90 px-2.5 py-1 text-xs text-white backdrop-blur">Selected work</span>
+          {project.status && <span className={`font-mono-label rounded-sm px-2.5 py-1 text-xs shadow-xs ${statusStyles[project.status]}`}>{project.status}</span>}
+          <span className="font-mono-label rounded-sm bg-[#07101f]/90 px-2.5 py-1 text-xs text-white backdrop-blur-sm">Selected work</span>
         </div>
       </div>
 
@@ -93,13 +93,13 @@ function PortfolioProjectCard({ project }: { project: Project }) {
   const content = (
     <>
       <div className="flex items-start gap-4">
-        <div className={`flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg ${project.image ? 'border border-slate-200 bg-white p-2' : `bg-gradient-to-br ${project.gradientBg || 'from-slate-700 to-slate-950'} text-white [&_svg]:h-7 [&_svg]:w-7`}`}>
+        <div className={`flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg ${project.image ? 'border border-slate-200 bg-white p-2' : `bg-linear-to-br ${project.gradientBg || 'from-slate-700 to-slate-950'} text-white [&_svg]:h-7 [&_svg]:w-7`}`}>
           {project.image ? <img src={project.image} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" /> : project.icon}
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-start justify-between gap-2">
             <h4 className="text-base font-bold leading-tight text-slate-950">{project.title}</h4>
-            {project.status && <span className={`font-mono-label rounded px-2 py-1 text-[10px] ${statusStyles[project.status]}`}>{project.status}</span>}
+            {project.status && <span className={`font-mono-label rounded-sm px-2 py-1 text-[10px] ${statusStyles[project.status]}`}>{project.status}</span>}
           </div>
           <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-blue-600">{project.subtitle}</p>
         </div>
@@ -107,8 +107,8 @@ function PortfolioProjectCard({ project }: { project: Project }) {
       <p className="mt-4 text-sm leading-relaxed text-slate-600">{project.description}</p>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-slate-100 pt-3">
         <div className="flex flex-wrap gap-x-2.5 gap-y-1 text-[11px] font-semibold text-slate-500">{project.tags.slice(0, 4).map((tag) => <span key={tag}>{tag}</span>)}</div>
-        {canVisit && <ArrowUpRight className="h-4 w-4 flex-shrink-0 text-slate-400 transition group-hover:text-blue-600" />}
-        {!project.link && project.status === 'Private deployment' && <LockKeyhole className="h-4 w-4 flex-shrink-0 text-slate-400" />}
+        {canVisit && <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-400 transition group-hover:text-blue-600" />}
+        {!project.link && project.status === 'Private deployment' && <LockKeyhole className="h-4 w-4 shrink-0 text-slate-400" />}
       </div>
     </>
   );
@@ -163,7 +163,7 @@ export default function Projects({ showSelected = true, showArchive = false }: {
             {projectGroups.map((group) => (
               <section key={group.title} aria-labelledby={`portfolio-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
                 <div className="grid gap-3 border-b border-slate-300 pb-4 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-                  <div className="flex items-center gap-3"><h3 id={`portfolio-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="text-xl font-bold text-slate-950">{group.title}</h3><span className="font-mono-label rounded bg-white px-2 py-1 text-xs text-slate-600">{group.projects.length}</span></div>
+                  <div className="flex items-center gap-3"><h3 id={`portfolio-${group.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`} className="text-xl font-bold text-slate-950">{group.title}</h3><span className="font-mono-label rounded-sm bg-white px-2 py-1 text-xs text-slate-600">{group.projects.length}</span></div>
                   <p className="text-sm leading-relaxed text-slate-500 md:text-right">{group.description}</p>
                 </div>
                 <div className="mt-5 grid gap-4 md:grid-cols-2">{group.projects.map((project) => <PortfolioProjectCard key={project.title} project={project} />)}</div>

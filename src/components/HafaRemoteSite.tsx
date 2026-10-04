@@ -49,7 +49,7 @@ function BrandMark() {
   return (
     <a
       href="/hafa-remote"
-      className="inline-flex items-center gap-3 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#07101f]"
+      className="inline-flex items-center gap-3 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#07101f]"
       aria-label="Hafa Remote home"
     >
       <span className="grid h-10 w-10 place-items-center rounded-[14px] border border-cyan-200/30 bg-cyan-300 text-[#07101f] shadow-[0_10px_30px_-12px_rgba(103,232,249,0.8)]">
@@ -130,7 +130,7 @@ function RemotePreview() {
 
         <div className="mt-7 grid grid-cols-3 gap-3 text-slate-200">
           {[Home, Volume2, Keyboard].map((Icon, index) => (
-            <span key={index} className="grid h-14 place-items-center rounded-2xl border border-white/10 bg-white/[0.04]">
+            <span key={index} className="grid h-14 place-items-center rounded-2xl border border-white/10 bg-white/4">
               <Icon className="h-5 w-5" />
             </span>
           ))}

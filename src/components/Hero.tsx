@@ -59,12 +59,12 @@ export default function Hero() {
               <span className="h-2 w-2 rounded-full bg-amber-400/70" />
               <span className="h-2 w-2 rounded-full bg-green-400/70" />
             </div>
-            <img src={desktopProduct} alt="Hafaloha Orders desktop interface" width="1600" height="903" fetchPriority="high" className="aspect-[16/10] w-full rounded-md object-cover object-top" />
+            <img src={desktopProduct} alt="Hafaloha Orders desktop interface" width="1600" height="903" fetchPriority="high" className="aspect-16/10 w-full rounded-md object-cover object-top" />
           </div>
           <div className="premium-shadow absolute -bottom-14 -right-3 w-[29%] overflow-hidden rounded-[1.6rem] border-[6px] border-slate-950 bg-slate-950">
-            <img src={mobileProduct} alt="Hafaloha Orders mobile interface" width="720" height="1561" className="aspect-[9/18] w-full object-cover object-top" />
+            <img src={mobileProduct} alt="Hafaloha Orders mobile interface" width="720" height="1561" className="aspect-9/18 w-full object-cover object-top" />
           </div>
-          <div className="absolute -bottom-1 left-3 rounded-lg border border-white/10 bg-[#0d192d]/95 p-3 backdrop-blur sm:-bottom-10 sm:left-8 sm:p-4">
+          <div className="absolute -bottom-1 left-3 rounded-lg border border-white/10 bg-[#0d192d]/95 p-3 backdrop-blur-sm sm:-bottom-10 sm:left-8 sm:p-4">
             <div className="font-mono-label text-[10px] text-blue-300">Live-event reliability</div>
             <div className="mt-1 text-2xl font-bold">850+ orders</div>
             <div className="text-xs text-slate-400">Zero downtime</div>

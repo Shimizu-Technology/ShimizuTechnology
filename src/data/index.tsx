@@ -276,7 +276,7 @@ export const projects: Project[] = [
     subtitle: "Airport Authority Event",
     description: "Custom registration and admin dashboard for the annual Edward A.P. Muna II Memorial Golf Tournament, built for reuse year after year.",
     image: "/images/giaa-logo.png",
-    imageStyle: "object-contain bg-gradient-to-b from-sky-50 to-blue-100 p-6",
+    imageStyle: "object-contain bg-linear-to-b from-sky-50 to-blue-100 p-6",
     link: "https://giaa-tournament.com",
     icon: <Plane className="w-5 h-5" />,
     accentColor: "bg-blue-600",
