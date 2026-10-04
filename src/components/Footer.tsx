@@ -15,7 +15,7 @@ export default function Footer() {
             /></a>
             <div>
               <span className="block font-semibold">Shimizu Technology</span>
-              <span className="text-sm text-slate-400">Custom software · Guam</span>
+              <span className="text-sm text-slate-400">Websites, software &amp; automation · Guam</span>
             </div>
           </div>
 

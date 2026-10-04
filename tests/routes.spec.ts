@@ -55,10 +55,10 @@ test('non-remote routes preserve the Shimizu Technology site', async ({ page }) 
 
   expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    'Software built for how your business actually works.',
+    'Technology built for how your business actually works.',
   );
   await expect(page).toHaveTitle(
-    'Shimizu Technology | AI Apps, Mobile Development & Custom Software in Guam',
+    'Shimizu Technology | Websites, Software & Automation in Guam',
   );
 });
 
@@ -83,14 +83,14 @@ test('contact deep link lands on the inquiry panel after the home page loads', a
   await page.goto('/#contact');
 
   await expect(page.getByRole('heading', { name: 'Start with a short note.' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Email about a project' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Project%20inquiry');
+  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(120);
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
 });
 
 test('malformed fragments leave the homepage available', async ({ page }) => {
   await page.goto('/#%');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('Software built for how your business actually works.');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
 });
 
 test('mobile menu closes on Escape and restores focus to its trigger', async ({ page }) => {

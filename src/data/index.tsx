@@ -525,32 +525,39 @@ export const internalTools: InternalTool[] = [
 //
 export const services: Service[] = [
   {
-    icon: <Brain className="w-7 h-7" />,
-    title: "AI & Machine Learning",
-    description: "Build intelligent applications with RAG systems, chatbots, and custom AI solutions. We've deployed production AI with Whisper, GPT-4o, Gemini, and more.",
-    iconBg: "bg-purple-100",
-    iconColor: "text-purple-600"
-  },
-  {
-    icon: <Smartphone className="w-7 h-7" />,
-    title: "Mobile App Development",
-    description: "Cross-platform iOS and Android apps using React Native. From concept to App Store deployment with ongoing maintenance.",
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600"
-  },
-  {
     icon: <Globe2 className="w-7 h-7" />,
-    title: "Web Applications",
-    description: "Modern, responsive web applications built with React, TypeScript, and Ruby on Rails. Scalable architecture that grows with your business.",
+    title: "Websites & Online Presence",
+    description: "Help customers understand your services and take the next step. We build and improve business websites, inquiry forms, and online experiences around what your customers need.",
     iconBg: "bg-green-100",
     iconColor: "text-green-600"
   },
   {
+    icon: <Code2 className="w-7 h-7" />,
+    title: "Business Software",
+    description: "Give your team a clearer way to manage requests, records, approvals, and daily work. We can improve an existing application or build a focused tool around your process.",
+    iconBg: "bg-blue-100",
+    iconColor: "text-blue-600"
+  },
+  {
     icon: <Settings className="w-7 h-7" />,
-    title: "Business Automation",
-    description: "Streamline operations with custom automation tools, integrations, and workflow optimization. Save time and reduce errors.",
+    title: "Integrations & Automation",
+    description: "Connect the tools you already use and reduce repeated entry or manual handoffs. We work through the access and limitations of your current setup before recommending a change.",
     iconBg: "bg-orange-100",
     iconColor: "text-orange-600"
+  },
+  {
+    icon: <Smartphone className="w-7 h-7" />,
+    title: "Mobile Applications",
+    description: "Build useful iPhone and Android experiences for customers or staff. We handle design, development, testing, and release, with maintenance agreed as part of the scope.",
+    iconBg: "bg-blue-100",
+    iconColor: "text-blue-600"
+  },
+  {
+    icon: <Brain className="w-7 h-7" />,
+    title: "Practical AI",
+    description: "Use AI where it helps people find information, process documents or media, and learn. We design around reliable sources, clear controls, and review by the people responsible for the result.",
+    iconBg: "bg-purple-100",
+    iconColor: "text-purple-600"
   }
 ];
 
@@ -569,22 +576,22 @@ export const techStack = [
 export const workflowSteps: WorkflowStep[] = [
   {
     icon: <Users className="w-6 h-6" />,
-    title: "Discovery",
-    description: "We map the current workflow, the people involved, the constraints, and what success would look like."
+    title: "Start with a conversation",
+    description: "Tell us what you want to improve in a 20–30-minute call or meeting. We look at your current setup and whether there's a useful next step."
   },
   {
     icon: <Code2 className="w-6 h-6" />,
-    title: "Design & Prototype",
-    description: "We put the important screens and decisions in front of your team before committing to a full build."
+    title: "Agree on a proposal",
+    description: "When the next step is clear, you receive a proposal covering the work, price, timing, and how we'll check the result. Any deeper investigation is scoped and agreed separately."
   },
   {
     icon: <Zap className="w-6 h-6" />,
-    title: "Agile Development",
-    description: "You review working software at agreed checkpoints and help resolve the tradeoffs that matter."
+    title: "Build or improve",
+    description: "After agreement and the initial payment, we configure, connect, or build the solution. You review progress at agreed checkpoints."
   },
   {
     icon: <Rocket className="w-6 h-6" />,
-    title: "Launch & Support",
-    description: "We test the launch path, hand over the workflows, and stay available as your needs change."
+    title: "Test and hand over",
+    description: "We test the result with your team and show you how to use it. Ongoing support is agreed separately."
   }
 ];

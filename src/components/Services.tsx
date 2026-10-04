@@ -8,11 +8,11 @@ export default function Services() {
           <div>
             <p className="font-mono-label text-xs text-blue-600">Capabilities</p>
             <h2 className="mt-4 text-3xl font-bold text-slate-950 md:text-5xl">
-              From operational problem to production software.
+              Useful technology, shaped around your business.
             </h2>
           </div>
           <p className="max-w-2xl text-lg leading-relaxed text-slate-600 lg:justify-self-end">
-            Strategy, design, engineering, and long-term support from one Guam-based team. We focus on useful systems that earn their place in the day-to-day operation.
+            We can help with your website, a manual process, or the tools your team already uses. Start with one useful improvement and a scope that fits your needs.
           </p>
         </div>
 

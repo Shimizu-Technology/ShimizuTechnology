@@ -14,11 +14,11 @@ export default function Hero() {
           </div>
 
           <h1 className="max-w-3xl text-4xl font-bold leading-[1.08] sm:text-5xl md:text-6xl lg:text-[4.25rem]">
-            Software built for how your business <span className="text-blue-400">actually works.</span>
+            Technology built for how your business <span className="text-blue-400">actually works.</span>
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-relaxed text-slate-300 md:text-xl">
-            We design and build custom platforms, AI applications, and mobile products for organizations in Guam and beyond.
+            We help businesses improve their online presence and make everyday work easier through websites, software, and automation. We start with what you need, then work out whether to improve your existing tools or build something new.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -26,7 +26,7 @@ export default function Hero() {
               href="#contact"
               className="inline-flex items-center justify-center rounded-md bg-blue-500 px-6 py-3.5 font-semibold text-white shadow-lg shadow-blue-500/20 transition hover:-translate-y-0.5 hover:bg-blue-400"
             >
-              Discuss your project
+              Start a conversation
               <ChevronRight className="ml-1 w-4 h-4" />
             </a>
             <a

@@ -37,7 +37,7 @@ export default function About() {
               I founded <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium">Code School of Guam</a> to open a path into software development here in Guam. Shimizu Technology grew from the same belief: local teams deserve software shaped around their real work, and emerging engineers need real projects to learn from.
             </p>
             <p className="text-slate-600 mb-4 leading-relaxed">
-              Today, our work ranges from payroll and learning platforms to ordering and live-event systems. We start by understanding the workflow, then design, build, and support the product with the people who use it.
+              Today, we help local teams with websites, business software, and the tools behind their daily work. We start by understanding what needs to improve, then configure, connect, or build a solution with the people who will use it.
             </p>
             <p className="text-slate-600 mb-6 leading-relaxed">
               You work with a Guam-based team that can stay close to the problem after launch. We are direct about what is live, what is still being tested, and what a new engagement needs to succeed.
@@ -102,7 +102,7 @@ export default function About() {
                 <h3 className="text-lg font-semibold text-slate-900">End-to-End Delivery</h3>
               </div>
               <p className="text-slate-600 text-sm">
-                One team carries discovery, design, engineering, launch, and support. You see working software and make decisions at practical checkpoints.
+                One team helps you understand the problem, agree on scope, improve the tools, and test the result. Ongoing support is scoped separately.
               </p>
             </div>
           </div>
