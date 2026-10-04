@@ -5,13 +5,13 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#07101f] py-10 text-white">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+      <div className="site-container">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center space-x-3">
             <a href="/" aria-label="Shimizu Technology home"><img
               src={shimizuLogo}
               alt=""
-              className="h-9 w-9 rounded-full object-contain"
+              width="36" height="36" className="h-9 w-9 rounded-full object-contain"
             /></a>
             <div>
               <span className="block font-semibold">Shimizu Technology</span>
@@ -19,9 +19,9 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex items-center gap-6 text-sm">
+          <div className="flex flex-wrap justify-center items-center gap-5 text-sm">
             <a href={isWorkPage ? '/#services' : '#services'} className="text-slate-300 hover:text-white transition-colors">Services</a>
-            <a href="/work/" className="text-slate-300 hover:text-white transition-colors">Portfolio</a>
+            <a href="/work/" aria-current={isWorkPage ? 'page' : undefined} className="text-slate-300 hover:text-white transition-colors">Portfolio</a>
             <a href={isWorkPage ? '/#about' : '#about'} className="text-slate-300 hover:text-white transition-colors">About</a>
             <a href="#contact" className="text-slate-300 hover:text-white transition-colors">Contact</a>
           </div>

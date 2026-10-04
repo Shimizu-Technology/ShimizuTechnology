@@ -42,8 +42,8 @@ function App() {
       <Navbar />
       <main id="main-content" tabIndex={-1}>
       <Hero />
-      <Services />
       <Projects />
+      <Services />
       <Testimonials />
       <Process />
       <About />
@@ -55,7 +55,7 @@ function App() {
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition-all z-50"
+          className="button-primary fixed bottom-6 right-6 z-50 !rounded-full !p-3 shadow-lg"
           aria-label="Back to top"
         >
           <ArrowRight className="w-5 h-5 -rotate-90" />

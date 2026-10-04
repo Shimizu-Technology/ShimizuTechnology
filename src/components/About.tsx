@@ -8,24 +8,24 @@ import {
 
 export default function About() {
   return (
-    <section id="about" className="relative bg-white py-16 md:py-24 lg:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+    <section id="about" className="relative bg-white site-section">
+      <div className="site-container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Left content */}
           <div>
-            <p className="font-mono-label text-xs text-blue-600">Built in Guam</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-950 md:text-5xl">
+            <p className="font-mono-label section-label">Built in Guam</p>
+            <h2 className="mt-4 section-title">
               Local context. Global engineering standards.
             </h2>
 
             {/* Founder intro with photo */}
-            <div className="flex items-center gap-4 mb-6 pb-6 border-b border-slate-200">
+            <div className="mt-7 flex items-center gap-4 mb-6 pb-6 border-b border-slate-200">
               <img
                 src="/images/leon-shimizu.webp"
                 alt="Leon Shimizu"
                 loading="lazy"
                 decoding="async"
-                className="h-20 w-20 rounded-lg object-cover grayscale"
+                width="80" height="80" className="h-20 w-20 rounded-lg object-cover"
               />
               <div>
                 <p className="font-bold text-slate-900 text-lg">Leon Shimizu</p>
@@ -84,7 +84,7 @@ export default function About() {
 
             <div className="py-8">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-purple-100 rounded-lg text-purple-600">
+                <div className="p-2 bg-blue-50 rounded-lg text-blue-700">
                   <Brain className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900">Practical AI</h3>
@@ -96,7 +96,7 @@ export default function About() {
 
             <div className="py-8">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 bg-green-100 rounded-lg text-green-600">
+                <div className="p-2 bg-blue-50 rounded-lg text-blue-700">
                   <Rocket className="w-5 h-5" />
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900">End-to-End Delivery</h3>

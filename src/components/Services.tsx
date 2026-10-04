@@ -2,24 +2,24 @@ import { services, techStack } from '../data';
 
 export default function Services() {
   return (
-    <section id="services" className="relative bg-[#f7f8fa] py-16 md:py-24 lg:py-28">
-      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
-        <div className="grid gap-8 border-b border-slate-200 pb-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+    <section id="services" className="relative bg-[var(--surface-soft)] site-section">
+      <div className="relative z-10 site-container">
+        <div className="grid gap-8 border-b border-slate-200 pb-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="font-mono-label text-xs text-blue-600">Capabilities</p>
-            <h2 className="mt-4 text-3xl font-bold text-slate-950 md:text-5xl">
+            <p className="font-mono-label section-label">Capabilities</p>
+            <h2 className="mt-4 section-title">
               Useful technology, shaped around your business.
             </h2>
           </div>
-          <p className="max-w-2xl text-lg leading-relaxed text-slate-600 lg:justify-self-end">
+          <p className="max-w-2xl section-intro lg:justify-self-end">
             We can help with your website, a manual process, or the tools your team already uses. Start with one useful improvement and a scope that fits your needs.
           </p>
         </div>
 
         <div className="mt-6 divide-y divide-slate-200 border-b border-slate-200">
           {services.map((service, index) => (
-            <article key={service.title} className="grid gap-4 py-7 md:grid-cols-[80px_0.65fr_1.35fr] md:items-start md:gap-8 md:py-9">
-              <span className="font-mono-label text-xs text-slate-400">0{index + 1}</span>
+            <article key={service.title} className="grid gap-3 py-6 md:grid-cols-[50px_0.8fr_1.2fr] md:items-start md:gap-8">
+              <span className="font-mono-label text-xs text-slate-600">0{index + 1}</span>
               <h3 className="text-xl font-bold text-slate-950 md:text-2xl">{service.title}</h3>
               <p className="max-w-2xl leading-relaxed text-slate-600">{service.description}</p>
             </article>

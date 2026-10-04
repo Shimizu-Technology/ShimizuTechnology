@@ -36,7 +36,7 @@ export default class HomeSiteErrorBoundary extends Component<
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <button
               type="button"
-              className="rounded-md bg-blue-500 px-5 py-3 font-semibold hover:bg-blue-400"
+              className="button-primary"
               onClick={() => window.location.reload()}
             >
               Try Again
