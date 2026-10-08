@@ -3,23 +3,23 @@ import { expect, test } from '@playwright/test';
 const hafaRemoteRoutes = [
   {
     path: '/hafa-remote',
-    heading: 'Three brands. One remote. Nothing in the way.',
-    title: 'Hafa Remote — Simple Wi-Fi TV remote',
-    description: 'A locally used iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. Personal alpha; not yet on the App Store.',
+    heading: 'Your Samsung TV. Within reach.',
+    title: 'Hafa Remote — Samsung TV remote',
+    description: 'A local iPhone remote for compatible Samsung TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
     canonical: 'https://shimizu-technology.com/hafa-remote',
   },
   {
     path: '/hafa-remote/support',
     heading: 'Get connected and back to watching.',
     title: 'Hafa Remote Support',
-    description: 'Setup, troubleshooting, compatibility, and contact information for Hafa Remote.',
+    description: 'Samsung setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.',
     canonical: 'https://shimizu-technology.com/hafa-remote/support',
   },
   {
     path: '/hafa-remote/privacy',
-    heading: 'Your remote stays in your home.',
+    heading: 'Local control. Sharing is your choice.',
     title: 'Hafa Remote Privacy Policy',
-    description: 'How Hafa Remote handles TV information, pairing credentials, typed text, and local-network access.',
+    description: 'Local TV data, default-off in-memory diagnostics, optional report sharing, and support reception in Hafa Remote.',
     canonical: 'https://shimizu-technology.com/hafa-remote/privacy',
   },
 ];
@@ -31,8 +31,8 @@ for (const route of hafaRemoteRoutes) {
     expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
     if (route.path === '/hafa-remote') {
-      await expect(page.getByText('Used locally · personal alpha')).toBeVisible();
-      await expect(page.getByText('Currently used in private testing. It is not available on the App Store yet.')).toBeVisible();
+      await expect(page.getByText('Samsung App Store release in preparation', { exact: true })).toBeVisible();
+      await expect(page.getByText('Hafa Remote is currently in private testing. It is not available on the App Store yet.')).toBeVisible();
     }
     await expect(page).toHaveTitle(route.title);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', route.description);
@@ -189,3 +189,50 @@ test('failed font and hero image requests preserve the inquiry path under reduce
   await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toBeVisible();
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
 });
+
+test('Samsung product pages preserve local diagnostics and voluntary support boundaries', async ({ page }) => {
+  const analyticsRequests: string[] = [];
+  page.on('request', request => {
+    if (/posthog|googletagmanager|google-analytics/i.test(request.url())) analyticsRequests.push(request.url());
+  });
+  await page.goto('/hafa-remote/support');
+  await expect(page.getByRole('heading', { name: 'Set up your Samsung TV' })).toBeVisible();
+  await expect(page.getByRole('main')).not.toContainText(/Sony|Vizio/);
+  await expect(page.getByText(/TV can use Wi-Fi or Ethernet on the same non-guest/)).toBeVisible();
+  await expect(page.getByText(/It resets to off when the app restarts/)).toBeVisible();
+  await expect(page.getByText(/An existing preview stays unchanged/)).toBeVisible();
+  await page.getByRole('link', { name: 'support privacy explanation' }).click();
+  await expect(page).toHaveURL(/\/hafa-remote\/privacy#support$/);
+  await expect(page.getByRole('heading', { name: 'Information you send to support' })).toBeInViewport();
+  await expect(page.getByText(/we receive the message\/report and the sender information/)).toBeVisible();
+  await expect(page.getByText(/It does not change an already-open preview/)).toBeVisible();
+  await expect(page.getByText(/Uninstalling is not a guarantee/)).toBeVisible();
+  await expect(page.getByRole('main')).not.toContainText(/Data we collect|Shimizu Technology does not collect data|Sony|Vizio/);
+  expect(analyticsRequests).toEqual([]);
+});
+
+for (const width of [320, 390, 1280]) {
+  test('Hafa routes stay readable and operable at ' + width + 'px', async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
+    for (const route of hafaRemoteRoutes) {
+      await page.goto(route.path);
+      await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+      const nav = page.getByRole('navigation', { name: 'Hafa Remote', exact: true });
+      for (const name of ['Support', 'Privacy']) {
+        const link = nav.getByRole('link', { name, exact: true });
+        const box = await link.boundingBox();
+        expect(box?.height).toBeGreaterThanOrEqual(44);
+        expect(box?.width).toBeGreaterThanOrEqual(44);
+      }
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page.getByRole('main')).toBeFocused();
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', route.title);
+      await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', route.canonical);
+      expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
+    }
+  });
+}
