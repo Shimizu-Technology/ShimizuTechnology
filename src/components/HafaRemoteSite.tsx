@@ -126,7 +126,7 @@ function LandingPage() {
         <section className="hafa-hero">
           <div className="hafa-hero-inner">
             <div>
-              <p className="hafa-eyebrow">Samsung App Store release in preparation</p>
+              <p className="hafa-eyebrow">App Store release for Samsung TVs in preparation</p>
               <h1>Your Samsung TV. <span>Within reach.</span></h1>
               <p className="hafa-hero-copy">Everyday controls on your iPhone, with a calm native interface and no account, advertising, tracking, or subscription.</p>
               <p className="hafa-availability">Hafa Remote is currently in private testing. It is not available on the App Store yet.</p>
@@ -201,14 +201,14 @@ function SupportPage() {
       <nav className="hafa-document-links" aria-label="Support topics">
         <a href="#setup">Set up</a><a href="#recovery">Connection help</a><a href="#diagnostics">Diagnostics</a><a href="#contact">Contact</a>
       </nav>
-      <h2 id="setup">Set up your Samsung TV</h2>
+      <h2 id="setup" tabIndex={-1}>Set up your Samsung TV</h2>
       <ol>
         <li>Turn on your compatible Samsung TV. Connect this iPhone to home Wi-Fi; the TV can use Wi-Fi or Ethernet on the same non-guest local network.</li>
         <li>Open Hafa Remote, choose <strong>Add TV</strong>, and allow Local Network access when iOS asks.</li>
         <li>Choose the intended television from the nearby list, then approve Hafa Remote on the TV by choosing <strong>Allow</strong> when prompted.</li>
         <li>Wait for the connected status before using the remote. Connected describes the control connection; TV power is shown separately when it is known.</li>
       </ol>
-      <h2 id="recovery">If the TV does not connect</h2>
+      <h2 id="recovery" tabIndex={-1}>If the TV does not connect</h2>
       <ul>
         <li>Check that the iPhone uses home Wi-Fi and the TV is on the same local network. Guest Wi-Fi and client isolation can prevent devices from finding each other.</li>
         <li>Choose <strong>Scan Again</strong>. If discovery still cannot find the TV, open <strong>TV not showing up?</strong> and use its private address from the TV network settings.</li>
@@ -221,7 +221,7 @@ function SupportPage() {
       <p>For text entry, focus a field on the TV first. TV apps and secure fields may reject remote text even while ordinary controls work.</p>
       <h2>Try the remote without a TV</h2>
       <p>Open <strong>Help → Try the Remote Offline</strong>. This clearly labeled demo changes only a preview on the phone; it does not discover, pair, or contact a TV, and it does not change your saved TVs.</p>
-      <h2 id="diagnostics">Optional diagnostics</h2>
+      <h2 id="diagnostics" tabIndex={-1}>Optional diagnostics</h2>
       <p><strong>Help → Diagnostics</strong> is off by default. Enabling it records up to <strong>100 recent semantic events</strong> and coarse timings in memory on the phone. It resets to off when the app restarts.</p>
       <ol>
         <li>Enable diagnostics and reproduce the problem.</li>
@@ -230,7 +230,7 @@ function SupportPage() {
       </ol>
       <p>The report contains app and iOS versions, optional TV model and firmware, and event/timing categories. It excludes network addresses, device identities, TV and Wi-Fi names, pairing credentials, and entered text.</p>
       <p><strong>Clear Events</strong> or disabling diagnostics clears the live event buffer. An existing preview stays unchanged, and a copy already sent remains with its recipient.</p>
-      <h2 id="contact">Contact support</h2>
+      <h2 id="contact" tabIndex={-1}>Contact support</h2>
       <p>Email <a href={supportLink}>{supportEmail}</a>. If useful, include the TV model and firmware, iPhone model, iOS version, and connection message. Sending a support report is optional.</p>
       <p>Do not send passwords, pairing credentials, device identities, or network addresses. Information you choose to send to support is received with your message and email sender details; read the <a href="/hafa-remote/privacy#support">support privacy explanation</a> before sending.</p>
     </DocumentPage>

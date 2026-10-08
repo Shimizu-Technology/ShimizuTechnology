@@ -31,7 +31,7 @@ for (const route of hafaRemoteRoutes) {
     expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
     if (route.path === '/hafa-remote') {
-      await expect(page.getByText('Samsung App Store release in preparation', { exact: true })).toBeVisible();
+      await expect(page.getByText('App Store release for Samsung TVs in preparation', { exact: true })).toBeVisible();
       await expect(page.getByText('Hafa Remote is currently in private testing. It is not available on the App Store yet.')).toBeVisible();
     }
     await expect(page).toHaveTitle(route.title);
@@ -204,6 +204,7 @@ test('Samsung product pages preserve local diagnostics and voluntary support bou
   await page.getByRole('link', { name: 'support privacy explanation' }).click();
   await expect(page).toHaveURL(/\/hafa-remote\/privacy#support$/);
   await expect(page.getByRole('heading', { name: 'Information you send to support' })).toBeInViewport();
+  await expect(page.getByRole('heading', { name: 'Information you send to support' })).toBeFocused();
   await expect(page.getByText(/we receive the message\/report and the sender information/)).toBeVisible();
   await expect(page.getByText(/It does not change an already-open preview/)).toBeVisible();
   await expect(page.getByText(/Uninstalling is not a guarantee/)).toBeVisible();
@@ -230,9 +231,35 @@ for (const width of [320, 390, 1280]) {
       await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.getByRole('main')).toBeFocused();
+      await expect(page.getByRole('main')).toHaveCSS('outline-style', 'solid');
+      await expect(page.getByRole('main')).toHaveCSS('outline-width', '3px');
       await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', route.title);
       await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', route.canonical);
       expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
     }
   });
 }
+
+
+test('support-topic fragments place keyboard focus at the requested heading', async ({ page }) => {
+  for (const [fragment, name] of [
+    ['setup', 'Set up your Samsung TV'],
+    ['recovery', 'If the TV does not connect'],
+    ['diagnostics', 'Optional diagnostics'],
+    ['contact', 'Contact support'],
+  ]) {
+    await page.goto('/hafa-remote/support#' + fragment);
+    const heading = page.getByRole('heading', { name, exact: true });
+    await expect(heading).toBeInViewport();
+    await expect(heading).toBeFocused();
+  }
+});
+
+test('Hafa pages reflow at a 195px CSS viewport for increased page zoom', async ({ page }) => {
+  await page.setViewportSize({ width: 195, height: 844 });
+  for (const route of hafaRemoteRoutes) {
+    await page.goto(route.path);
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(195);
+  }
+});
