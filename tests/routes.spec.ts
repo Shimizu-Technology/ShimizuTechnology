@@ -206,6 +206,11 @@ test('Samsung product pages preserve local diagnostics and voluntary support bou
   await expect(page.getByRole('heading', { name: 'Information you send to support' })).toBeInViewport();
   await expect(page.getByRole('heading', { name: 'Information you send to support' })).toBeFocused();
   await expect(page.getByText(/we receive the message\/report and the sender information/)).toBeVisible();
+  await expect(page.getByText(/name, email address, support-message content/)).toBeVisible();
+  await expect(page.getByText(/app-interaction, performance, or other diagnostic information/)).toBeVisible();
+  await expect(page.getByText(/90 days after the support issue is resolved/)).toBeVisible();
+  await expect(page.getByText(/then delete those copies/)).toBeVisible();
+  await expect(page.getByText(/does not promise immediate erasure/)).toBeVisible();
   await expect(page.getByText(/It does not change an already-open preview/)).toBeVisible();
   await expect(page.getByText(/Uninstalling is not a guarantee/)).toBeVisible();
   await expect(page.getByRole('main')).not.toContainText(/Data we collect|Shimizu Technology does not collect data|Sony|Vizio/);
