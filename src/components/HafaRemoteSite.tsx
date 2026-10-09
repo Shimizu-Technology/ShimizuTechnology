@@ -1,78 +1,71 @@
 import { useEffect, type ReactNode } from 'react';
 import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Home,
-  Keyboard,
-  Mail,
-  Power,
-  ShieldCheck,
-  Tv,
-  Volume2,
-  Wifi,
+  ArrowLeft, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, ChevronUp,
+  Home, Keyboard, Power, ShieldCheck, Tv, Volume2, Wifi,
 } from 'lucide-react';
-import shimizuLogo from '../assets/ShimizuTechnologyLogo.jpg';
 
-type HafaRemoteSiteProps = {
-  pathname: string;
-};
-
+type HafaRemoteSiteProps = { pathname: string };
 const baseUrl = 'https://shimizu-technology.com/hafa-remote';
 const supportEmail = 'ShimizuTechnology@gmail.com';
+const iconUrl = '/hafa-remote-icon.png';
+const supportLink = 'mailto:' + supportEmail + '?subject=Hafa%20Remote%20support';
+
 const landingFeatures = [
-  { icon: Wifi, title: 'Local by design', copy: 'Commands stay between your iPhone and television on the same Wi-Fi network.' },
-  { icon: Volume2, title: 'Everyday controls', copy: 'D-pad, select, volume, mute, home, back, playback, and saved-TV power controls.' },
-  { icon: Keyboard, title: 'Type from iPhone', copy: 'Use the familiar iPhone keyboard when the active TV screen accepts text.' },
-  { icon: ShieldCheck, title: 'Honest status', copy: 'Clear pairing, reconnecting, offline, and permission states—never fake success.' },
+  { icon: Volume2, title: 'Everyday controls', copy: 'Navigation, volume, mute, Home, Back, and playback, with an optional swipe surface and accessible Buttons fallback.' },
+  { icon: Keyboard, title: 'Text from your iPhone', copy: 'Type when the current TV field accepts remote text. Individual apps and secure fields can limit text entry.' },
+  { icon: Home, title: 'Your TVs, your favorites', copy: 'Name saved TVs, add rooms, and keep favorites with their TV. App shortcuts use the list a compatible TV returns.' },
+  { icon: ShieldCheck, title: 'Clear connection status', copy: 'See connected, reconnecting, and offline states. A sent request does not claim that the TV carried it out.' },
 ];
 
 function usePageMetadata(title: string, description: string, path: string) {
   useEffect(() => {
     document.title = title;
-    document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-
+    const setMeta = (attribute: 'name' | 'property', key: string, value: string) => {
+      let element = document.querySelector<HTMLMetaElement>('meta[' + attribute + '="' + key + '"]');
+      if (!element) {
+        element = document.createElement('meta');
+        element.setAttribute(attribute, key);
+        document.head.appendChild(element);
+      }
+      element.content = value;
+    };
+    setMeta('name', 'description', description);
+    setMeta('property', 'og:title', title);
+    setMeta('property', 'og:description', description);
+    setMeta('property', 'og:url', baseUrl + path);
+    setMeta('property', 'og:image', 'https://shimizu-technology.com' + iconUrl);
+    setMeta('name', 'twitter:title', title);
+    setMeta('name', 'twitter:description', description);
+    setMeta('name', 'twitter:image', 'https://shimizu-technology.com' + iconUrl);
     let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement('link');
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = `${baseUrl}${path}`;
+    canonical.href = baseUrl + path;
+    // The document heading exists only after React renders, after the browser's initial hash lookup.
+    const target = document.getElementById(window.location.hash.slice(1));
+    if (target) {
+      target.scrollIntoView({ block: 'start', behavior: 'instant' });
+      target.focus({ preventScroll: true });
+    }
   }, [description, path, title]);
 }
 
-function BrandMark() {
-  return (
-    <a
-      href="/hafa-remote"
-      className="inline-flex items-center gap-3 rounded-md focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-4 focus-visible:ring-offset-[#07101f]"
-      aria-label="Hafa Remote home"
-    >
-      <span className="grid h-10 w-10 place-items-center rounded-[14px] border border-cyan-200/30 bg-cyan-300 text-[#07101f] shadow-[0_10px_30px_-12px_rgba(103,232,249,0.8)]">
-        <Tv className="h-5 w-5" strokeWidth={2.2} />
-      </span>
-      <span>
-        <span className="block text-base font-extrabold tracking-tight text-white">Hafa Remote</span>
-        <span className="font-mono-label block text-[9px] text-slate-400">by Shimizu Technology</span>
-      </span>
-    </a>
-  );
-}
-
 function Header() {
-  const normalizedPath = window.location.pathname.replace(/\/+$/, '');
-
+  const path = window.location.pathname.replace(/\/+$/, '');
   return (
-    <header className="border-b border-white/10 bg-[#07101f] text-white">
-      <nav className="mx-auto flex h-[76px] max-w-6xl items-center justify-between px-5 sm:px-8" aria-label="Hafa Remote">
-        <BrandMark />
-        <div className="flex items-center gap-1 text-sm font-semibold text-slate-300 sm:gap-2">
-          <a aria-current={normalizedPath === '/hafa-remote/support' ? 'page' : undefined} className="rounded-md px-3 py-2 hover:bg-white/5 hover:text-white aria-[current=page]:bg-white/10 aria-[current=page]:text-white" href="/hafa-remote/support">Support</a>
-          <a aria-current={normalizedPath === '/hafa-remote/privacy' ? 'page' : undefined} className="rounded-md px-3 py-2 hover:bg-white/5 hover:text-white aria-[current=page]:bg-white/10 aria-[current=page]:text-white" href="/hafa-remote/privacy">Privacy</a>
+    <header className="hafa-header">
+      <a className="hafa-skip-link" href="#hafa-main">Skip to content</a>
+      <nav className="hafa-header-inner" aria-label="Hafa Remote">
+        <a href="/hafa-remote" className="hafa-brand" aria-label="Hafa Remote home">
+          <img src={iconUrl} width="44" height="44" alt="" />
+          <span><strong>Hafa Remote</strong><small>by Shimizu Technology</small></span>
+        </a>
+        <div className="hafa-nav-links">
+          <a aria-current={path === '/hafa-remote/support' ? 'page' : undefined} href="/hafa-remote/support">Support</a>
+          <a aria-current={path === '/hafa-remote/privacy' ? 'page' : undefined} href="/hafa-remote/privacy">Privacy</a>
         </div>
       </nav>
     </header>
@@ -81,139 +74,90 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="border-t border-slate-800 bg-[#07101f] py-9 text-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 sm:px-8 md:flex-row md:items-center md:justify-between">
-        <a href="/" className="inline-flex items-center gap-3 text-sm font-semibold text-slate-300 hover:text-white">
-          <img src={shimizuLogo} alt="" className="h-8 w-8 rounded-full border border-white/10 object-contain" />
-          Shimizu Technology
-        </a>
-        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-400">
-          <a className="hover:text-white" href="/hafa-remote">Hafa Remote</a>
-          <a className="hover:text-white" href="/hafa-remote/support">Support</a>
-          <a className="hover:text-white" href="/hafa-remote/privacy">Privacy</a>
-        </div>
-        <span className="text-xs text-slate-500">© {new Date().getFullYear()} Shimizu Technology</span>
+    <footer className="hafa-footer">
+      <div className="hafa-footer-inner">
+        <a href="/">Shimizu Technology</a>
+        <nav aria-label="Product information">
+          <a href="/hafa-remote">Hafa Remote</a>
+          <a href="/hafa-remote/support">Support</a>
+          <a href="/hafa-remote/privacy">Privacy</a>
+        </nav>
+        <small>© {new Date().getFullYear()} Shimizu Technology</small>
       </div>
     </footer>
   );
 }
 
 function RemotePreview() {
-  const directionClass = 'grid h-12 w-12 place-items-center rounded-full text-slate-300';
-
   return (
-    <div className="relative mx-auto w-full max-w-[342px]" role="img" aria-label="Illustration of the Hafa Remote controls">
-      <div className="absolute -inset-10 rounded-full bg-cyan-300/10 blur-3xl" />
-      <div className="premium-shadow relative overflow-hidden rounded-[42px] border border-white/15 bg-[#0d192d] p-6 shadow-2xl shadow-cyan-950/50">
-        <div className="flex items-start justify-between border-b border-white/10 pb-5">
-          <div>
-            <p className="font-mono-label text-[9px] text-cyan-300">Samsung · Q70AA</p>
-            <p className="mt-1 text-lg font-bold text-white">Living Room TV</p>
-            <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-emerald-300"><span className="h-1.5 w-1.5 rounded-full bg-emerald-300" /> Connected</p>
-          </div>
-          <div className="grid h-11 w-11 place-items-center rounded-full border border-red-300/20 bg-red-400/10 text-red-200">
-            <Power className="h-5 w-5" />
-          </div>
+    <figure className="hafa-remote-preview">
+      <div role="img" aria-label="Illustration of Hafa Remote navigation and volume controls, shown as an offline preview">
+        <div className="hafa-preview-heading">
+          <div><small>Offline preview</small><strong>Demo TV</strong><span>No TV connected</span></div>
+          <span className="hafa-preview-power"><Power aria-hidden="true" size={22} /></span>
         </div>
-
-        <div className="mx-auto mt-7 grid h-48 w-48 grid-cols-3 grid-rows-3 place-items-center rounded-full border border-white/10 bg-[#07101f] shadow-inner shadow-black/30">
-          <span />
-          <span className={directionClass}><ChevronUp /></span>
-          <span />
-          <span className={directionClass}><ChevronLeft /></span>
-          <span className="grid h-16 w-16 place-items-center rounded-full border border-cyan-200/30 bg-cyan-300 font-bold text-[#07101f] shadow-lg shadow-cyan-950">OK</span>
-          <span className={directionClass}><ChevronRight /></span>
-          <span />
-          <span className={directionClass}><ChevronDown /></span>
-          <span />
+        <div className="hafa-preview-pad" aria-hidden="true">
+          <span /><span className="hafa-preview-direction"><ChevronUp /></span><span />
+          <span className="hafa-preview-direction"><ChevronLeft /></span>
+          <span className="hafa-preview-select">OK</span>
+          <span className="hafa-preview-direction"><ChevronRight /></span>
+          <span /><span className="hafa-preview-direction"><ChevronDown /></span><span />
         </div>
-
-        <div className="mt-7 grid grid-cols-3 gap-3 text-slate-200">
-          {[Home, Volume2, Keyboard].map((Icon, index) => (
-            <span key={index} className="grid h-14 place-items-center rounded-2xl border border-white/10 bg-white/4">
-              <Icon className="h-5 w-5" />
-            </span>
-          ))}
+        <div className="hafa-preview-volume" aria-hidden="true">
+          <small>Volume</small>
+          <div><span>−</span><Volume2 size={24} /><span>+</span></div>
         </div>
       </div>
-    </div>
+      <figcaption>Control illustration. Try the labeled offline demo in the app.</figcaption>
+    </figure>
   );
 }
 
 function LandingPage() {
   usePageMetadata(
-    'Hafa Remote — Simple Wi-Fi TV remote',
-    'A locally used iPhone remote for compatible Samsung, Sony, and Vizio smart TVs. Personal alpha; not yet on the App Store.',
+    'Hafa Remote — Samsung TV remote',
+    'A local iPhone remote for compatible Samsung TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
     '',
   );
-
   return (
     <>
       <Header />
-      <main>
-        <section className="surface-grid relative overflow-hidden bg-[#07101f] text-white">
-          <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-cyan-300/[0.07] blur-[120px]" />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-5 py-16 sm:px-8 md:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+      <main id="hafa-main" tabIndex={-1}>
+        <section className="hafa-hero">
+          <div className="hafa-hero-inner">
             <div>
-              <p className="font-mono-label flex items-center gap-3 text-xs text-cyan-300"><span className="h-px w-8 bg-cyan-300" /> Used locally · personal alpha</p>
-              <h1 className="mt-7 max-w-3xl text-5xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl lg:text-[4.65rem]">
-                Three brands. One remote. <span className="text-cyan-300">Nothing in the way.</span>
-              </h1>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-300 sm:text-xl">
-                Hafa Remote puts everyday controls on your iPhone without an account, advertising, tracking, or a weekly subscription.
-              </p>
-              <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">Currently used in private testing. It is not available on the App Store yet.</p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <a href="/hafa-remote/support" className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-300 px-6 py-3.5 font-bold text-[#07101f] transition hover:-translate-y-0.5 hover:bg-cyan-200">
-                  Setup and support <ArrowRight className="h-4 w-4" />
-                </a>
-                <a href="/hafa-remote/privacy" className="inline-flex items-center justify-center rounded-md border border-white/15 bg-white/5 px-6 py-3.5 font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/10">
-                  Read the privacy policy
-                </a>
+              <p className="hafa-eyebrow">App Store release for Samsung TVs in preparation</p>
+              <h1>Your Samsung TV. <span>Within reach.</span></h1>
+              <p className="hafa-hero-copy">Everyday controls on your iPhone, with a calm native interface and no account, advertising, tracking, or subscription.</p>
+              <p className="hafa-availability">Hafa Remote is currently in private testing. It is not available on the App Store yet.</p>
+              <div className="hafa-actions">
+                <a href="/hafa-remote/support" className="hafa-button">Setup and support <ArrowRight size={18} aria-hidden="true" /></a>
+                <a href="/hafa-remote/privacy" className="hafa-button hafa-button-secondary">Read the privacy policy</a>
               </div>
-              <div className="mt-11 grid max-w-xl grid-cols-2 gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-4">
-                {['No account', 'No ads', 'No tracking', 'No subscription'].map((item) => (
-                  <div key={item} className="bg-[#0a1628] px-3 py-4 text-center text-xs font-bold text-slate-200">{item}</div>
-                ))}
-              </div>
+              <p className="hafa-network-note"><Wifi size={18} aria-hidden="true" /> Your iPhone uses Wi-Fi. Your TV can use Wi-Fi or Ethernet on the same home network.</p>
             </div>
             <RemotePreview />
           </div>
         </section>
-
-        <section className="bg-[#f7f8fa] py-16 md:py-24">
-          <div className="mx-auto max-w-6xl px-5 sm:px-8">
-            <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
-              <div>
-                <p className="font-mono-label text-xs text-cyan-700">Built for the daily job</p>
-                <h2 className="mt-4 text-3xl font-extrabold text-slate-950 sm:text-5xl">Open it. Connect. Control.</h2>
-                <p className="mt-5 max-w-md text-lg leading-relaxed text-slate-600">The controls you reach for most, organized around one-handed use and a truthful connection state.</p>
-              </div>
-              <div className="grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 sm:grid-cols-2">
-                {landingFeatures.map(({ icon: FeatureIcon, title, copy }) => {
-                  return (
-                    <article key={title} className="bg-white p-7 sm:p-8">
-                      <FeatureIcon className="h-6 w-6 text-cyan-700" />
-                      <h3 className="mt-6 text-xl font-bold text-slate-950">{title}</h3>
-                      <p className="mt-3 leading-relaxed text-slate-600">{copy}</p>
-                    </article>
-                  );
-                })}
-              </div>
+        <section className="hafa-features">
+          <div className="hafa-content-width">
+            <p className="hafa-eyebrow">Made for the daily job</p>
+            <h2>Open it. Connect. Control.</h2>
+            <div className="hafa-feature-list">
+              {landingFeatures.map(({ icon: Icon, title, copy }) => (
+                <article key={title}>
+                  <Icon size={24} aria-hidden="true" />
+                  <h3>{title}</h3><p>{copy}</p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
-
-        <section className="border-y border-slate-200 bg-white py-16 md:py-20">
-          <div className="mx-auto grid max-w-6xl gap-8 px-5 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-center">
-            <div>
-              <p className="font-mono-label text-xs text-slate-500">Compatibility note</p>
-              <h2 className="mt-3 text-2xl font-extrabold text-slate-950 sm:text-3xl">Three brands, tested before promised.</h2>
-              <p className="mt-4 max-w-3xl leading-relaxed text-slate-600">Internal testing supports compatible Samsung, Sony, and Vizio TVs with local-network control. Power on depends on the TV's standby settings, firmware, and network. Hafa Remote is independently developed and is not affiliated with or endorsed by those manufacturers.</p>
-            </div>
-            <a href={`mailto:${supportEmail}?subject=Hafa%20Remote%20question`} className="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 px-5 py-3 font-bold text-slate-800 hover:border-cyan-700 hover:text-cyan-800">
-              Ask a question <Mail className="h-4 w-4" />
-            </a>
+        <section className="hafa-compatibility hafa-content-width">
+          <Tv size={28} aria-hidden="true" />
+          <div><h2>Compatible Samsung TVs. Model and firmware matter.</h2>
+            <p>The planned public release supports compatible Samsung Tizen TVs. Available controls depend on the TV and its local-control service. Power-on varies with standby settings and the network, and is not guaranteed.</p>
+            <p>Hafa Remote is independently developed by Shimizu Technology and is not affiliated with or endorsed by Samsung Electronics.</p>
           </div>
         </section>
       </main>
@@ -223,30 +167,22 @@ function LandingPage() {
 }
 
 function DocumentPage({ eyebrow, title, intro, children, metadata }: {
-  eyebrow: string;
-  title: string;
-  intro: string;
-  children: ReactNode;
+  eyebrow: string; title: string; intro: string; children: ReactNode;
   metadata: { title: string; description: string; path: string };
 }) {
   usePageMetadata(metadata.title, metadata.description, metadata.path);
-
   return (
     <>
       <Header />
-      <main className="bg-[#f7f8fa]">
-        <section className="border-b border-white/10 bg-[#07101f] py-14 text-white sm:py-20">
-          <div className="mx-auto max-w-4xl px-5 sm:px-8">
-            <a href="/hafa-remote" className="inline-flex items-center gap-2 text-sm font-bold text-cyan-300 hover:text-cyan-200"><ArrowLeft className="h-4 w-4" /> Hafa Remote</a>
-            <p className="font-mono-label mt-10 text-xs text-slate-400">{eyebrow}</p>
-            <h1 className="mt-4 text-4xl font-extrabold tracking-[-0.045em] sm:text-6xl">{title}</h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">{intro}</p>
+      <main id="hafa-main" tabIndex={-1}>
+        <section className="hafa-document-heading">
+          <div className="hafa-document-width">
+            <a href="/hafa-remote" className="hafa-back-link"><ArrowLeft size={16} aria-hidden="true" /> Hafa Remote</a>
+            <p className="hafa-eyebrow">{eyebrow}</p><h1>{title}</h1><p>{intro}</p>
           </div>
         </section>
-        <div className="mx-auto max-w-4xl px-5 py-12 sm:px-8 sm:py-16">
-          <article className="hafa-document rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_24px_70px_-50px_rgba(15,23,42,0.55)] sm:p-10">
-            {children}
-          </article>
+        <div className="hafa-document-width hafa-document-wrap">
+          <article className="hafa-document">{children}</article>
         </div>
       </main>
       <Footer />
@@ -257,35 +193,46 @@ function DocumentPage({ eyebrow, title, intro, children, metadata }: {
 function SupportPage() {
   return (
     <DocumentPage
-      eyebrow="Support"
+      eyebrow="Samsung setup and support"
       title="Get connected and back to watching."
-      intro="Hafa Remote works locally, so most setup issues come down to Wi-Fi access, the TV approval prompt, or the television being asleep."
-      metadata={{ title: 'Hafa Remote Support', description: 'Setup, troubleshooting, compatibility, and contact information for Hafa Remote.', path: '/support' }}
+      intro="Start with a compatible Samsung TV on your home network. Help is available in the app before pairing."
+      metadata={{ title: 'Hafa Remote Support', description: 'Samsung setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.', path: '/support' }}
     >
-      <h2>Set up your TV</h2>
+      <nav className="hafa-document-links" aria-label="Support topics">
+        <a href="#setup">Set up</a><a href="#recovery">Connection help</a><a href="#diagnostics">Diagnostics</a><a href="#contact">Contact</a>
+      </nav>
+      <h2 id="setup" tabIndex={-1}>Set up your Samsung TV</h2>
       <ol>
-        <li>Turn on your compatible Samsung, Sony, or Vizio TV and connect your iPhone to the same non-guest Wi-Fi network.</li>
-        <li>Open Hafa Remote, choose <strong>Add TV</strong>, and allow local-network access when iOS asks.</li>
-        <li>Choose your television when it appears in the nearby TV list. You should not need to enter an address.</li>
-        <li>Complete the prompt on the TV: choose <strong>Allow</strong> on Samsung, enter the six-character code shown by Sony, or enter the four-digit PIN shown by Vizio.</li>
-        <li>Wait for the connected status before using the remote.</li>
+        <li>Turn on your compatible Samsung TV. Connect this iPhone to home Wi-Fi; the TV can use Wi-Fi or Ethernet on the same non-guest local network.</li>
+        <li>Open Hafa Remote, choose <strong>Add TV</strong>, and allow Local Network access when iOS asks.</li>
+        <li>Choose the intended television from the nearby list, then approve Hafa Remote on the TV by choosing <strong>Allow</strong> when prompted.</li>
+        <li>Wait for the connected status before using the remote. Connected describes the control connection; TV power is shown separately when it is known.</li>
       </ol>
-
-      <h2>If the TV does not connect</h2>
+      <h2 id="recovery" tabIndex={-1}>If the TV does not connect</h2>
       <ul>
-        <li>Confirm both devices are on the same normal Wi-Fi network. Guest networks often prevent devices from seeing each other.</li>
-        <li>Keep the TV on during initial pairing. Hafa Remote can only turn on a saved TV when its standby network setting is enabled: Power On With Mobile on Samsung, Remote Start or network standby on Sony, and Quick Start on Vizio.</li>
-        <li>Choose <strong>Scan Again</strong> if the TV does not appear right away.</li>
-        <li>If discovery still cannot find it, open <strong>TV not showing up?</strong> in Hafa Remote. Manual address entry is a troubleshooting fallback; network-menu wording varies by brand and model.</li>
-        <li>If approval was denied or expired, remove the saved TV in Hafa Remote and pair it again.</li>
-        <li>Model and firmware support varies. Some TV apps and secure text fields may not accept every command.</li>
+        <li>Check that the iPhone uses home Wi-Fi and the TV is on the same local network. Guest Wi-Fi and client isolation can prevent devices from finding each other.</li>
+        <li>Choose <strong>Scan Again</strong>. If discovery still cannot find the TV, open <strong>TV not showing up?</strong> and use its private address from the TV network settings.</li>
+        <li>For a saved pairing that is no longer accepted, open <strong>My TVs</strong>, select the intended TV, choose <strong>Forget TV</strong>, then <strong>Add TV</strong> and approve pairing again. Forget applies to that selected TV.</li>
+        <li>Foreground reconnect attempts are bounded. Use <strong>Retry Connection</strong> or <strong>Find TV</strong> when offered.</li>
+        <li>Power-on is available only for eligible saved TVs. Settings such as <strong>Power On With Mobile</strong> can help, but model, firmware, network connection, and standby behavior still matter. Use the physical remote if wake is unavailable.</li>
       </ul>
-
-      <h2>Text entry</h2>
-      <p>Open a text field on the television before sending text. Individual TV apps and secure fields may ignore remote text even while other controls work normally.</p>
-
-      <h2>Contact support</h2>
-      <p>Email <a href={`mailto:${supportEmail}?subject=Hafa%20Remote%20support`}>{supportEmail}</a>. Include the TV model, firmware version, iPhone model, iOS version, and the connection message shown in Hafa Remote. Do not send your pairing token, Wi-Fi password, or other credentials.</p>
+      <h2>Controls and favorites</h2>
+      <p>Use Buttons for individual directions or switch to Swipe for discrete movement and tap-to-select. <strong>More Controls &amp; Favorites</strong> offers available source and tuner controls and shortcuts from a TV-returned app list. Some Samsung TVs do not provide that list. A request described as sent does not confirm the TV carried it out.</p>
+      <p>For text entry, focus a field on the TV first. TV apps and secure fields may reject remote text even while ordinary controls work.</p>
+      <h2>Try the remote without a TV</h2>
+      <p>Open <strong>Help → Try the Remote Offline</strong>. This clearly labeled demo changes only a preview on the phone; it does not discover, pair, or contact a TV, and it does not change your saved TVs.</p>
+      <h2 id="diagnostics" tabIndex={-1}>Optional diagnostics</h2>
+      <p><strong>Help → Diagnostics</strong> is off by default. Enabling it records up to <strong>100 recent semantic events</strong> and coarse timings in memory on the phone. It resets to off when the app restarts.</p>
+      <ol>
+        <li>Enable diagnostics and reproduce the problem.</li>
+        <li>Choose <strong>Preview Support Report</strong> and read the report.</li>
+        <li>If you want to send it, choose <strong>Share This Report</strong> and select a destination in the system share sheet. Nothing is uploaded automatically.</li>
+      </ol>
+      <p>The report contains app and iOS versions, optional TV model and firmware, and event/timing categories. It excludes network addresses, device identities, TV and Wi-Fi names, pairing credentials, and entered text.</p>
+      <p><strong>Clear Events</strong> or disabling diagnostics clears the live event buffer. An existing preview stays unchanged, and a copy already sent remains with its recipient.</p>
+      <h2 id="contact" tabIndex={-1}>Contact support</h2>
+      <p>Email <a href={supportLink}>{supportEmail}</a>. If useful, include the TV model and firmware, iPhone model, iOS version, and connection message. Sending a support report is optional.</p>
+      <p>Do not send passwords, pairing credentials, device identities, or network addresses. Information you choose to send to support is received with your message and email sender details; read the <a href="/hafa-remote/privacy#support">support privacy explanation</a> before sending.</p>
     </DocumentPage>
   );
 }
@@ -293,58 +240,53 @@ function SupportPage() {
 function PrivacyPage() {
   return (
     <DocumentPage
-      eyebrow="Privacy policy · Effective September 4, 2026"
-      title="Your remote stays in your home."
-      intro="Hafa Remote has no account, advertising, tracking, analytics SDK, backend, or subscription. Shimizu Technology does not collect data from the iOS app."
-      metadata={{ title: 'Hafa Remote Privacy Policy', description: 'How Hafa Remote handles TV information, pairing credentials, typed text, and local-network access.', path: '/privacy' }}
+      eyebrow="Privacy policy"
+      title="Local control. Sharing is your choice."
+      intro="Hafa Remote has no account, advertising, tracking, analytics SDK, backend, subscription, or automatic diagnostic uploader."
+      metadata={{ title: 'Hafa Remote Privacy Policy', description: 'Local TV data, default-off in-memory diagnostics, optional report sharing, and support reception in Hafa Remote.', path: '/privacy' }}
     >
-      <h2>Data we collect</h2>
-      <p><strong>None.</strong> Hafa Remote does not send personal information, television information, usage activity, typed text, or pairing credentials to Shimizu Technology or an advertising or analytics service.</p>
-
-      <h2>Information kept on your iPhone</h2>
-      <p>The app stores the television name, model details made available by the TV, local network address, observed capabilities, and recent connection information on your device. Pairing credentials are stored separately in Apple Keychain. This information is used only to reconnect and show the correct controls.</p>
-
-      <h2>Local-network communication</h2>
-      <p>Remote commands and text you choose to send travel directly from your iPhone to the selected television over your local Wi-Fi network. Typed text is not saved by Hafa Remote or written to app logs. The app requests iOS Local Network permission because this direct connection cannot work without it.</p>
-
-      <h2>Deleting local information</h2>
-      <p>Removing a television in Hafa Remote deletes its saved device record and pairing credential. Remove each saved television in the app before uninstalling if you want those credentials explicitly deleted.</p>
-
-      <h2>Apple services</h2>
-      <p>Apple may process App Store, TestFlight, or opt-in diagnostic information under Apple’s own policies. Hafa Remote does not add a third-party crash-reporting or analytics SDK.</p>
-
-      <h2>This website</h2>
-      <p>This policy describes the Hafa Remote iOS app. The public website hosting this policy may create routine security and delivery logs through its hosting and content-delivery providers. The Hafa Remote pages do not load Shimizu Technology’s product analytics provider.</p>
-
+      <h2>Ordinary local control</h2>
+      <p>Remote commands and text you choose to send travel from the iPhone to the selected compatible Samsung TV on your local network. Your iPhone uses Wi-Fi; the TV can use Wi-Fi or Ethernet. Ordinary control does not send app activity or pairing credentials to Shimizu Technology or an advertising or analytics service.</p>
+      <p>Typed text is not saved by Hafa Remote or written to app logs. Local Network permission enables direct communication with your TV.</p>
+      <h2>Information kept on your phone</h2>
+      <p>Saved TV names, optional rooms, model details, cached local addresses, observed capabilities, and per-TV favorites/preferences stay in local app storage. Pairing credentials are stored separately in Apple Keychain. These records support reconnecting, TV selection, and the controls you choose.</p>
+      <h2>Optional diagnostics on the phone</h2>
+      <p>Diagnostics are off by default and reset to off when the app restarts. When you enable them, the app holds at most <strong>100 semantic connection, delivery, discovery, and lifecycle events</strong> with coarse timings in memory. This buffer is not an automatic upload or an analytics service.</p>
+      <p>A report includes app and iOS versions and, when available, a TV model and firmware. It excludes addresses, device identities, TV and Wi-Fi names, credentials, and entered text.</p>
+      <h2>Previewing and sharing a report</h2>
+      <p><strong>Preview Support Report</strong> creates a fixed copy for you to review. <strong>Share This Report</strong> opens the system share sheet; you decide whether to send that exact report and choose the recipient. The chosen recipient receives the copy you send.</p>
+      <p><strong>Clear Events</strong> or turning diagnostics off clears the live in-memory events. It does not change an already-open preview or erase a copy you have already sent. Shared copies are handled by their recipients.</p>
+      <h2 id="support" tabIndex={-1}>Information you send to support</h2>
+      <p>If you email Shimizu Technology or send a report to our support address, we receive the message/report and the sender information your email service provides. We use that information to understand the problem and respond to your request. Please omit passwords, pairing credentials, device identities, and network addresses.</p>
+      <p>Information you choose to send may include your name, email address, support-message content, and app-interaction, performance, or other diagnostic information in an attached report. It is associated with the sender of the support request and used only to troubleshoot the app and respond to you, not for tracking or advertising. Nothing is uploaded automatically.</p>
+      <p>We keep support messages and report copies we control for <strong>90 days after the support issue is resolved</strong>, then delete those copies. To request earlier deletion or ask about information you have sent, email <a href={supportLink}>{supportEmail}</a>.</p>
+      <p>This deletion applies to support copies we control. It does not promise immediate erasure from an email provider's recovery systems or backups.</p>
+      <h2>Removing saved TV information</h2>
+      <p><strong>My TVs → Forget TV</strong> removes the selected TV's saved record and its scoped pairing credential. It does not erase unrelated records. Updates can preserve older saved information, including records that the current public version does not display.</p>
+      <p>Uninstalling is not a guarantee that Apple Keychain credentials are removed. Use <strong>My TVs → Forget TV</strong> before uninstalling if you want the selected TV's stored pairing credential explicitly deleted. The saved TV can be offline.</p>
+      <h2>Apple services and this website</h2>
+      <p>Apple may process App Store, TestFlight, or opt-in diagnostic information under Apple's own policies. Hafa Remote does not add a third-party crash-reporting or analytics SDK.</p>
+      <p>This policy describes the iOS app. The website's hosting and delivery providers may create routine delivery and security logs. These Hafa Remote pages do not load Shimizu Technology's product analytics provider.</p>
       <h2>Changes and contact</h2>
-      <p>If app behavior changes in a way that affects privacy, this policy and the App Store privacy answers will be updated before that release. Questions can be sent to <a href={`mailto:${supportEmail}?subject=Hafa%20Remote%20privacy`}>{supportEmail}</a>.</p>
+      <p>We update this policy and the App Store privacy answers when the app's privacy behavior changes. Privacy questions can be sent to <a href={'mailto:' + supportEmail + '?subject=Hafa%20Remote%20privacy'}>{supportEmail}</a>.</p>
     </DocumentPage>
   );
 }
 
 function NotFoundPage() {
   usePageMetadata('Page not found — Hafa Remote', 'The requested Hafa Remote page could not be found.', '/not-found');
-
   return (
-    <>
-      <Header />
-      <main className="grid min-h-[62vh] place-items-center bg-[#f7f8fa] px-5 py-16 text-center">
-        <div>
-          <p className="font-mono-label text-xs text-cyan-700">404</p>
-          <h1 className="mt-4 text-4xl font-extrabold text-slate-950">That page is not on this remote.</h1>
-          <a href="/hafa-remote" className="mt-7 inline-flex items-center gap-2 rounded-md bg-[#07101f] px-5 py-3 font-bold text-white">Return to Hafa Remote <ArrowRight className="h-4 w-4" /></a>
-        </div>
-      </main>
-      <Footer />
-    </>
+    <><Header /><main id="hafa-main" tabIndex={-1} className="hafa-not-found">
+      <p className="hafa-eyebrow">404</p><h1>That page is not on this remote.</h1>
+      <a href="/hafa-remote" className="hafa-button">Return to Hafa Remote</a>
+    </main><Footer /></>
   );
 }
 
 export default function HafaRemoteSite({ pathname }: HafaRemoteSiteProps) {
-  const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-
-  if (normalizedPath === '/hafa-remote') return <LandingPage />;
-  if (normalizedPath === '/hafa-remote/support') return <SupportPage />;
-  if (normalizedPath === '/hafa-remote/privacy') return <PrivacyPage />;
-  return <NotFoundPage />;
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+  const page = path === '/hafa-remote' ? <LandingPage />
+    : path === '/hafa-remote/support' ? <SupportPage />
+      : path === '/hafa-remote/privacy' ? <PrivacyPage /> : <NotFoundPage />;
+  return <div className="hafa-site">{page}</div>;
 }
