@@ -58,7 +58,7 @@ export default function About() {
                     href="https://codeschoolofguam.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm font-bold text-red-700 hover:underline"
+                    className="inline-flex min-h-11 items-center text-sm font-bold text-red-700 hover:underline"
                   >
                     Learn more about Code School
                     <ExternalLink className="w-3.5 h-3.5 ml-1" />

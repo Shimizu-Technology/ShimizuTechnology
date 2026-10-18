@@ -18,16 +18,16 @@ export default function Testimonials() {
               Hafaloha used its custom ordering platform to manage a high-volume concert VIP experience without downtime or fulfillment gaps.
             </p>
 
-            <div className="mt-9 grid grid-cols-3 border-y border-white/10 py-6">
+            <div className="mt-9 flex flex-wrap gap-x-4 gap-y-5 border-y border-white/10 py-6">
               {outcomes.map(([value, label]) => (
-                <div key={label} className="pr-3">
-                  <div className="text-2xl font-bold text-blue-300 md:text-3xl">{value}</div>
-                  <div className="mt-1 text-[11px] leading-tight text-slate-400 sm:text-xs">{label}</div>
+                <div key={label} className="min-w-20 flex-1 pr-3">
+                  <div className="text-2xl font-bold text-blue-300 [overflow-wrap:anywhere] md:text-3xl">{value}</div>
+                  <div className="mt-1 text-xs leading-tight text-slate-400">{label}</div>
                 </div>
               ))}
             </div>
 
-            <a href="#contact" className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-white hover:text-blue-300">
+            <a href="#contact" className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white hover:text-blue-300 active:text-blue-300">
               Plan a dependable launch <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
@@ -43,12 +43,12 @@ export default function Testimonials() {
             </div>
 
             <div className="mt-8 rounded-lg bg-white/4 p-5">
-              <p className="font-mono-label text-[10px] text-slate-400">Additional client proof</p>
+              <p className="font-mono-label text-xs text-slate-400">Additional client proof</p>
               <p className="mt-3 leading-relaxed text-slate-300">
                 “Your technical expertise and attention to detail ensured the process was user-friendly for our registrants and efficient for our team.”
               </p>
               <p className="mt-3 text-sm font-semibold text-white">Guam International Airport Authority</p>
-              <a href="https://giaa-tournament.com" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-blue-300">
+              <a href="https://giaa-tournament.com" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-blue-300">
                 View registration platform <ArrowUpRight className="h-3.5 w-3.5" />
               </a>
             </div>

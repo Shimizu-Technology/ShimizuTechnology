@@ -283,7 +283,22 @@ function NotFoundPage() {
   );
 }
 
+function useHafaThemeColor() {
+  useEffect(() => {
+    // The company page shell uses one white theme color; Hafa Remote follows its own dark mode.
+    document.querySelectorAll('meta[name="theme-color"]').forEach((element) => element.remove());
+    for (const [media, color] of [['(prefers-color-scheme: light)', '#ffffff'], ['(prefers-color-scheme: dark)', '#1c292b']]) {
+      const meta = document.createElement('meta');
+      meta.name = 'theme-color';
+      meta.media = media;
+      meta.content = color;
+      document.head.appendChild(meta);
+    }
+  }, []);
+}
+
 export default function HafaRemoteSite({ pathname }: HafaRemoteSiteProps) {
+  useHafaThemeColor();
   const path = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
   const page = path === '/hafa-remote' ? <LandingPage />
     : path === '/hafa-remote/support' ? <SupportPage />
