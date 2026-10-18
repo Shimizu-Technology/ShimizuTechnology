@@ -18,11 +18,24 @@ import {
   Clock,
   Swords,
   HeartHandshake,
-  Mic,
   ShieldCheck,
   Ticket,
+  Dumbbell,
+  HandHeart,
 } from 'lucide-react';
 import hafalohaProduct from '../assets/hafaloha-orders-hero.webp';
+import payrollWide800 from '../assets/case-studies/payroll-wide-800.webp';
+import payrollWide1600 from '../assets/case-studies/payroll-wide-1600.webp';
+import payrollFocus560 from '../assets/case-studies/payroll-focus-560.webp';
+import payrollFocus1120 from '../assets/case-studies/payroll-focus-1120.webp';
+import csgWide800 from '../assets/case-studies/csglearn-wide-800.webp';
+import csgWide1600 from '../assets/case-studies/csglearn-wide-1600.webp';
+import csgFocus560 from '../assets/case-studies/csglearn-focus-560.webp';
+import csgFocus1120 from '../assets/case-studies/csglearn-focus-1120.webp';
+import moWide800 from '../assets/case-studies/marianasopen-wide-800.webp';
+import moWide1600 from '../assets/case-studies/marianasopen-wide-1600.webp';
+import moFocus560 from '../assets/case-studies/marianasopen-focus-560.webp';
+import moFocus1120 from '../assets/case-studies/marianasopen-focus-1120.webp';
 
 // Types
 export interface Project {
@@ -34,14 +47,27 @@ export interface Project {
   gradientBg?: string;
   link?: string;
   appStoreLink?: string;
+  /** Released on the App Store at some point (paused apps keep this but show no link). */
+  launchedOnAppStore?: boolean;
   icon: React.ReactNode;
   accentColor: string;
   features: string[];
   tags: string[];
   isFeatured?: boolean;
   selectedOrder?: number;
-  isComingSoon?: string;
-  status?: "Live" | "Live pilot" | "Live demo" | "Seasonal" | "In development" | "Private deployment" | "Paused";
+  /** Product screenshots for a selected case study: a 4:3 product crop and the full 16:10 page. */
+  caseImage?: CaseImage;
+  /** Extra classes for the small logo tile on /work (e.g. a dark tile for a white logo). */
+  logoTileClass?: string;
+  status?: ProjectStatus;
+}
+
+export type ProjectStatus = "Live" | "Live pilot" | "Live demo" | "Seasonal" | "Prototype" | "In development" | "Private deployment" | "Paused";
+
+export interface CaseImage {
+  alt: string;
+  focus: { small: string; large: string; width: number; height: number };
+  wide: { small: string; large: string; width: number; height: number };
 }
 
 export interface InternalTool {
@@ -53,7 +79,6 @@ export interface InternalTool {
   accentColor: string;
   features: string[];
   tags: string[];
-  isComingSoon?: string;
 }
 
 export interface Service {
@@ -113,8 +138,13 @@ export const projects: Project[] = [
   {
     title: "CSG Learning Hub",
     subtitle: "Code School Learning Platform",
-    description: "The private learning platform behind Code School of Guam: prework, class content, workshops, recordings, grading, progress tracking, and cohort management.",
+    description: "The private learning platform behind Code School of Guam: prework, class content, workshops, recordings, grading, progress tracking, and cohort management. A companion mobile app is in development.",
     image: "/images/csg-logo.png",
+    caseImage: {
+      alt: "CSG Learn sign-in page with an illustrative learning path showing lesson progress, recordings, and course messages",
+      focus: { small: csgFocus560, large: csgFocus1120, width: 1120, height: 840 },
+      wide: { small: csgWide800, large: csgWide1600, width: 1600, height: 1000 },
+    },
     imageStyle: "object-contain bg-slate-950 p-8",
     link: "https://learn.codeschoolofguam.com",
     icon: <GraduationCap className="w-5 h-5" />,
@@ -135,7 +165,12 @@ export const projects: Project[] = [
     description: "A production payroll and firm-operations system used by Cornerstone Accounting, translating Guam tax and filing rules into dependable calculations and audited workflows.",
     image: "/images/cornerstone-payroll-cp.svg",
     imageStyle: "object-contain bg-blue-50 p-8",
-    link: "https://cornerstone-payroll.netlify.app",
+    caseImage: {
+      alt: "Cornerstone Payroll home page with an illustrative pay period review showing employee, check, and filing status",
+      focus: { small: payrollFocus560, large: payrollFocus1120, width: 1120, height: 840 },
+      wide: { small: payrollWide800, large: payrollWide1600, width: 1600, height: 1000 },
+    },
+    link: "https://payroll.shimizu-technology.com",
     icon: <BookOpen className="w-5 h-5" />,
     accentColor: "bg-amber-700",
     features: [
@@ -188,6 +223,12 @@ export const projects: Project[] = [
     description: "Live multilingual platform for the Marianas Open, serving competitors and fans across Guam, Korea, Japan, and beyond.",
     image: "/images/mo-logo-white.png",
     imageStyle: "object-contain bg-slate-900 p-6",
+    logoTileClass: "border-slate-900 bg-slate-900",
+    caseImage: {
+      alt: "Marianas Open event pages on desktop and phone, showing the Guam Marianas Open 2026 championship and registration",
+      focus: { small: moFocus560, large: moFocus1120, width: 1120, height: 840 },
+      wide: { small: moWide800, large: moWide1600, width: 1600, height: 1000 },
+    },
     link: "https://marianasopen.com",
     icon: <Swords className="w-5 h-5" />,
     accentColor: "bg-red-600",
@@ -221,7 +262,7 @@ export const projects: Project[] = [
   {
     title: "Hafaloha Orders",
     subtitle: "Online Ordering & VIP",
-    description: "Active ordering, retail, and VIP platform for Hawaiian businesses, still used for concert sales and fulfillment — including Hafaloha's June 2026 event.",
+    description: "Ordering, retail, and VIP platform for Hawaiian businesses, used seasonally for concert sales and fulfillment — including Hafaloha's June 2026 event.",
     image: hafalohaProduct,
     imageStyle: "object-cover",
     link: "https://hafaloha-orders.com",
@@ -235,7 +276,7 @@ export const projects: Project[] = [
     tags: ["E-commerce", "React", "Rails"],
     isFeatured: true,
     selectedOrder: 1,
-    status: "Live"
+    status: "Seasonal"
   },
   {
     title: "Cornerstone Accounting",
@@ -275,7 +316,7 @@ export const projects: Project[] = [
     title: "GIAA Golf Tournament",
     subtitle: "Airport Authority Event",
     description: "Custom registration and admin dashboard for the annual Edward A.P. Muna II Memorial Golf Tournament, built for reuse year after year.",
-    image: "/images/giaa-logo.webp",
+    image: "/images/giaa-logo-mark.webp",
     imageStyle: "object-contain bg-linear-to-b from-sky-50 to-blue-100 p-6",
     link: "https://giaa-tournament.com",
     icon: <Plane className="w-5 h-5" />,
@@ -295,7 +336,8 @@ export const projects: Project[] = [
     image: "/images/hafa-recipes-icon.webp",
     imageStyle: "object-contain bg-slate-50 p-4",
     link: "https://hafa-recipes.com",
-    appStoreLink: "https://apps.apple.com/us/app/recipe-extractor-gu/id6755892896",
+    appStoreLink: "https://apps.apple.com/us/app/h%C3%A5fa-recipes/id6755892896",
+    launchedOnAppStore: true,
     icon: <Utensils className="w-5 h-5" />,
     accentColor: "bg-orange-500",
     features: [
@@ -309,7 +351,7 @@ export const projects: Project[] = [
   {
     title: "Household CFO",
     subtitle: "AI Financial Workspace",
-    description: "An in-development financial workspace combining household setup, planning tools, deterministic calculations, and an AI assistant.",
+    description: "An in-development financial workspace combining household setup, planning tools, deterministic calculations, and an AI assistant. A pilot is starting.",
     gradientBg: "from-emerald-700 via-teal-700 to-slate-900",
     link: "https://householdcfomethod.com",
     icon: <Brain className="w-5 h-5" />,
@@ -326,18 +368,18 @@ export const projects: Project[] = [
   {
     title: "Hafa Homes",
     subtitle: "Guam Property Platform",
-    description: "A live Guam-first real-estate proof of concept used by its partners to demonstrate the product to investors and brokerages.",
+    description: "A Guam-first real-estate proof of concept its partners used to demonstrate the product to investors and brokerages. The project is currently paused.",
     gradientBg: "from-emerald-800 via-green-800 to-slate-950",
-    link: "https://hafahomes.com",
+    launchedOnAppStore: true,
     icon: <Globe2 className="w-5 h-5" />,
     accentColor: "bg-emerald-800",
     features: [
       "Property and neighborhood discovery",
-      "Investor- and brokerage-ready live product demo",
+      "Investor- and brokerage-ready product demo",
       "Designed around Guam's housing market"
     ],
     tags: ["Real Estate", "React", "Rails"],
-    status: "Live demo"
+    status: "Paused"
   },
   {
     title: "TraceBuddy",
@@ -345,6 +387,8 @@ export const projects: Project[] = [
     description: "A live mobile-friendly drawing tool created from a real family need, now used by its intended first user to trace references onto paper with a device camera.",
     gradientBg: "from-amber-100 via-orange-100 to-stone-200",
     link: "https://tracebuddy-gu.netlify.app",
+    appStoreLink: "https://apps.apple.com/us/app/tracebuddy-gu/id6779658138",
+    launchedOnAppStore: true,
     icon: <Smartphone className="w-5 h-5" />,
     accentColor: "bg-orange-600",
     features: [
@@ -389,7 +433,7 @@ export const projects: Project[] = [
   {
     title: "HafaPass",
     subtitle: "Guam Hospitality Ticketing",
-    description: "A Guam-first event and hospitality ticketing platform for event creation, online sales, QR tickets, and attendee check-in.",
+    description: "A Guam-first event and hospitality ticketing platform for event creation, online sales, QR tickets, and attendee check-in, in development for Ambros Inc.'s venue network.",
     gradientBg: "from-violet-800 via-purple-900 to-slate-950",
     icon: <Ticket className="w-5 h-5" />,
     accentColor: "bg-violet-700",
@@ -402,11 +446,43 @@ export const projects: Project[] = [
     status: "In development"
   },
   {
+    title: "Hafa Workouts",
+    subtitle: "Workout Plans & Guided Sessions",
+    description: "A companion to Håfa Recipes that turns workout sources into plans, guided sessions, and workout history.",
+    gradientBg: "from-orange-700 via-rose-800 to-slate-950",
+    icon: <Dumbbell className="w-5 h-5" />,
+    accentColor: "bg-orange-700",
+    features: [
+      "Workout plans from saved sources",
+      "Guided workout sessions",
+      "Workout history"
+    ],
+    tags: ["iOS", "Fitness", "Companion app"],
+    status: "In development"
+  },
+  {
+    title: "Flex and Care",
+    subtitle: "Caregiver Guidance Prototype",
+    description: "A prototype that helps family caregivers in Guam find practical guidance and local resources, built for a partner conversation. It is not a clinical or medical service.",
+    gradientBg: "from-teal-700 via-cyan-800 to-slate-950",
+    link: "https://care.shimizu-technology.com",
+    icon: <HandHeart className="w-5 h-5" />,
+    accentColor: "bg-teal-700",
+    features: [
+      "Caregiver guidance in plain language",
+      "Local resource discovery for Guam",
+      "Prototype for partner feedback"
+    ],
+    tags: ["Caregiving", "Community", "Prototype"],
+    status: "Prototype"
+  },
+  {
     title: "Guahan Grocer",
     subtitle: "Grocery Delivery",
     description: "Guam's local grocery delivery platform connecting shoppers with stores across the island. Paused now, with a stronger relaunch path ahead.",
     image: "/images/guahan-grocer-logo.webp",
     imageStyle: "object-contain bg-[#f5f0e6] p-6",
+    launchedOnAppStore: true,
     icon: <ShoppingCart className="w-5 h-5" />,
     accentColor: "bg-green-500",
     features: [
@@ -419,11 +495,22 @@ export const projects: Project[] = [
   }
 ];
 
+const IN_USE: ProjectStatus[] = ["Live", "Live pilot", "Live demo", "Seasonal", "Private deployment"];
+const IN_PROGRESS: ProjectStatus[] = ["In development", "Prototype"];
+
+export const portfolioCounts = {
+  total: projects.length,
+  inUse: projects.filter((project) => project.status && IN_USE.includes(project.status)).length,
+  inProgress: projects.filter((project) => project.status && IN_PROGRESS.includes(project.status)).length,
+  paused: projects.filter((project) => project.status === "Paused").length,
+  appStoreLaunches: projects.filter((project) => project.launchedOnAppStore).length,
+};
+
 export const projectGroups = [
   {
     title: "AI, Education & Local Culture",
     description: "Learning platforms, language tools, and student-friendly software built for Guam.",
-    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "TraceBuddy"].includes(project.title))
+    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "Hafa Workouts", "TraceBuddy"].includes(project.title))
   },
   {
     title: "Business Operations & Finance",
@@ -437,8 +524,8 @@ export const projectGroups = [
   },
   {
     title: "Civic, Membership & Community Systems",
-    description: "Role-aware engagement, ticketing, alumni, and community platforms with clear operational boundaries.",
-    projects: projects.filter((project) => ["Civic Engagement & Campaign Operations", "FD Alumni Hub", "HafaPass"].includes(project.title))
+    description: "Role-aware engagement, caregiving, ticketing, alumni, and community platforms with clear operational boundaries.",
+    projects: projects.filter((project) => ["Civic Engagement & Campaign Operations", "Flex and Care", "FD Alumni Hub", "HafaPass"].includes(project.title))
   },
   {
     title: "Events & Sports",
@@ -453,21 +540,8 @@ export const projectGroups = [
 //
 export const internalTools: InternalTool[] = [
   {
-    title: "Invoice Maker",
-    description: "AI-powered invoice generation. Describe what you need in plain English or paste timesheet screenshots — the AI extracts hours and creates professional invoices.",
-    link: "https://invoice-maker-gu.netlify.app/chat",
-    icon: <FileText className="w-5 h-5" />,
-    accentColor: "bg-teal-500",
-    features: [
-      "Natural language invoice creation",
-      "Vision AI extracts hours from screenshots",
-      "Client templates and PDF generation"
-    ],
-    tags: ["AI/ML", "React", "FastAPI"]
-  },
-  {
     title: "Media Tools",
-    description: "A searchable workspace that turns videos, recordings, and PDFs into source material you can summarize and question with citations.",
+    description: "A searchable workspace that turns videos, recordings, and PDFs into source material you can summarize and question with citations. The iPhone app is in TestFlight; Android is in development.",
     link: "https://media.shimizu-technology.com",
     icon: <FileText className="w-5 h-5" />,
     accentColor: "bg-rose-500",
@@ -480,7 +554,7 @@ export const internalTools: InternalTool[] = [
   },
   {
     title: "Hafa Remote",
-    description: "A native iPhone remote for compatible Samsung, Sony, and Vizio TVs. Used locally as a personal alpha; not available on the App Store.",
+    description: "A native iPhone remote for compatible Samsung TVs, now in private testing. App Store submission is in preparation; Sony and Vizio support is in development.",
     link: "/hafa-remote",
     icon: <Smartphone className="w-5 h-5" />,
     accentColor: "bg-cyan-700",
@@ -489,7 +563,7 @@ export const internalTools: InternalTool[] = [
       "Saved TVs and everyday controls",
       "No account, ads, or subscription"
     ],
-    tags: ["iOS", "SwiftUI", "Personal alpha"]
+    tags: ["iOS", "SwiftUI", "Private testing"]
   },
   {
     title: "Hafa Timezones",
@@ -503,20 +577,6 @@ export const internalTools: InternalTool[] = [
       "Shareable URL state"
     ],
     tags: ["React", "TypeScript", "Luxon"]
-  },
-  {
-    title: "Typr",
-    description: "A local-first dictation app inspired by Superwhisper and Wispr Flow — fast voice-to-text for the way our team actually works.",
-    image: "/images/typr-icon.png",
-    icon: <Mic className="w-5 h-5" />,
-    accentColor: "bg-slate-900",
-    features: [
-      "Local Whisper-powered dictation",
-      "App-aware paste and replace workflows",
-      "Built for developers and operators"
-    ],
-    tags: ["macOS", "Tauri", "Whisper"],
-    isComingSoon: "Coming Soon"
   }
 ];
 

@@ -11,7 +11,7 @@ export default function Services() {
               Useful technology, shaped around your business.
             </h2>
           </div>
-          <p className="max-w-2xl section-intro lg:justify-self-end">
+          <p className="section-intro lg:justify-self-end">
             We can help with your website, a manual process, or the tools your team already uses. Start with one useful improvement and a scope that fits your needs.
           </p>
         </div>
@@ -19,7 +19,7 @@ export default function Services() {
         <div className="mt-6 divide-y divide-slate-200 border-b border-slate-200">
           {services.map((service, index) => (
             <article key={service.title} className="grid gap-3 py-6 md:grid-cols-[50px_0.8fr_1.2fr] md:items-start md:gap-8">
-              <span className="font-mono-label text-xs text-slate-600">0{index + 1}</span>
+              <span className="font-mono-label text-xs text-slate-600">{String(index + 1).padStart(2, '0')}</span>
               <h3 className="text-xl font-bold text-slate-950 md:text-2xl">{service.title}</h3>
               <p className="max-w-2xl leading-relaxed text-slate-600">{service.description}</p>
             </article>
@@ -27,10 +27,10 @@ export default function Services() {
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-[220px_1fr] md:items-start">
-          <p className="font-mono-label pt-2 text-xs text-slate-500">Production toolkit</p>
+          <p className="font-mono-label pt-2 text-xs text-slate-600">Production toolkit</p>
           <div className="flex flex-wrap gap-x-6 gap-y-3">
             {techStack.map((tech) => (
-              <span key={tech} className="text-sm font-semibold text-slate-500">{tech}</span>
+              <span key={tech} className="text-sm font-semibold text-slate-600">{tech}</span>
             ))}
           </div>
         </div>

@@ -1,6 +1,14 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import desktopProduct from '../assets/hafaloha-orders-hero.webp';
-import mobileProduct from '../assets/hafaloha-orders-mobile.webp';
+import mobileProduct240 from '../assets/hafaloha-orders-mobile-240.webp';
+import mobileProduct480 from '../assets/hafaloha-orders-mobile-480.webp';
+import { portfolioCounts } from '../data';
+
+const proof = [
+  [String(portfolioCounts.total), 'Products & platforms built'],
+  ['4', 'AI systems live'],
+  [String(portfolioCounts.appStoreLaunches), 'App Store launches'],
+];
 
 export default function Hero() {
   return (
@@ -20,20 +28,17 @@ export default function Hero() {
           <figure className="product-preview" aria-label="Hafaloha Orders desktop and mobile product interfaces">
             <div className="product-window">
               <div className="flex items-center justify-between px-3 py-2 text-[11px] font-semibold text-slate-600"><span>Hafaloha Orders</span><span>Desktop &amp; mobile</span></div>
-              <img src={desktopProduct} alt="Hafaloha Orders desktop interface" width="1600" height="903" fetchPriority="high" className="aspect-video w-full rounded-sm object-cover object-top" />
+              {/* Preloaded from index.html; the attribute is lower-case because React 18 does not know fetchPriority. */}
+              <img src={desktopProduct} alt="Hafaloha Orders desktop interface" width="1600" height="903" {...{ fetchpriority: 'high' }} className="aspect-video w-full rounded-sm object-cover object-top" />
             </div>
             <div className="absolute bottom-0 right-0 w-[23%] overflow-hidden rounded-[1rem] border-[4px] border-slate-800 bg-slate-800 shadow-lg">
-              <img src={mobileProduct} alt="Hafaloha Orders mobile interface" width="720" height="1561" decoding="async" className="aspect-9/18 w-full object-cover object-top" />
+              <img src={mobileProduct240} srcSet={`${mobileProduct240} 240w, ${mobileProduct480} 480w`} sizes="(min-width: 1024px) 130px, 23vw" alt="Hafaloha Orders mobile interface" width="240" height="520" decoding="async" className="aspect-9/18 w-full object-cover object-top" />
             </div>
             <figcaption className="mt-4 pr-[27%] text-xs text-slate-600"><strong className="text-slate-900">Live-event reliability</strong><br />850+ orders · Zero downtime</figcaption>
           </figure>
         </div>
         <div className="hero-proof">
-          {[
-            ['20', 'Products & platforms'],
-            ['4', 'AI systems live'],
-            ['2', 'App Store launches'],
-          ].map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+          {proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
         </div>
       </div>
     </section>

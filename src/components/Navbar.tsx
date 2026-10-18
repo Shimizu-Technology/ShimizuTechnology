@@ -88,7 +88,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="site-header sticky top-0 z-50 backdrop-blur-md">
+      <header className="site-header sticky top-0 z-50">
         <nav className="site-container" aria-label="Main navigation">
           <div className="flex h-[72px] items-center justify-between gap-4">
             <a href="/" aria-label="Shimizu Technology home" className="flex shrink-0 items-center gap-2.5 rounded-md">
@@ -99,17 +99,17 @@ export default function Navbar() {
               {navItems.map((item) => <a key={item.href} href={navHref(item.href)} aria-current={currentState(item.href)} className="nav-link">{item.label}</a>)}
               <a href="#contact" aria-current={currentState('#contact')} className="button-primary ml-4">Let’s talk <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
             </div>
-            <button ref={menuButtonRef} type="button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="rounded-md p-2 hover:bg-slate-100 lg:hidden" aria-label="Toggle menu" aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
+            <button ref={menuButtonRef} type="button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="nav-toggle rounded-md p-2.5 hover:bg-slate-100 active:bg-slate-200 lg:hidden" aria-label="Toggle menu" aria-expanded={mobileMenuOpen} aria-controls="mobile-navigation">
               {mobileMenuOpen ? <CloseIcon className="h-6 w-6" /> : <MenuIcon className="h-6 w-6" />}
             </button>
           </div>
         </nav>
         <nav id="mobile-navigation" aria-label="Mobile navigation" ref={menuRef} aria-hidden={!mobileMenuOpen} className={`absolute left-0 top-full z-50 max-h-[calc(100dvh-72px)] w-full overflow-y-auto border-t border-slate-200 bg-white shadow-lg lg:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
           <div className="space-y-1 px-5 py-4">
-            {navItems.map((item) => <a key={item.href} href={navHref(item.href)} aria-current={currentState(item.href)} onClick={() => closeMenu(item.href)} className="nav-link block py-3">{item.label}</a>)}
+            {navItems.map((item) => <a key={item.href} href={navHref(item.href)} aria-current={currentState(item.href)} onClick={() => closeMenu(item.href)} className="nav-link flex min-h-12 items-center py-3">{item.label}</a>)}
             <a href="#contact" onClick={() => closeMenu('#contact')} className="button-primary mt-3 w-full">Start a conversation <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
-            <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" onClick={() => closeMenu()} className="nav-link block py-3">Code School of Guam ↗</a>
-            <button type="button" onClick={() => closeMenu()} className="nav-link w-full py-3 text-left">Close navigation</button>
+            <a href="https://codeschoolofguam.com" target="_blank" rel="noopener noreferrer" onClick={() => closeMenu()} className="nav-link flex min-h-12 items-center py-3">Code School of Guam ↗</a>
+            <button type="button" onClick={() => closeMenu()} className="nav-link flex min-h-12 w-full items-center py-3 text-left">Close navigation</button>
           </div>
         </nav>
       </header>

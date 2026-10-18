@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { usePostHog } from 'posthog-js/react';
 import { ArrowRight } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -11,15 +10,15 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import useInitialHashScroll from './hooks/useInitialHashScroll';
+import { track } from './lib/analytics';
 
 function App() {
-  const posthog = usePostHog();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Track page view on component mount
   useEffect(() => {
-    posthog.capture('page_viewed', { page: 'homepage' });
-  }, [posthog]);
+    track('page_viewed', { page: 'homepage' });
+  }, []);
 
   useInitialHashScroll();
 
@@ -28,7 +27,8 @@ function App() {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 300);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
