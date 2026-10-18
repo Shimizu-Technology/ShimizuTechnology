@@ -1,1 +1,15 @@
-/*    /index.html   200
+# Known routes. Static files (assets, images, /work/index.html, sitemap) are served before these rules.
+/                       /index.html             200
+/work                   /work/                  301
+/hafa-remote            /hafa-remote-app.html   200
+/hafa-remote/           /hafa-remote-app.html   200
+/hafa-remote/support    /hafa-remote-app.html   200
+/hafa-remote/support/   /hafa-remote-app.html   200
+/hafa-remote/privacy    /hafa-remote-app.html   200
+/hafa-remote/privacy/   /hafa-remote-app.html   200
+
+# Unknown Hafa Remote paths keep the product's own not-found page, with a real 404 status.
+/hafa-remote/*          /hafa-remote-app.html   404
+
+# Everything else is a real 404 with the branded page.
+/*                      /404.html               404

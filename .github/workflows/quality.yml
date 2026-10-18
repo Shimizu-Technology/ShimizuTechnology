@@ -52,6 +52,10 @@ jobs:
       - name: Verify App Store support routes
         run: |
           test -f dist/_redirects
-          grep -Fq '/*    /index.html   200' dist/_redirects
+          test -f dist/404.html
+          test -f dist/hafa-remote-app.html
+          grep -Eq '^/hafa-remote/support +/hafa-remote-app.html +200$' dist/_redirects
+          grep -Eq '^/hafa-remote/privacy +/hafa-remote-app.html +200$' dist/_redirects
+          grep -Eq '^/\* +/404.html +404$' dist/_redirects
           grep -Fq 'https://shimizu-technology.com/hafa-remote/support' public/sitemap.xml
           grep -Fq 'https://shimizu-technology.com/hafa-remote/privacy' public/sitemap.xml
