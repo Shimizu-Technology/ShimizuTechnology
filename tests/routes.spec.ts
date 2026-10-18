@@ -151,6 +151,10 @@ test('the company site renders from the first bundle without waiting for analyti
   for (const path of scriptsBeforeLoad) expect(html).toContain(path);
   await expect(page.locator('link[rel="preload"][as="image"]')).toHaveAttribute('fetchpriority', 'high');
   await expect(page.locator('.product-window img')).toHaveAttribute('fetchpriority', 'high');
+  // The preload must stay pointed at the image the hero actually renders.
+  const preloadUrl = await page.locator('link[rel="preload"][as="image"]').evaluate((link: HTMLLinkElement) => link.href);
+  const heroUrl = await page.locator('.product-window img').evaluate((image: HTMLImageElement) => image.currentSrc);
+  expect(preloadUrl).toBe(heroUrl);
 });
 
 test('resizing an open phone menu restores scrolling and visible keyboard focus', async ({ page }) => {

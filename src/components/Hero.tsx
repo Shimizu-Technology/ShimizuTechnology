@@ -2,12 +2,12 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import desktopProduct from '../assets/hafaloha-orders-hero.webp';
 import mobileProduct240 from '../assets/hafaloha-orders-mobile-240.webp';
 import mobileProduct480 from '../assets/hafaloha-orders-mobile-480.webp';
-import { projects } from '../data';
+import { portfolioCounts } from '../data';
 
 const proof = [
-  [String(projects.length), 'Products & platforms built'],
+  [String(portfolioCounts.total), 'Products & platforms built'],
   ['4', 'AI systems live'],
-  ['4', 'App Store launches'],
+  [String(portfolioCounts.appStoreLaunches), 'App Store launches'],
 ];
 
 export default function Hero() {

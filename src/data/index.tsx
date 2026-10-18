@@ -47,6 +47,8 @@ export interface Project {
   gradientBg?: string;
   link?: string;
   appStoreLink?: string;
+  /** Released on the App Store at some point (paused apps keep this but show no link). */
+  launchedOnAppStore?: boolean;
   icon: React.ReactNode;
   accentColor: string;
   features: string[];
@@ -335,6 +337,7 @@ export const projects: Project[] = [
     imageStyle: "object-contain bg-slate-50 p-4",
     link: "https://hafa-recipes.com",
     appStoreLink: "https://apps.apple.com/us/app/h%C3%A5fa-recipes/id6755892896",
+    launchedOnAppStore: true,
     icon: <Utensils className="w-5 h-5" />,
     accentColor: "bg-orange-500",
     features: [
@@ -367,6 +370,7 @@ export const projects: Project[] = [
     subtitle: "Guam Property Platform",
     description: "A Guam-first real-estate proof of concept its partners used to demonstrate the product to investors and brokerages. The project is currently paused.",
     gradientBg: "from-emerald-800 via-green-800 to-slate-950",
+    launchedOnAppStore: true,
     icon: <Globe2 className="w-5 h-5" />,
     accentColor: "bg-emerald-800",
     features: [
@@ -384,6 +388,7 @@ export const projects: Project[] = [
     gradientBg: "from-amber-100 via-orange-100 to-stone-200",
     link: "https://tracebuddy-gu.netlify.app",
     appStoreLink: "https://apps.apple.com/us/app/tracebuddy-gu/id6779658138",
+    launchedOnAppStore: true,
     icon: <Smartphone className="w-5 h-5" />,
     accentColor: "bg-orange-600",
     features: [
@@ -477,6 +482,7 @@ export const projects: Project[] = [
     description: "Guam's local grocery delivery platform connecting shoppers with stores across the island. Paused now, with a stronger relaunch path ahead.",
     image: "/images/guahan-grocer-logo.webp",
     imageStyle: "object-contain bg-[#f5f0e6] p-6",
+    launchedOnAppStore: true,
     icon: <ShoppingCart className="w-5 h-5" />,
     accentColor: "bg-green-500",
     features: [
@@ -497,6 +503,7 @@ export const portfolioCounts = {
   inUse: projects.filter((project) => project.status && IN_USE.includes(project.status)).length,
   inProgress: projects.filter((project) => project.status && IN_PROGRESS.includes(project.status)).length,
   paused: projects.filter((project) => project.status === "Paused").length,
+  appStoreLaunches: projects.filter((project) => project.launchedOnAppStore).length,
 };
 
 export const projectGroups = [
