@@ -27,10 +27,10 @@ export default function Services() {
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-[220px_1fr] md:items-start">
-          <p className="font-mono-label pt-2 text-xs text-slate-500">Production toolkit</p>
+          <p className="font-mono-label pt-2 text-xs text-slate-600">Production toolkit</p>
           <div className="flex flex-wrap gap-x-6 gap-y-3">
             {techStack.map((tech) => (
-              <span key={tech} className="text-sm font-semibold text-slate-500">{tech}</span>
+              <span key={tech} className="text-sm font-semibold text-slate-600">{tech}</span>
             ))}
           </div>
         </div>

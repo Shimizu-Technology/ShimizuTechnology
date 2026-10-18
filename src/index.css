@@ -352,7 +352,7 @@
   .hafa-brand > span { min-width: 0; }
   .hafa-brand img { flex-shrink: 0; border-radius: 12px; }
   .hafa-brand strong { display: block; font-size: 1rem; font-weight: 800; letter-spacing: -.025em; }
-  .hafa-brand small { display: block; font-size: .65rem; color: var(--hafa-muted); }
+  .hafa-brand small { display: block; font-size: .75rem; color: var(--hafa-muted); }
   .hafa-nav-links { display: flex; align-items: center; gap: 4px; }
   .hafa-nav-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border-radius: 12px; font-size: .875rem; font-weight: 700; }
   .hafa-nav-links a { transition: background-color 150ms ease, color 150ms ease; }
@@ -408,7 +408,7 @@
   .hafa-compatibility { display: flex; align-items: flex-start; gap: 20px; padding-block: 56px; }
   .hafa-compatibility svg { color: var(--hafa-accent); flex-shrink: 0; margin-top: 5px; }
   .hafa-compatibility h2 { font-weight: 800; font-size: 1.4rem; }
-  .hafa-compatibility p { margin-top: 12px; color: var(--hafa-muted); max-width: 76ch; line-height: 1.75; }
+  .hafa-compatibility p { margin-top: 12px; color: var(--hafa-muted); max-width: 60ch; line-height: 1.75; }
   .hafa-document-heading { padding-block: 40px 48px; border-bottom: 1px solid var(--hafa-border); }
   .hafa-document-width { width: min(100% - 40px, 850px); margin-inline: auto; }
   .hafa-back-link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--hafa-accent); font-size: .875rem; font-weight: 700; }
