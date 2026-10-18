@@ -132,17 +132,23 @@ test('mobile menu closes on Escape and restores focus to its trigger', async ({ 
 });
 
 test('the company site renders from the first bundle without waiting for analytics', async ({ page }) => {
-  const scripts: string[] = [];
-  page.on('request', (request) => { if (request.resourceType() === 'script') scripts.push(new URL(request.url()).pathname); });
   const response = await page.goto('/');
 
   expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
-  // Every application script is linked from the HTML: no lazy page chunk and no analytics SDK on the critical path.
+  // Scripts that started before the load event; PostHog (when configured) is requested only afterwards, at idle.
+  const scriptsBeforeLoad = await page.evaluate(() => {
+    const [navigation] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+    return performance.getEntriesByType('resource')
+      .filter((entry) => (entry as PerformanceResourceTiming).initiatorType === 'script' && entry.startTime < navigation.loadEventStart)
+      .map((entry) => new URL(entry.name))
+      .filter((url) => url.origin === location.origin && url.pathname.startsWith('/assets/'))
+      .map((url) => url.pathname);
+  });
+  // Every one of them is linked from the HTML: no lazy page chunk and no analytics SDK on the critical path.
   const html = await response!.text();
-  const appScripts = scripts.filter((path) => path.startsWith('/assets/'));
-  expect(appScripts.length).toBeGreaterThan(0);
-  for (const path of appScripts) expect(html).toContain(path);
+  expect(scriptsBeforeLoad.length).toBeGreaterThan(0);
+  for (const path of scriptsBeforeLoad) expect(html).toContain(path);
   await expect(page.locator('link[rel="preload"][as="image"]')).toHaveAttribute('fetchpriority', 'high');
   await expect(page.locator('.product-window img')).toHaveAttribute('fetchpriority', 'high');
 });
