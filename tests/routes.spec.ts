@@ -138,8 +138,11 @@ test('the company site renders from the first bundle without waiting for analyti
 
   expect(response?.ok()).toBeTruthy();
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
-  // One application script: no lazy page chunk and no analytics SDK on the critical path.
-  expect(scripts.filter((path) => path.startsWith('/assets/'))).toHaveLength(1);
+  // Every application script is linked from the HTML: no lazy page chunk and no analytics SDK on the critical path.
+  const html = await response!.text();
+  const appScripts = scripts.filter((path) => path.startsWith('/assets/'));
+  expect(appScripts.length).toBeGreaterThan(0);
+  for (const path of appScripts) expect(html).toContain(path);
   await expect(page.locator('link[rel="preload"][as="image"]')).toHaveAttribute('fetchpriority', 'high');
   await expect(page.locator('.product-window img')).toHaveAttribute('fetchpriority', 'high');
 });
