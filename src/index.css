@@ -181,7 +181,7 @@
   .button-primary { background: var(--action-primary); color: var(--action-on-primary); }
   .button-secondary { border-color: var(--border-subtle); color: var(--text-primary); background: white; }
 
-  .site-header { border-bottom: 1px solid var(--border-subtle); background: rgba(255,255,255,.97); color: var(--text-primary); }
+  .site-header { border-bottom: 1px solid var(--border-subtle); background: #fff; color: var(--text-primary); }
   .nav-link { border-radius: 5px; padding: 10px 12px; color: var(--text-muted); font-size: .8125rem; font-weight: 650; transition: background-color 150ms ease, color 150ms ease; }
   .nav-link[aria-current] { background: var(--surface-soft); color: var(--action-primary); }
   .hero-layout { display: grid; align-items: center; gap: 44px; padding-block: 56px 44px; }
