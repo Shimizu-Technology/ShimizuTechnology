@@ -11,5 +11,21 @@
 # Unknown Hafa Remote paths keep the product's own not-found page, with a real 404 status.
 /hafa-remote/*          /hafa-remote-app.html   404
 
+/hafa-workouts           /hafa-workouts-app.html 200
+/hafa-workouts/          /hafa-workouts-app.html 200
+/hafa-workouts/support   /hafa-workouts-app.html 200
+/hafa-workouts/support/  /hafa-workouts-app.html 200
+/hafa-workouts/privacy   /hafa-workouts-app.html 200
+/hafa-workouts/privacy/  /hafa-workouts-app.html 200
+/hafa-workouts/*         /hafa-workouts-app.html 404
+
+/hafa-baby           /hafa-baby-app.html 200
+/hafa-baby/          /hafa-baby-app.html 200
+/hafa-baby/support   /hafa-baby-app.html 200
+/hafa-baby/support/  /hafa-baby-app.html 200
+/hafa-baby/privacy   /hafa-baby-app.html 200
+/hafa-baby/privacy/  /hafa-baby-app.html 200
+/hafa-baby/*             /hafa-baby-app.html 404
+
 # Everything else is a real 404 with the branded page.
 /*                      /404.html               404
