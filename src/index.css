@@ -420,6 +420,8 @@
   .hafa-site .hafa-document h2 { color: var(--hafa-ink); font-size: 1.3rem; scroll-margin-top: 24px; }
   .hafa-site .hafa-document h2:focus { outline: 3px solid var(--hafa-accent); outline-offset: 4px; }
   .hafa-site .hafa-document a { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; color: var(--hafa-accent); overflow-wrap: anywhere; }
+  .hafa-site .hafa-document a.hafa-button { color: var(--hafa-on-accent); text-decoration: none; }
+  .hafa-site .hafa-document a.hafa-button-secondary { color: var(--hafa-accent); background: var(--hafa-surface); border: 1px solid var(--hafa-accent); }
   .hafa-document-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 28px; }
   .hafa-footer { border-top: 1px solid var(--hafa-border); padding-block: 24px; }
   .hafa-footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--hafa-muted); font-size: .875rem; }

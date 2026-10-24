@@ -487,3 +487,90 @@ test('buttons give press feedback with transform and color only', async ({ page 
   await expect.poll(() => action.evaluate((element) => getComputedStyle(element).backgroundColor)).toBe('rgb(22, 58, 153)');
   await page.mouse.up();
 });
+
+for (const [slug, name] of [['workouts', 'Håfa Workouts'], ['baby', 'Håfa Baby']]) {
+  const base = `/hafa-${slug}`;
+  for (const suffix of ['', '/support', '/privacy']) {
+    test(`${base}${suffix} renders product content, metadata and navigation`, async ({ page }) => {
+      const response = await page.goto(base + suffix);
+      expect(response?.ok()).toBeTruthy();
+      const title = name + (suffix === '/support' ? ' Support' : suffix === '/privacy' ? ' Privacy Policy' : '');
+      await expect(page).toHaveTitle(title);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(name + (suffix === '/support' ? ' support' : suffix === '/privacy' ? ' privacy policy' : ''));
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://shimizu-technology.com' + base + suffix);
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
+      const description = suffix === '/support' ? `Getting started, import help, account deletion and contact details for ${name}.`
+        : suffix === '/privacy' ? `Information collected, optional AI processing, storage, sharing and deletion in ${name}.`
+          : slug === 'workouts' ? 'Save workouts from videos and other sources, build training plans, and record your sessions. Free while in beta.'
+            : 'A private pregnancy and baby-care companion for parents and caregivers: saved sources, a journal, care logs, routines, and optional AI answers.';
+      await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description);
+      await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', description);
+      const nav = page.getByRole('navigation', { name, exact: true });
+      await expect(nav.getByRole('link', { name: 'Support', exact: true })).toHaveAttribute('href', base + '/support');
+      await expect(nav.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', base + '/privacy');
+      if (suffix) {
+        await expect(nav.getByRole('link', { name: suffix === '/support' ? 'Support' : 'Privacy', exact: true })).toHaveAttribute('aria-current', 'page');
+        await expect(page.getByRole('link', { name: 'shimizutechnology@gmail.com' }).first()).toHaveAttribute('href', /^mailto:shimizutechnology@gmail.com\?subject=/);
+        await expect(page.getByRole('heading', { name: 'Account and data deletion' })).toBeVisible();
+      } else {
+        await expect(page.getByText(/no public App Store download yet/)).toBeVisible();
+        expect(await page.locator('a[href*="apps.apple.com"]').count()).toBe(0);
+        expect(await contrastOf(page, '.hafa-document .hafa-button')).toBeGreaterThanOrEqual(4.5);
+        expect(await contrastOf(page, '.hafa-document .hafa-button-secondary')).toBeGreaterThanOrEqual(4.5);
+      }
+      await page.setViewportSize({ width: 320, height: 812 });
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBeTruthy();
+      await page.keyboard.press('Tab');
+      await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('#hafa-main')).toBeFocused();
+    });
+  }
+  test(`${base} product 404, trailing slash and deletion deep link`, async ({ page }) => {
+    const response = await page.goto(base + '/missing');
+    expect(response?.status()).toBe(isDeploymentTest ? 404 : 200);
+    await expect(page).toHaveTitle('Page not found — ' + name);
+    await page.getByRole('link', { name: 'Return to ' + name }).click();
+    await expect(page).toHaveTitle(name);
+    await page.goto(base + '/support/');
+    await expect(page).toHaveTitle(name + ' Support');
+    await page.getByRole('navigation', { name, exact: true }).getByRole('link', { name: 'Privacy', exact: true }).click();
+    await expect(page).toHaveTitle(name + ' Privacy Policy');
+    await page.goto(base + '/privacy#deletion');
+    await expect(page.getByRole('heading', { name: 'Account and data deletion' })).toBeFocused();
+  });
+}
+
+test('new product deployment entries and sitemap match the route contract', async () => {
+  const rules = readFileSync('dist/_redirects', 'utf8').split('\n').map((line) => line.trim().split(/\s+/));
+  const sitemap = readFileSync('dist/sitemap.xml', 'utf8');
+  for (const slug of ['workouts', 'baby']) {
+    const base = `/hafa-${slug}`;
+    expect(readFileSync(`dist/hafa-${slug}-app.html`, 'utf8')).toContain('Håfa ' + (slug === 'baby' ? 'Baby' : 'Workouts'));
+    for (const suffix of ['', '/support', '/privacy']) {
+      expect(sitemap).toContain(`<loc>https://shimizu-technology.com${base}${suffix}</loc>`);
+      for (const slash of ['', '/']) expect(rules.find((rule) => rule[0] === base + suffix + slash)).toEqual([base + suffix + slash, `${base}-app.html`, '200']);
+    }
+    expect(rules.find((rule) => rule[0] === base + '/*')).toEqual([base + '/*', base + '-app.html', '404']);
+  }
+  expect(rules.filter((rule) => rule[0]).at(-1)).toEqual(['/*', '/404.html', '404']);
+});
+
+for (const slug of ['workouts', 'baby']) {
+  test(`Håfa ${slug} dedicated entry does not load company analytics`, async ({ page }) => {
+    const requests: string[] = [];
+    page.on('request', (request) => requests.push(request.url()));
+    if (!isDeploymentTest) {
+      // Exercise Netlify's dedicated HTML entry, rather than Vite's index fallback.
+      await page.route(`**/hafa-${slug}/privacy`, (route) => route.fulfill({
+        contentType: 'text/html', body: readFileSync(`dist/hafa-${slug}-app.html`, 'utf8'),
+      }));
+    }
+    await page.goto(`/hafa-${slug}/privacy`);
+    await expect(page).toHaveTitle(`Håfa ${slug === 'baby' ? 'Baby' : 'Workouts'} Privacy Policy`);
+    await expect(page.getByRole('heading', { name: 'Storage and service providers' })).toBeVisible();
+    expect(requests.filter((url) => /posthog|\/assets\/main-/.test(url))).toEqual([]);
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await expect(page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]')).toHaveAttribute('content', '#1c292b');
+  });
+}
