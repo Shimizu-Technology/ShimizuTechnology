@@ -115,8 +115,8 @@ function RemotePreview() {
 
 function LandingPage() {
   usePageMetadata(
-    'Hafa Remote — Samsung TV remote',
-    'A local iPhone remote for compatible Samsung TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
+    'Hafa Remote — a calm TV remote for iPhone',
+    'A local iPhone remote for compatible smart TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
     '',
   );
   return (
@@ -126,8 +126,8 @@ function LandingPage() {
         <section className="hafa-hero">
           <div className="hafa-hero-inner">
             <div>
-              <p className="hafa-eyebrow">App Store release for Samsung TVs in preparation</p>
-              <h1>Your Samsung TV. <span>Within reach.</span></h1>
+              <p className="hafa-eyebrow">App Store release in preparation</p>
+              <h1>Your TV. <span>Within reach.</span></h1>
               <p className="hafa-hero-copy">Everyday controls on your iPhone, with a calm native interface and no account, advertising, tracking, or subscription.</p>
               <p className="hafa-availability">Hafa Remote is currently in private testing. It is not available on the App Store yet.</p>
               <div className="hafa-actions">
@@ -155,9 +155,9 @@ function LandingPage() {
         </section>
         <section className="hafa-compatibility hafa-content-width">
           <Tv size={28} aria-hidden="true" />
-          <div><h2>Compatible Samsung TVs. Model and firmware matter.</h2>
-            <p>The planned public release supports compatible Samsung Tizen TVs. Available controls depend on the TV and its local-control service. Power-on varies with standby settings and the network, and is not guaranteed.</p>
-            <p>Hafa Remote is independently developed by Shimizu Technology and is not affiliated with or endorsed by Samsung Electronics.</p>
+          <div><h2>Compatible TVs. Model and firmware matter.</h2>
+            <p>Hafa Remote works with TVs that offer a local-network remote connection approved on the TV screen. Not every TV supports this. Available controls depend on the TV and its local-control service. Power-on varies with standby settings and the network, and is not guaranteed.</p>
+            <p>Hafa Remote is independently developed by Shimizu Technology and is not affiliated with or endorsed by any TV manufacturer.</p>
           </div>
         </section>
       </main>
@@ -193,17 +193,17 @@ function DocumentPage({ eyebrow, title, intro, children, metadata }: {
 function SupportPage() {
   return (
     <DocumentPage
-      eyebrow="Samsung setup and support"
+      eyebrow="Setup and support"
       title="Get connected and back to watching."
-      intro="Start with a compatible Samsung TV on your home network. Help is available in the app before pairing."
-      metadata={{ title: 'Hafa Remote Support', description: 'Samsung setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.', path: '/support' }}
+      intro="Start with a compatible TV on your home network. Help is available in the app before pairing."
+      metadata={{ title: 'Hafa Remote Support', description: 'TV setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.', path: '/support' }}
     >
       <nav className="hafa-document-links" aria-label="Support topics">
         <a href="#setup">Set up</a><a href="#recovery">Connection help</a><a href="#diagnostics">Diagnostics</a><a href="#contact">Contact</a>
       </nav>
-      <h2 id="setup" tabIndex={-1}>Set up your Samsung TV</h2>
+      <h2 id="setup" tabIndex={-1}>Set up your TV</h2>
       <ol>
-        <li>Turn on your compatible Samsung TV. Connect this iPhone to home Wi-Fi; the TV can use Wi-Fi or Ethernet on the same non-guest local network.</li>
+        <li>Turn on your compatible TV. Connect this iPhone to home Wi-Fi; the TV can use Wi-Fi or Ethernet on the same non-guest local network.</li>
         <li>Open Hafa Remote, choose <strong>Add TV</strong>, and allow Local Network access when iOS asks.</li>
         <li>Choose the intended television from the nearby list, then approve Hafa Remote on the TV by choosing <strong>Allow</strong> when prompted.</li>
         <li>Wait for the connected status before using the remote. Connected describes the control connection; TV power is shown separately when it is known.</li>
@@ -217,7 +217,7 @@ function SupportPage() {
         <li>Power-on is available only for eligible saved TVs. Settings such as <strong>Power On With Mobile</strong> can help, but model, firmware, network connection, and standby behavior still matter. Use the physical remote if wake is unavailable.</li>
       </ul>
       <h2>Controls and favorites</h2>
-      <p>Use Buttons for individual directions or switch to Swipe for discrete movement and tap-to-select. <strong>More Controls &amp; Favorites</strong> offers available source and tuner controls and shortcuts from a TV-returned app list. Some Samsung TVs do not provide that list. A request described as sent does not confirm the TV carried it out.</p>
+      <p>Use Buttons for individual directions or switch to Swipe for discrete movement and tap-to-select. <strong>More Controls &amp; Favorites</strong> offers available source and tuner controls and shortcuts from a TV-returned app list. Some TVs do not provide that list. A request described as sent does not confirm the TV carried it out.</p>
       <p>For text entry, focus a field on the TV first. TV apps and secure fields may reject remote text even while ordinary controls work.</p>
       <h2>Try the remote without a TV</h2>
       <p>Open <strong>Help → Try the Remote Offline</strong>. This clearly labeled demo changes only a preview on the phone; it does not discover, pair, or contact a TV, and it does not change your saved TVs.</p>
@@ -246,7 +246,7 @@ function PrivacyPage() {
       metadata={{ title: 'Hafa Remote Privacy Policy', description: 'Local TV data, default-off in-memory diagnostics, optional report sharing, and support reception in Hafa Remote.', path: '/privacy' }}
     >
       <h2>Ordinary local control</h2>
-      <p>Remote commands and text you choose to send travel from the iPhone to the selected compatible Samsung TV on your local network. Your iPhone uses Wi-Fi; the TV can use Wi-Fi or Ethernet. Ordinary control does not send app activity or pairing credentials to Shimizu Technology or an advertising or analytics service.</p>
+      <p>Remote commands and text you choose to send travel from the iPhone to the selected compatible TV on your local network. Your iPhone uses Wi-Fi; the TV can use Wi-Fi or Ethernet. Ordinary control does not send app activity or pairing credentials to Shimizu Technology or an advertising or analytics service.</p>
       <p>Typed text is not saved by Hafa Remote or written to app logs. Local Network permission enables direct communication with your TV.</p>
       <h2>Information kept on your phone</h2>
       <p>Saved TV names, optional rooms, model details, cached local addresses, observed capabilities, and per-TV favorites/preferences stay in local app storage. Pairing credentials are stored separately in Apple Keychain. These records support reconnecting, TV selection, and the controls you choose.</p>

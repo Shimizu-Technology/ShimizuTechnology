@@ -23,16 +23,16 @@ const contrastOf = (page: Page, selector: string) => page.locator(selector).firs
 const hafaRemoteRoutes = [
   {
     path: '/hafa-remote',
-    heading: 'Your Samsung TV. Within reach.',
-    title: 'Hafa Remote — Samsung TV remote',
-    description: 'A local iPhone remote for compatible Samsung TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
+    heading: 'Your TV. Within reach.',
+    title: 'Hafa Remote — a calm TV remote for iPhone',
+    description: 'A local iPhone remote for compatible smart TVs. No account, ads, tracking, backend, or subscription. App Store release in preparation.',
     canonical: 'https://shimizu-technology.com/hafa-remote',
   },
   {
     path: '/hafa-remote/support',
     heading: 'Get connected and back to watching.',
     title: 'Hafa Remote Support',
-    description: 'Samsung setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.',
+    description: 'TV setup, connection recovery, offline demo, optional diagnostics, and support for Hafa Remote.',
     canonical: 'https://shimizu-technology.com/hafa-remote/support',
   },
   {
@@ -51,7 +51,7 @@ for (const route of hafaRemoteRoutes) {
     expect(response?.ok()).toBeTruthy();
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(route.heading);
     if (route.path === '/hafa-remote') {
-      await expect(page.getByText('App Store release for Samsung TVs in preparation', { exact: true })).toBeVisible();
+      await expect(page.getByText('App Store release in preparation', { exact: true })).toBeVisible();
       await expect(page.getByText('Hafa Remote is currently in private testing. It is not available on the App Store yet.')).toBeVisible();
     }
     await expect(page).toHaveTitle(route.title);
@@ -230,14 +230,14 @@ test('in-page navigation jumps instead of smooth-scrolling the whole page', asyn
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
 });
 
-test('Samsung product pages preserve local diagnostics and voluntary support boundaries', async ({ page }) => {
+test('Hafa Remote product pages preserve local diagnostics and voluntary support boundaries', async ({ page }) => {
   const analyticsRequests: string[] = [];
   page.on('request', request => {
     if (/posthog|googletagmanager|google-analytics/i.test(request.url())) analyticsRequests.push(request.url());
   });
   await page.goto('/hafa-remote/support');
-  await expect(page.getByRole('heading', { name: 'Set up your Samsung TV' })).toBeVisible();
-  await expect(page.getByRole('main')).not.toContainText(/Sony|Vizio/);
+  await expect(page.getByRole('heading', { name: 'Set up your TV' })).toBeVisible();
+  await expect(page.getByRole('main')).not.toContainText(/Samsung|Tizen|Sony|Vizio/);
   await expect(page.getByText(/TV can use Wi-Fi or Ethernet on the same non-guest/)).toBeVisible();
   await expect(page.getByText(/It resets to off when the app restarts/)).toBeVisible();
   await expect(page.getByText(/An existing preview stays unchanged/)).toBeVisible();
@@ -288,7 +288,7 @@ for (const width of [320, 390, 1280]) {
 
 test('support-topic fragments place keyboard focus at the requested heading', async ({ page }) => {
   for (const [fragment, name] of [
-    ['setup', 'Set up your Samsung TV'],
+    ['setup', 'Set up your TV'],
     ['recovery', 'If the TV does not connect'],
     ['diagnostics', 'Optional diagnostics'],
     ['contact', 'Contact support'],
@@ -411,7 +411,7 @@ test('portfolio statuses, links, and counts reflect the current inventory', asyn
   await expect(card('Cornerstone Payroll').getByRole('link').first()).toHaveAttribute('href', 'https://payroll.shimizu-technology.com');
   await expect(card('Hafa Recipes').getByRole('link', { name: /App Store/ })).toHaveAttribute('href', 'https://apps.apple.com/us/app/h%C3%A5fa-recipes/id6755892896');
   await expect(page.locator('main')).not.toContainText(/Invoice Maker|Typr|Coming Soon/);
-  await expect(page.locator('.tool-cell').filter({ hasText: 'Hafa Remote' })).toContainText('Sony and Vizio support is in development');
+  await expect(page.locator('.tool-cell').filter({ hasText: 'Hafa Remote' })).toContainText('compatible smart TVs, now in private testing');
 
   await page.goto('/');
   await expect(page.locator('.hero-proof')).toContainText(`${total}Products & platforms built`);

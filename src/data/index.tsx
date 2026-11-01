@@ -554,7 +554,7 @@ export const internalTools: InternalTool[] = [
   },
   {
     title: "Hafa Remote",
-    description: "A native iPhone remote for compatible Samsung TVs, now in private testing. App Store submission is in preparation; Sony and Vizio support is in development.",
+    description: "A calm native iPhone remote for compatible smart TVs, now in private testing. App Store submission is in preparation.",
     link: "/hafa-remote",
     icon: <Smartphone className="w-5 h-5" />,
     accentColor: "bg-cyan-700",
