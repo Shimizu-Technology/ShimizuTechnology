@@ -577,14 +577,15 @@ for (const slug of ['workouts', 'baby']) {
 
 // A made-up code in the real shape. A family code is a secret, so the page must never read it or pass it on.
 const joinPath = '/join/hfbi_v1.not-a-real-code-only-for-this-test';
+const joinCsp = "default-src 'none'; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
 
 test('the app-association file opens only family links in Håfa Baby', async ({ request }) => {
-  const response = await request.get('/.well-known/apple-app-site-association');
+  // Apple won't follow a redirect, so one has to fail here.
+  const response = await request.get('/.well-known/apple-app-site-association', { maxRedirects: 0 });
   expect(response.status()).toBe(200);
   // vite preview can't apply Netlify's headers, so locally the header rule is what's checked.
   if (isDeploymentTest) {
     expect(response.headers()['content-type']).toContain('application/json');
-    expect(response.url()).toContain('/.well-known/apple-app-site-association');
   } else {
     const headers = readFileSync('dist/_headers', 'utf8');
     expect(headers).toMatch(/\/\.well-known\/apple-app-site-association\n\s+Content-Type: application\/json/);
@@ -607,13 +608,15 @@ test('every join path has the same page, and it can\'t pass a code on', async ({
       expect(response.status()).toBe(200);
       expect(response.headers()['referrer-policy']).toBe('no-referrer');
       expect(response.headers()['x-robots-tag']).toContain('noindex');
+      expect(response.headers()['cache-control']).toBe('no-store');
+      expect(response.headers()['content-security-policy']).toBe(joinCsp);
     }
   } else {
     // vite preview can't apply Netlify's rules, so check the rules and the page separately.
     const rules = readFileSync('dist/_redirects', 'utf8').split('\n').map((line) => line.trim().split(/\s+/));
     for (const path of ['/join', '/join/', '/join/*']) expect(rules.find((rule) => rule[0] === path)).toEqual([path, '/join.html', '200']);
     const headers = readFileSync('dist/_headers', 'utf8');
-    for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n`);
+    for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n  Content-Security-Policy: ${joinCsp}\n`);
     await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', body: readFileSync('dist/join.html', 'utf8') }));
   }
   await page.goto(joinPath);
