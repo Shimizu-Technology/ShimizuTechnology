@@ -27,5 +27,10 @@
 /hafa-baby/privacy/  /hafa-baby-app.html 200
 /hafa-baby/*             /hafa-baby-app.html 404
 
+# Family invitation links. The page is static and never reads the code in the path.
+/join                /join.html 200
+/join/               /join.html 200
+/join/*              /join.html 200
+
 # Everything else is a real 404 with the branded page.
 /*                      /404.html               404

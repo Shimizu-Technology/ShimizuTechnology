@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Join a family in Håfa Baby</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="How to install Håfa Baby with TestFlight, then use your family invitation." />
+    <meta name="robots" content="noindex" />
+    <meta name="referrer" content="no-referrer" />
+    <meta property="og:title" content="Join a family in Håfa Baby" />
+    <meta property="og:description" content="How to install Håfa Baby with TestFlight, then use your family invitation." />
+    <meta property="og:image" content="https://shimizu-technology.com/hafa-baby-icon.png" />
+    <meta name="theme-color" content="#F8F3EE" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href="/hafa-baby-icon.png" />
+    <link rel="apple-touch-icon" href="/hafa-baby-icon.png" />
+    <!-- No script, and nothing from another site. A family code can be in this page's address. -->
+    <style>
+      @font-face { font-family: 'Manrope'; font-weight: 400 800; font-display: swap; src: url('/fonts/manrope-latin.woff2') format('woff2'); }
+      :root { color-scheme: light dark; --ground: #F8F3EE; --surface: #FFFFFF; --text: #2B211C; --muted: #6A5A50; --action: #7A4E2D; --on-action: #FFFFFF; --line: #E5DACF; }
+      @media (prefers-color-scheme: dark) { :root { --ground: #14110F; --surface: #221B18; --text: #F4EBE3; --muted: #BFAFA3; --action: #E3B58F; --on-action: #14110F; --line: #3A2E28; } }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
+      body { margin: 0; min-height: 100vh; color: var(--text); background: var(--ground); font-family: 'Manrope', system-ui, sans-serif; line-height: 1.55; }
+      main { width: min(100%, 620px); margin-inline: auto; padding: clamp(28px, 7vw, 64px) 20px 48px; }
+      img { display: block; width: 56px; height: 56px; border-radius: 14px; }
+      h1 { margin: 20px 0 0; font-size: clamp(1.75rem, 6vw, 2.4rem); font-weight: 750; line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance; }
+      h2 { margin: 0 0 8px; font-size: 1.0625rem; font-weight: 700; }
+      p { margin: 14px 0 0; }
+      a { color: var(--action); text-underline-offset: 2px; }
+      ol { margin: 24px 0 0; padding: 0; list-style: none; counter-reset: step; }
+      li { counter-increment: step; position: relative; margin-top: 12px; padding: 16px 16px 16px 56px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+      li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 28px; height: 28px; display: grid; place-items: center; font-weight: 700; color: var(--on-action); background: var(--action); border-radius: 999px; }
+      li p { margin: 0; color: var(--muted); }
+      .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 12px; padding: 12px 20px; font-weight: 700; color: var(--on-action); text-decoration: none; background: var(--action); border-radius: 12px; }
+      .quiet { color: var(--muted); font-size: 0.9375rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/hafa-baby-icon.png" alt="" width="56" height="56" />
+      <h1>You’ve been invited to a family in Håfa Baby</h1>
+      <p>If you’re seeing this page, Håfa Baby isn’t on this phone yet, or it needs an update. It’s in private testing, so it comes through TestFlight, Apple’s app for trying apps before they’re released. Testing is on iPhone for now.</p>
+      <ol>
+        <li>
+          <h2>Ask to be added as a tester</h2>
+          <p>Ask the person who invited you. Apple sends the TestFlight invitation by email.</p>
+        </li>
+        <li>
+          <h2>Get TestFlight</h2>
+          <p>It’s free, from the App Store.</p>
+          <a class="button" href="https://apps.apple.com/app/testflight/id899247664" rel="noopener noreferrer">Get TestFlight</a>
+        </li>
+        <li>
+          <h2>Install Håfa Baby</h2>
+          <p>Open Apple’s email and follow its link into TestFlight. Already have Håfa Baby? Open TestFlight and update it.</p>
+        </li>
+        <li>
+          <h2>Tap the link in your message again</h2>
+          <p>Håfa Baby opens with your invitation filled in. If you come back here instead, open Håfa Baby, then your profile, Family and I have a code, and paste the code from your message.</p>
+        </li>
+      </ol>
+      <p>Nothing is shared until you’ve read what joining means and said yes. Your code works once, for 7 days, so keep it to yourself. This page doesn’t read it.</p>
+      <p class="quiet">Stuck? <a href="/hafa-baby/support">Håfa Baby support</a></p>
+    </main>
+  </body>
+</html>
