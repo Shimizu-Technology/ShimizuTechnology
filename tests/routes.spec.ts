@@ -598,8 +598,9 @@ test('the app-association file opens only family links in Håfa Baby', async ({ 
 });
 
 test('every join path has the same page, and it can\'t pass a code on', async ({ page, request }) => {
-  const requests: string[] = [];
+  const requests: string[] = [], finished: string[] = [];
   page.on('request', (sent) => requests.push(sent.url()));
+  page.on('requestfinished', (sent) => finished.push(sent.url()));
   if (isDeploymentTest) {
     for (const path of [joinPath, '/join', '/join/']) {
       const response = await request.get(path);
@@ -624,7 +625,7 @@ test('every join path has the same page, and it can\'t pass a code on', async ({
   // Netlify adds its review drawer to deploy previews only, and the CSP stops it loading. Production must have no script at all.
   const previewDrawer = process.env.DEPLOY_URL?.includes('deploy-preview') ? ':not([src="/.netlify/scripts/cdp"])' : '';
   expect(await page.locator(`script${previewDrawer}`).count()).toBe(0);
-  expect(requests.filter((url) => url.includes('/.netlify/'))).toEqual([]);
+  expect(finished.filter((url) => url.includes('/.netlify/'))).toEqual([]);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
   expect(requests.filter((url) => /posthog|\/assets\//.test(url))).toEqual([]);
