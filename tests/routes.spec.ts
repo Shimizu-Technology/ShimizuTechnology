@@ -574,3 +574,66 @@ for (const slug of ['workouts', 'baby']) {
     await expect(page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]')).toHaveAttribute('content', '#1c292b');
   });
 }
+
+// A made-up code in the real shape. A family code is a secret, so the page must never read it or pass it on.
+const joinPath = '/join/hfbi_v1.not-a-real-code-only-for-this-test';
+
+test('the app-association file opens only family links in Håfa Baby', async ({ request }) => {
+  const response = await request.get('/.well-known/apple-app-site-association');
+  expect(response.status()).toBe(200);
+  // vite preview can't apply Netlify's headers, so locally the header rule is what's checked.
+  if (isDeploymentTest) {
+    expect(response.headers()['content-type']).toContain('application/json');
+    expect(response.url()).toContain('/.well-known/apple-app-site-association');
+  } else {
+    const headers = readFileSync('dist/_headers', 'utf8');
+    expect(headers).toMatch(/\/\.well-known\/apple-app-site-association\n\s+Content-Type: application\/json/);
+  }
+  expect(await response.json()).toEqual({
+    applinks: { details: [{
+      appIDs: ['4T358A5S74.com.shimizutechnology.hafababy'],
+      components: [{ '/': '/join/*', comment: 'Family invitation links for Håfa Baby' }],
+    }] },
+  });
+});
+
+test('every join path has the same page, and it can\'t pass a code on', async ({ page, request }) => {
+  const requests: string[] = [];
+  page.on('request', (sent) => requests.push(sent.url()));
+  if (isDeploymentTest) {
+    for (const path of [joinPath, '/join', '/join/']) {
+      const response = await request.get(path);
+      expect(response.status()).toBe(200);
+      expect(response.headers()['referrer-policy']).toBe('no-referrer');
+      expect(response.headers()['x-robots-tag']).toContain('noindex');
+    }
+  } else {
+    // vite preview can't apply Netlify's rules, so check the rules and the page separately.
+    const rules = readFileSync('dist/_redirects', 'utf8').split('\n').map((line) => line.trim().split(/\s+/));
+    for (const path of ['/join', '/join/', '/join/*']) expect(rules.find((rule) => rule[0] === path)).toEqual([path, '/join.html', '200']);
+    const headers = readFileSync('dist/_headers', 'utf8');
+    for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n`);
+    await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', body: readFileSync('dist/join.html', 'utf8') }));
+  }
+  await page.goto(joinPath);
+  await expect(page).toHaveTitle('Join a family in Håfa Baby');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('You’ve been invited to a family in Håfa Baby');
+  await expect(page.getByRole('link', { name: 'Get TestFlight' })).toHaveAttribute('href', 'https://apps.apple.com/app/testflight/id899247664');
+
+  expect(await page.content()).not.toContain('hfbi_v1');
+  expect(await page.locator('script').count()).toBe(0);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+  await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
+  expect(requests.filter((url) => /posthog|\/assets\//.test(url))).toEqual([]);
+  // Only the page itself may carry the path. Its font and image requests don't.
+  expect(requests.filter((url) => url.includes('hfbi_v1'))).toHaveLength(1);
+  expect(requests.filter((url) => new URL(url).host !== new URL(page.url()).host)).toEqual([]);
+  expect(readFileSync('dist/sitemap.xml', 'utf8')).not.toContain('/join');
+});
+
+test('the join page fits a small phone', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  if (!isDeploymentTest) await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', body: readFileSync('dist/join.html', 'utf8') }));
+  await page.goto(joinPath);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
