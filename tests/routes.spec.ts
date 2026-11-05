@@ -621,7 +621,10 @@ test('every join path has the same page, and it can\'t pass a code on', async ({
   await expect(page.getByRole('link', { name: 'Get TestFlight' })).toHaveAttribute('href', 'https://apps.apple.com/app/testflight/id899247664');
 
   expect(await page.content()).not.toContain('hfbi_v1');
-  expect(await page.locator('script').count()).toBe(0);
+  // Netlify adds its review drawer to deploy previews only, and the CSP stops it loading. Production must have no script at all.
+  const previewDrawer = process.env.DEPLOY_URL?.includes('deploy-preview') ? ':not([src="/.netlify/scripts/cdp"])' : '';
+  expect(await page.locator(`script${previewDrawer}`).count()).toBe(0);
+  expect(requests.filter((url) => url.includes('/.netlify/'))).toEqual([]);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
   expect(requests.filter((url) => /posthog|\/assets\//.test(url))).toEqual([]);
