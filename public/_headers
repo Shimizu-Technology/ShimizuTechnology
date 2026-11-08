@@ -3,15 +3,15 @@
   Content-Type: application/json
   Cache-Control: public, max-age=3600
 
-# A family code can be in these paths. Don't index them, and don't pass them on or let any script run.
+# A family code can be in these paths. Don't index or forward them. Only the fixed invitation handoff script may run.
 /join
   Referrer-Policy: no-referrer
   X-Robots-Tag: noindex
   Cache-Control: no-store
-  Content-Security-Policy: default-src 'none'; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'sha256-Y/QH5jDeb8GsRPZpsCr8uPxzbJKAtMVbrrjh+PMCqzs='; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'
 
 /join/*
   Referrer-Policy: no-referrer
   X-Robots-Tag: noindex
   Cache-Control: no-store
-  Content-Security-Policy: default-src 'none'; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'sha256-Y/QH5jDeb8GsRPZpsCr8uPxzbJKAtMVbrrjh+PMCqzs='; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'
