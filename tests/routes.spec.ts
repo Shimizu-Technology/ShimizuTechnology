@@ -575,9 +575,9 @@ for (const slug of ['workouts', 'baby']) {
   });
 }
 
-// A made-up code in the real shape. A family code is a secret, so the page must never read it or pass it on.
+// A synthetic code. Only an explicit app handoff may use it; no external requests or storage.
 const joinPath = '/join/hfbi_v1.not-a-real-code-only-for-this-test';
-const joinCsp = "default-src 'none'; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
+const joinCsp = "default-src 'none'; script-src 'sha256-Y/QH5jDeb8GsRPZpsCr8uPxzbJKAtMVbrrjh+PMCqzs='; img-src 'self'; font-src 'self'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
 
 test('the app-association file opens only family links in Håfa Baby', async ({ request }) => {
   // Apple won't follow a redirect, so one has to fail here.
@@ -598,7 +598,7 @@ test('the app-association file opens only family links in Håfa Baby', async ({ 
   });
 });
 
-test('every join path has the same page, and it can\'t pass a code on', async ({ page, request }) => {
+test('join paths offer an explicit app handoff without external disclosure', async ({ page, request }) => {
   const requests: string[] = [], finished: string[] = [];
   page.on('request', (sent) => requests.push(sent.url()));
   page.on('requestfinished', (sent) => finished.push(sent.url()));
@@ -617,17 +617,21 @@ test('every join path has the same page, and it can\'t pass a code on', async ({
     for (const path of ['/join', '/join/', '/join/*']) expect(rules.find((rule) => rule[0] === path)).toEqual([path, '/join.html', '200']);
     const headers = readFileSync('dist/_headers', 'utf8');
     for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n  Content-Security-Policy: ${joinCsp}\n`);
-    await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', body: readFileSync('dist/join.html', 'utf8') }));
+    await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', headers: { 'Content-Security-Policy': joinCsp }, body: readFileSync('dist/join.html', 'utf8') }));
   }
   await page.goto(joinPath);
   await expect(page).toHaveTitle('Join a family in Håfa Baby');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('You’ve been invited to a family in Håfa Baby');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Join your family in Håfa Baby');
+  await expect(page.getByRole('link', { name: 'Open Håfa Baby' })).toHaveAttribute('href', `hafababy://join/${joinPath.split('/').at(-1)}`);
+  await page.getByText('Need to install or update the app?').click();
   await expect(page.getByRole('link', { name: 'Get TestFlight' })).toHaveAttribute('href', 'https://apps.apple.com/app/testflight/id899247664');
 
-  expect(await page.content()).not.toContain('hfbi_v1');
-  // Netlify adds its review drawer to deploy previews only, and the CSP stops it loading. Production must have no script at all.
+  expect(await page.locator('main').innerText()).not.toContain('hfbi_v1');
+  expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length }))).toEqual({ local: 0, session: 0 });
+  // Netlify adds its review drawer to deploy previews only, and the CSP stops it loading. Production permits only the hash-pinned handoff script.
   const previewDrawer = process.env.DEPLOY_URL?.includes('deploy-preview') ? ':not([src="/.netlify/scripts/cdp"])' : '';
-  expect(await page.locator(`script${previewDrawer}`).count()).toBe(0);
+  expect(await page.locator(`script${previewDrawer}`).count()).toBe(1);
+  expect(await page.locator(`script${previewDrawer}`).getAttribute('src')).toBeNull();
   expect(finished.filter((url) => url.includes('/.netlify/'))).toEqual([]);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   await expect(page.locator('meta[name="referrer"]')).toHaveAttribute('content', 'no-referrer');
@@ -640,7 +644,33 @@ test('every join path has the same page, and it can\'t pass a code on', async ({
 
 test('the join page fits a small phone', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 640 });
-  if (!isDeploymentTest) await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', body: readFileSync('dist/join.html', 'utf8') }));
+  if (!isDeploymentTest) await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', headers: { 'Content-Security-Policy': joinCsp }, body: readFileSync('dist/join.html', 'utf8') }));
   await page.goto(joinPath);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+});
+
+
+test('malformed or missing invitation codes never create an app action', async ({ page }) => {
+  for (const path of ['/join', '/join/not-a-code', '/join/hfbi_v1.%22%3E%3Cscript%3E', '/join/hfbi_v1.abcdefghijklmnopqrstuvwxyz/extra']) {
+    if (!isDeploymentTest) await page.route(`**${path}`, (route) => route.fulfill({ contentType: 'text/html', headers: { 'Content-Security-Policy': joinCsp }, body: readFileSync('dist/join.html', 'utf8') }));
+    await page.goto(path);
+    await expect(page.getByRole('link', { name: 'Open Håfa Baby' })).toHaveCount(0);
+    await expect(page.getByText('Open the invitation link from your message to continue.')).toBeVisible();
+  }
+});
+
+
+test('join actions remain readable at large text in light and dark on a small phone', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 640 });
+  if (!isDeploymentTest) await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', headers: { 'Content-Security-Policy': joinCsp }, body: readFileSync('dist/join.html', 'utf8') }));
+  for (const colorScheme of ['light', 'dark'] as const) {
+    await page.emulateMedia({ colorScheme });
+    await page.goto(joinPath);
+    await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
+    await expect(page.getByRole('link', { name: 'Open Håfa Baby' })).toBeVisible();
+    await page.getByText('Need to install or update the app?').click();
+    await expect(page.getByRole('heading', { name: 'Tap your family invitation again' })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath(`join-${colorScheme}-large.png`), fullPage: true });
+  }
 });

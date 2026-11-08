@@ -4,17 +4,17 @@
     <meta charset="UTF-8" />
     <title>Join a family in Håfa Baby</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="How to install Håfa Baby with TestFlight, then use your family invitation." />
+    <meta name="description" content="Open Håfa Baby to review your family invitation." />
     <meta name="robots" content="noindex" />
     <meta name="referrer" content="no-referrer" />
     <meta property="og:title" content="Join a family in Håfa Baby" />
-    <meta property="og:description" content="How to install Håfa Baby with TestFlight, then use your family invitation." />
+    <meta property="og:description" content="Open Håfa Baby to review your family invitation." />
     <meta property="og:image" content="https://shimizu-technology.com/hafa-baby-icon.png" />
     <meta name="theme-color" content="#F8F3EE" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/png" href="/hafa-baby-icon.png" />
     <link rel="apple-touch-icon" href="/hafa-baby-icon.png" />
-    <!-- No script, and nothing from another site. A family code can be in this page's address. -->
+    <!-- Only the hash-allowed invitation handoff below runs; no analytics or external resources. -->
     <style>
       @font-face { font-family: 'Manrope'; font-weight: 400 800; font-display: swap; src: url('/fonts/manrope-latin.woff2') format('woff2'); }
       :root { color-scheme: light dark; --ground: #F8F3EE; --surface: #FFFFFF; --text: #2B211C; --muted: #6A5A50; --action: #7A4E2D; --on-action: #FFFFFF; --line: #E5DACF; }
@@ -33,35 +33,54 @@
       li::before { content: counter(step); position: absolute; left: 16px; top: 16px; width: 28px; height: 28px; display: grid; place-items: center; font-weight: 700; color: var(--on-action); background: var(--action); border-radius: 999px; }
       li p { margin: 0; color: var(--muted); }
       .button { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; margin-top: 12px; padding: 12px 20px; font-weight: 700; color: var(--on-action); text-decoration: none; background: var(--action); border-radius: 12px; }
+      [hidden] { display: none !important; }
+      a:focus-visible, summary:focus-visible { outline: 3px solid var(--action); outline-offset: 4px; }
+      details { margin-top: 28px; }
+      summary { cursor: pointer; font-weight: 700; padding-block: 10px; }
       .quiet { color: var(--muted); font-size: 0.9375rem; }
     </style>
   </head>
   <body>
     <main>
       <img src="/hafa-baby-icon.png" alt="" width="56" height="56" />
-      <h1>You’ve been invited to a family in Håfa Baby</h1>
-      <p>If you’re seeing this page, Håfa Baby isn’t on this phone yet, or it needs an update. It’s in private testing, so it comes through TestFlight, Apple’s app for trying apps before they’re released. Testing is on iPhone for now.</p>
-      <ol>
-        <li>
-          <h2>Ask to be added as a tester</h2>
-          <p>Ask the person who invited you. Apple sends the TestFlight invitation by email.</p>
-        </li>
-        <li>
-          <h2>Get TestFlight</h2>
-          <p>It’s free, from the App Store.</p>
-          <a class="button" href="https://apps.apple.com/app/testflight/id899247664" rel="noopener noreferrer">Get TestFlight</a>
-        </li>
-        <li>
-          <h2>Install Håfa Baby</h2>
-          <p>Open Apple’s email and follow its link into TestFlight. Already have Håfa Baby? Open TestFlight and update it.</p>
-        </li>
-        <li>
-          <h2>Tap the link in your message again</h2>
-          <p>Håfa Baby opens with your invitation filled in. If you come back here instead, open Håfa Baby, then your profile, Family and I have a code, and paste the code from your message.</p>
-        </li>
-      </ol>
-      <p>Nothing is shared until you’ve read what joining means and said yes. Your code works once, for 7 days, so keep it to yourself. This page doesn’t read it.</p>
+      <h1>Join your family in Håfa Baby</h1>
+      <p>Keep baby’s days, appointments and shared notes together.</p>
+      <a id="open-app" class="button" hidden>Open Håfa Baby</a>
+      <p id="invite-help" class="quiet" hidden>Open the invitation link from your message to continue.</p>
+      <p class="quiet">You’ll review the invitation in the app before anything is shared.</p>
+      <details>
+        <summary>Need to install or update the app?</summary>
+        <p>Håfa Baby is an iPhone app in private testing through TestFlight.</p>
+        <ol>
+          <li>
+            <h2>Get tester access</h2>
+            <p>Ask the person who invited you to have you added as a tester. Apple sends an email with access to Håfa Baby.</p>
+          </li>
+          <li>
+            <h2>Install Håfa Baby with TestFlight</h2>
+            <p>Get TestFlight, then follow Apple’s invitation email. Already a tester? Open TestFlight to install or update Håfa Baby.</p>
+            <a class="button" href="https://apps.apple.com/app/testflight/id899247664" rel="noopener noreferrer">Get TestFlight</a>
+          </li>
+          <li>
+            <h2>Tap your family invitation again</h2>
+            <p>Return to the original message after installing. Tap its link, then Open Håfa Baby if this page appears.</p>
+          </li>
+        </ol>
+      </details>
+      <noscript><p>Open Håfa Baby, go to Settings → Family → I have a code, and paste the invitation link from your message.</p></noscript>
+      <p class="quiet">Invitations work once, for 7 days. Keep yours between you and the person who invited you.</p>
       <p class="quiet">Stuck? <a href="/hafa-baby/support">Håfa Baby support</a></p>
     </main>
+    <script>
+      // Keep the code local: no network calls, logging, analytics or storage.
+      const invitation = /^\/join\/(hfbi_v1\.[A-Za-z0-9_-]{16,128})\/?$/.exec(window.location.pathname);
+      const action = document.getElementById('open-app');
+      if (invitation) {
+        action.href = 'hafababy://join/' + invitation[1];
+        action.hidden = false;
+      } else {
+        document.getElementById('invite-help').hidden = false;
+      }
+    </script>
   </body>
 </html>
