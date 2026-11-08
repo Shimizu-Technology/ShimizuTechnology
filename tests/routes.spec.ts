@@ -608,7 +608,7 @@ test('join paths offer an explicit app handoff without external disclosure', asy
       expect(response.status()).toBe(200);
       expect(response.headers()['referrer-policy']).toBe('no-referrer');
       expect(response.headers()['x-robots-tag']).toContain('noindex');
-      expect(response.headers()['cache-control']).toBe('no-store, no-transform');
+      expect(response.headers()['cache-control'].split(',').map((directive) => directive.trim()).sort()).toEqual(['no-store', 'no-transform']);
       expect(response.headers()['content-security-policy']).toBe(joinCsp);
     }
   } else {
