@@ -608,7 +608,7 @@ test('join paths offer an explicit app handoff without external disclosure', asy
       expect(response.status()).toBe(200);
       expect(response.headers()['referrer-policy']).toBe('no-referrer');
       expect(response.headers()['x-robots-tag']).toContain('noindex');
-      expect(response.headers()['cache-control']).toBe('no-store');
+      expect(response.headers()['cache-control']).toBe('no-store, no-transform');
       expect(response.headers()['content-security-policy']).toBe(joinCsp);
     }
   } else {
@@ -616,7 +616,7 @@ test('join paths offer an explicit app handoff without external disclosure', asy
     const rules = readFileSync('dist/_redirects', 'utf8').split('\n').map((line) => line.trim().split(/\s+/));
     for (const path of ['/join', '/join/', '/join/*']) expect(rules.find((rule) => rule[0] === path)).toEqual([path, '/join.html', '200']);
     const headers = readFileSync('dist/_headers', 'utf8');
-    for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store\n  Content-Security-Policy: ${joinCsp}\n`);
+    for (const path of ['/join', '/join/*']) expect(headers).toContain(`\n${path}\n  Referrer-Policy: no-referrer\n  X-Robots-Tag: noindex\n  Cache-Control: no-store, no-transform\n  Content-Security-Policy: ${joinCsp}\n`);
     await page.route(`**${joinPath}`, (route) => route.fulfill({ contentType: 'text/html', headers: { 'Content-Security-Policy': joinCsp }, body: readFileSync('dist/join.html', 'utf8') }));
   }
   await page.goto(joinPath);
