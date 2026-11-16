@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
+for (const direction of ['a', 'b', 'c']) {
 for (const width of [390, 1280]) {
-  test(`homepage motion and contact journey at ${width}`, async ({ page }) => {
+  test(`homepage motion and contact journey ${direction} at ${width}`, async ({ page }) => {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 800 });
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto("/");
+    await page.goto(`/?direction=${direction}`);
     const video = page.locator("video");
     await video.scrollIntoViewIfNeeded();
     await expect
@@ -54,7 +55,7 @@ for (const width of [390, 1280]) {
     expect(errors).toEqual([]);
   });
 }
-test("reduced motion uses only the poster and responds to preference changes", async ({
+test(`reduced motion uses poster and preference changes ${direction}`, async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -62,7 +63,7 @@ test("reduced motion uses only the poster and responds to preference changes", a
   page.on("request", (req) => {
     if (/\.(mp4|webm)/.test(req.url())) mediaRequests.push(req.url());
   });
-  await page.goto("/");
+  await page.goto(`/?direction=${direction}`);
   await expect(page.locator("video")).toHaveCount(0);
   const poster = page.getByRole("img", {
     name: "Cornerstone Payroll demo with fictional payroll data",
@@ -84,9 +85,9 @@ test("reduced motion uses only the poster and responds to preference changes", a
   await expect.poll(transforms).toEqual(["", "", ""]);
 });
 
-test("phone About navigation transfers keyboard focus to its heading", async ({ page }) => {
+test(`phone About keyboard focus ${direction}`, async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto(`/?direction=${direction}`);
   await page.getByRole("button", { name: "Toggle menu" }).click();
   const about = page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "About", exact: true });
   await about.focus();
@@ -95,3 +96,5 @@ test("phone About navigation transfers keyboard focus to its heading", async ({ 
   await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeHidden();
   await expect.poll(() => page.locator("body").evaluate(el => el.style.overflow)).not.toBe("hidden");
 });
+
+}

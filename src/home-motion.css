@@ -39,7 +39,7 @@
   animation: headline-rise 800ms var(--motion-ease) both;
 }
 .motion-accent {
-  color: var(--accent-warm);
+  color: var(--accent-detail);
 }
 @keyframes headline-rise {
   from {
@@ -449,7 +449,7 @@
   align-self: center;
 }
 .motion-home :focus-visible {
-  outline: 3px solid var(--accent-warm);
+  outline: 3px solid var(--accent-detail);
   outline-offset: 4px;
 }
 .motion-home .motion-contact :focus-visible {
@@ -581,21 +581,21 @@
   }
 }
 
-/* Restrained warmth: ivory canvas, cool work surface, and one ocean proof band.
+/* Shared section surfaces and markers.
    These static accents leave the existing motion and reduced-motion paths intact. */
 .motion-home { background: var(--surface-page); }
 .motion-home #projects { background: var(--surface-soft); }
-.motion-home #about { background: var(--surface-warm); }
+.motion-home #about { background: var(--surface-alt); }
 .motion-home #services { background: var(--surface-page); }
-.motion-statement { background: var(--surface-warm); }
+.motion-statement { background: var(--surface-alt); }
 .section-mark { width: 28px; height: 20px; flex: none; }
 .marked-label, .logo-band-label { display: flex; align-items: center; gap: 12px; }
 .logo-band-label { color: #ffffff; font-size: 12px; }
 .logo-band-label .section-mark { color: var(--accent-on-dark); }
-.motion-home .motion-service-row > .font-mono-label { color: var(--accent-warm); }
+.motion-home .motion-service-row > .font-mono-label { color: var(--accent-detail); }
 @media (hover: hover) and (pointer: fine) {
   .motion-home .motion-service-row:hover > .font-mono-label { color: white; }
 }
 .motion-home .motion-service-row:focus-visible > .font-mono-label { color: white; }
 .motion-contact-links small { color: var(--accent-on-dark); }
-.motion-about blockquote { border-left: 2px solid var(--accent-warm); padding-left: 24px; }
+.motion-about blockquote { border-left: 2px solid var(--accent-detail); padding-left: 24px; }
