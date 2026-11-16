@@ -12,7 +12,7 @@ export default function About() {
           />
         </div>
         <div>
-          <p className="font-mono-label section-label">Built in Guam</p>
+          <h2 className="font-mono-label section-label">Built in Guam</h2>
           <blockquote>
             “Local teams deserve software shaped around their real work.”
           </blockquote>

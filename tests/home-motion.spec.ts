@@ -72,6 +72,26 @@ test("reduced motion uses only the poster and responds to preference changes", a
   expect(mediaRequests).toEqual([]);
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await expect(page.locator("video")).toHaveCount(1);
+  const transforms = () => page.evaluate(() =>
+    ["[data-tilt]", ".motion-process-line", ".motion-portrait img"].map(
+      selector => document.querySelector<HTMLElement>(selector)?.style.transform ?? "",
+    ));
+  await expect.poll(transforms).not.toContain("");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(page.locator("video")).toHaveCount(0);
+  await expect.poll(transforms).toEqual(["", "", ""]);
+  await page.locator("#about").scrollIntoViewIfNeeded();
+  await expect.poll(transforms).toEqual(["", "", ""]);
+});
+
+test("phone About navigation transfers keyboard focus to its heading", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Toggle menu" }).click();
+  const about = page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "About", exact: true });
+  await about.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#about h2")).toBeFocused();
+  await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeHidden();
+  await expect.poll(() => page.locator("body").evaluate(el => el.style.overflow)).not.toBe("hidden");
 });
