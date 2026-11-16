@@ -4,6 +4,7 @@ import { portfolioCounts } from "../data";
 
 function PayrollDemo() {
   const video = useRef<HTMLVideoElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
   const userPaused = useRef(false);
   const [reduced, setReduced] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
@@ -21,7 +22,10 @@ function PayrollDemo() {
     let visible = false;
     const update = () => {
       if (visible && !document.hidden && !userPaused.current)
-        void el.play().catch(() => setPlaying(false));
+        void el.play().catch((error: DOMException) => {
+          // Visibility changes can cancel a pending play without changing intent.
+          if (error.name !== "AbortError") setPlaying(false);
+        });
       else el.pause();
     };
     const observer = new IntersectionObserver(
@@ -29,9 +33,10 @@ function PayrollDemo() {
         visible = entry.isIntersecting;
         update();
       },
-      { threshold: 0.25 },
+      { threshold: 0 },
     );
-    observer.observe(el);
+    // Include the control bar and avoid transformed video intersection differences.
+    observer.observe(frame.current ?? el);
     document.addEventListener("visibilitychange", update);
     return () => {
       observer.disconnect();
@@ -45,7 +50,7 @@ function PayrollDemo() {
       aria-label="Cornerstone Payroll product view"
     >
       <div className="site-container">
-        <div className="motion-frame-wrap">
+        <div className="motion-frame-wrap" ref={frame}>
           <div className="motion-frame" data-tilt>
             <div className="motion-frame-bar">
               <span>Cornerstone Payroll · Demo</span>
@@ -57,10 +62,14 @@ function PayrollDemo() {
                   onClick={() => {
                     const el = video.current;
                     if (!el) return;
-                    userPaused.current = !el.paused;
-                    if (el.paused)
+                    // Offscreen pauses must not turn an intended Pause click into Play.
+                    userPaused.current = playing;
+                    if (playing) {
+                      el.pause();
+                      setPlaying(false);
+                    } else {
                       void el.play().catch(() => setPlaying(false));
-                    else el.pause();
+                    }
                   }}
                 >
                   {playing ? "Pause" : "Play"}
@@ -88,8 +97,11 @@ function PayrollDemo() {
                 preload="none"
                 poster="/images/motion/payroll-demo-v4-poster.webp"
                 aria-label="Cornerstone Payroll demo with fictional data: enter hours, calculate, approve and commit payroll, then view a pay stub"
-                onPlay={() => setPlaying(true)}
-                onPause={() => setPlaying(false)}
+                onPlay={() => {
+                  // A late play event must never undo an explicit user pause.
+                  if (userPaused.current) video.current?.pause();
+                  else setPlaying(true);
+                }}
               >
                 <source
                   src="/images/motion/payroll-demo-v4.mp4"

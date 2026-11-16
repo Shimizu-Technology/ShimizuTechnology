@@ -22,11 +22,16 @@ for (const width of [390, 1280]) {
     await expect
       .poll(() => video.evaluate((el: HTMLVideoElement) => el.paused))
       .toBe(true);
+    const pausedTime = await video.evaluate((el: HTMLVideoElement) => el.currentTime);
     await page.locator("#projects").scrollIntoViewIfNeeded();
     await video.scrollIntoViewIfNeeded();
     await expect(
       page.getByRole("button", { name: "Play Payroll demo video" }),
     ).toBeVisible();
+    // Check after observer delivery, not just immediately after scrolling.
+    await page.waitForTimeout(600);
+    expect(await video.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);
+    expect(await video.evaluate((el: HTMLVideoElement) => el.currentTime)).toBe(pausedTime);
     await page.getByRole("button", { name: "Play Payroll demo video" }).click();
     await expect
       .poll(() => video.evaluate((el: HTMLVideoElement) => !el.paused))

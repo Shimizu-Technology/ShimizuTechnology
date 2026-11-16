@@ -44,3 +44,15 @@ Local complete suite: 60 passed after updating assertions for replaced homepage 
 Host setup: lifecycle command wasn't on PATH and no mini profile existed; created a local protective profile and used the canonical helper directly. Shared-context read-only check cannot run because this account lacks `agent-context.json`; applicable canonical synced skills read directly. No shared skill changed.
 
 Deployment, final review, WebKit outcome and cleanup are recorded in the PR/release handoff after execution.
+
+## Pause acceptance blocker: reproduction and fix
+
+2026-11-16 resume verified worktree branch `feat/home-motion-20261116`, local and PR head `59e4b999`, target `main`, green quality/Netlify preview checks. Netlify connector reauthentication did not indicate a failed site deployment; no Netlify login, settings or billing changes are needed.
+
+WebKit reproduced the desktop failure. Instrumented media calls on the deployed preview showed: observer `pause()` while scrolling to the control, then a click on a button whose label had changed to Play, then `play()` from the click handler. The video-only observer excluded the control bar. The handler inferred user intent from transient `video.paused`, so an intended Pause became Play. The same boundary could interrupt a manual resume.
+
+The observer now tracks the untransformed frame including its controls. Visibility pauses preserve the control's playback intent; explicit Pause sets the persistent user-pause flag. Aborted autoplay promises do not reset intent, and late play events respect user pause. The regression checks actual paused state and frozen time after scrolling away/back before explicit Play.
+
+Retest history: original desktop WebKit failed (phone/poster passed); initial intent-only fix exposed a desktop resume failure in Chromium; adding frame visibility tracking passes the full 60-test Chromium suite at 390×844 and 1280×800. Full WebKit retest and final deployment acceptance follow before merge. Local lint/typecheck/build and high-severity audit pass; seven pre-existing moderate audit findings remain. Impeccable advisory on changed Hero returns no findings. Real iPhone is not tested.
+
+Final local fix validation: 60/60 Chromium on Mac mini and 60/60 WebKit on ASUS passed with the frame observer and persistent user pause, including H01–H07 and existing support/privacy/app/invitation regressions. Exact-source WorkPage checksum matches `origin/main`; portfolio data, redirects and sitemap have no diff. Both test phases exited and task-owned local preview server was cleaned. Deployed-head results and release commit are recorded on PR #25.
