@@ -23,6 +23,7 @@ export default defineConfig({
     baseURL: isDeploymentTest ? deploymentURL : `http://127.0.0.1:${localPort}`,
     trace: 'retain-on-failure',
     ...devices['Desktop Chrome'],
+    browserName: process.env.TEST_BROWSER === 'webkit' ? 'webkit' : 'chromium',
   },
   webServer: isDeploymentTest || externalServer
     ? undefined

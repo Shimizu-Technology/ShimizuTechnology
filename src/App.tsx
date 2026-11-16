@@ -3,8 +3,9 @@ import { ArrowRight } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
-import Projects from './components/Projects';
-import Testimonials from './components/Testimonials';
+import HomeWork, { ClientLogos, Statement } from './components/HomeWork';
+import useHomeMotion from './hooks/useHomeMotion';
+import './home-motion.css';
 import Process from './components/Process';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -21,6 +22,7 @@ function App() {
   }, []);
 
   useInitialHashScroll();
+  useHomeMotion();
 
   // Detect scroll position for back-to-top button
   useEffect(() => {
@@ -37,17 +39,18 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="motion-home min-h-screen bg-white">
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
       <main id="main-content" tabIndex={-1}>
       <Hero />
-      <Projects />
+      <ClientLogos />
+      <HomeWork />
+      <Statement />
       <Services />
-      <Testimonials />
       <Process />
       <About />
-      <Contact />
+      <Contact motion />
       </main>
       <Footer />
 

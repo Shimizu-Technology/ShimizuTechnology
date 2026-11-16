@@ -1,46 +1,190 @@
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
-import desktopProduct from '../assets/hafaloha-orders-hero.webp';
-import mobileProduct240 from '../assets/hafaloha-orders-mobile-240.webp';
-import mobileProduct480 from '../assets/hafaloha-orders-mobile-480.webp';
-import { portfolioCounts } from '../data';
+import { ArrowRight, Check } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { portfolioCounts } from "../data";
 
-const proof = [
-  [String(portfolioCounts.total), 'Products & platforms built'],
-  ['4', 'AI systems live'],
-  [String(portfolioCounts.appStoreLaunches), 'App Store launches'],
-];
-
-export default function Hero() {
+function PayrollDemo() {
+  const video = useRef<HTMLVideoElement>(null);
+  const userPaused = useRef(false);
+  const [reduced, setReduced] = useState(
+    () => matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [playing, setPlaying] = useState(false);
+  useEffect(() => {
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const change = () => setReduced(media.matches);
+    media.addEventListener("change", change);
+    return () => media.removeEventListener("change", change);
+  }, []);
+  useEffect(() => {
+    const el = video.current;
+    if (!el || reduced) return;
+    let visible = false;
+    const update = () => {
+      if (visible && !document.hidden && !userPaused.current)
+        void el.play().catch(() => setPlaying(false));
+      else el.pause();
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        update();
+      },
+      { threshold: 0.25 },
+    );
+    observer.observe(el);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", update);
+      el.pause();
+    };
+  }, [reduced]);
   return (
-    <section className="bg-white">
+    <section
+      className="motion-product"
+      aria-label="Cornerstone Payroll product view"
+    >
       <div className="site-container">
-        <div className="hero-layout">
-          <div>
-            <p className="font-mono-label section-label mb-5">Guam-built software studio</p>
-            <h1 className="hero-title">Technology built for how your business actually works.</h1>
-            <p className="hero-copy">Improve your online presence and make everyday work easier through websites, software, and automation. We start with your needs, then improve the tools you have or build something new.</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <a href="#contact" className="button-primary">Start a conversation <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></a>
-              <a href="#projects" className="button-secondary">Explore selected work <ArrowRight className="h-4 w-4" aria-hidden="true" /></a>
+        <div className="motion-frame-wrap">
+          <div className="motion-frame" data-tilt>
+            <div className="motion-frame-bar">
+              <span>Cornerstone Payroll · Demo</span>
+              {!reduced && (
+                <button
+                  type="button"
+                  aria-controls="payroll-demo"
+                  aria-label={`${playing ? "Pause" : "Play"} Payroll demo video`}
+                  onClick={() => {
+                    const el = video.current;
+                    if (!el) return;
+                    userPaused.current = !el.paused;
+                    if (el.paused)
+                      void el.play().catch(() => setPlaying(false));
+                    else el.pause();
+                  }}
+                >
+                  {playing ? "Pause" : "Play"}
+                </button>
+              )}
             </div>
-            <p className="mt-4 text-xs leading-relaxed text-slate-600">A 20–30-minute call or meeting to explore where we can help.</p>
+            {reduced ? (
+              <img
+                className="motion-video"
+                src="/images/motion/payroll-demo-v4-poster.webp"
+                alt="Cornerstone Payroll demo with fictional payroll data"
+                width="1600"
+                height="1000"
+              />
+            ) : (
+              <video
+                ref={video}
+                id="payroll-demo"
+                className="motion-video"
+                width="1600"
+                height="1000"
+                muted
+                loop
+                playsInline
+                preload="none"
+                poster="/images/motion/payroll-demo-v4-poster.webp"
+                aria-label="Cornerstone Payroll demo with fictional data: enter hours, calculate, approve and commit payroll, then view a pay stub"
+                onPlay={() => setPlaying(true)}
+                onPause={() => setPlaying(false)}
+              >
+                <source
+                  src="/images/motion/payroll-demo-v4.mp4"
+                  type="video/mp4"
+                />
+                <source
+                  src="/images/motion/payroll-demo-v4.webm"
+                  type="video/webm"
+                />
+              </video>
+            )}
           </div>
-          <figure className="product-preview" aria-label="Hafaloha Orders desktop and mobile product interfaces">
-            <div className="product-window">
-              <div className="flex items-center justify-between px-3 py-2 text-[11px] font-semibold text-slate-600"><span>Hafaloha Orders</span><span>Desktop &amp; mobile</span></div>
-              {/* Preloaded from index.html; the attribute is lower-case because React 18 does not know fetchPriority. */}
-              <img src={desktopProduct} alt="Hafaloha Orders desktop interface" width="1600" height="903" {...{ fetchpriority: 'high' }} className="aspect-video w-full rounded-sm object-cover object-top" />
+          <div className="motion-chip">
+            <Check size={24} aria-hidden="true" />
+            <div>
+              Pay period reviewed
+              <small>Calculations checked before commit</small>
             </div>
-            <div className="absolute bottom-0 right-0 w-[23%] overflow-hidden rounded-[1rem] border-[4px] border-slate-800 bg-slate-800 shadow-lg">
-              <img src={mobileProduct240} srcSet={`${mobileProduct240} 240w, ${mobileProduct480} 480w`} sizes="(min-width: 1024px) 130px, 23vw" alt="Hafaloha Orders mobile interface" width="240" height="520" decoding="async" className="aspect-9/18 w-full object-cover object-top" />
-            </div>
-            <figcaption className="mt-4 pr-[27%] text-xs text-slate-600"><strong className="text-slate-900">Live-event reliability</strong><br />850+ orders · Zero downtime</figcaption>
-          </figure>
+          </div>
         </div>
-        <div className="hero-proof">
-          {proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+        <div className="motion-caption">
+          <p>
+            <strong>Cornerstone Payroll</strong> · Guam payroll and firm
+            operations, live for Cornerstone Accounting
+          </p>
+          <p>Illustrative data shown</p>
         </div>
       </div>
     </section>
+  );
+}
+export default function Hero() {
+  return (
+    <>
+      <section className="motion-hero" id="top">
+        <div className="motion-grid" aria-hidden="true" />
+        <div className="motion-grid-spot" aria-hidden="true" />
+        <div className="site-container">
+          <p className="font-mono-label section-label">
+            Guam-built software studio
+          </p>
+          <h1>
+            {"Technology built for how your business"
+              .split(" ")
+              .map((word, i) => (
+                <Fragment key={i}>
+                  <span className="motion-word">
+                    <span style={{ animationDelay: `${i * 35}ms` }}>
+                      {word}
+                    </span>
+                  </span>{" "}
+                </Fragment>
+              ))}
+            <span className="motion-accent motion-word">
+              <span style={{ animationDelay: "245ms" }}>actually works.</span>
+            </span>
+          </h1>
+          <div className="motion-hero-row">
+            <p>
+              Improve your online presence and make everyday work easier through
+              websites, software, and automation. We start with your needs, then
+              improve the tools you have or build something new.
+            </p>
+            <div>
+              <div className="flex flex-wrap gap-3">
+                <a href="#contact" className="button-primary">
+                  Start a conversation{" "}
+                  <ArrowRight size={16} aria-hidden="true" />
+                </a>
+                <a href="#projects" className="button-secondary">
+                  See the work
+                </a>
+              </div>
+              <p className="mt-4 text-sm text-slate-600">
+                A 20–30-minute call or meeting to explore where we can help.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <PayrollDemo />
+      <section className="motion-stats" aria-label="Portfolio at a glance">
+        <div className="site-container">
+          {[
+            [portfolioCounts.total, "Products & platforms built"],
+            [4, "AI systems live"],
+            [portfolioCounts.appStoreLaunches, "App Store launches"],
+          ].map(([n, label]) => (
+            <div key={label}>
+              <strong>{n}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
