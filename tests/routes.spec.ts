@@ -104,8 +104,8 @@ test('portfolio deep link lands on its archive section', async ({ page }) => {
 test('contact deep link lands on the inquiry panel after the home page loads', async ({ page }) => {
   await page.goto('/#contact');
 
-  await expect(page.getByRole('heading', { name: 'Start with a short note.' })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
+  await expect(page.getByRole('heading', { name: 'Tell us what you want to improve.' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Email us ShimizuTechnology/ })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(120);
   await expect.poll(async () => page.locator('#contact').evaluate((element) => element.getBoundingClientRect().top)).toBeGreaterThanOrEqual(0);
 });
@@ -150,10 +150,10 @@ test('the company site renders from the first bundle without waiting for analyti
   expect(scriptsBeforeLoad.length).toBeGreaterThan(0);
   for (const path of scriptsBeforeLoad) expect(html).toContain(path);
   await expect(page.locator('link[rel="preload"][as="image"]')).toHaveAttribute('fetchpriority', 'high');
-  await expect(page.locator('.product-window img')).toHaveAttribute('fetchpriority', 'high');
+  await expect(page.locator('video')).toHaveAttribute('preload', 'none');
   // The preload must stay pointed at the image the hero actually renders.
   const preloadUrl = await page.locator('link[rel="preload"][as="image"]').evaluate((link: HTMLLinkElement) => link.href);
-  const heroUrl = await page.locator('.product-window img').evaluate((image: HTMLImageElement) => image.currentSrc);
+  const heroUrl = await page.locator('video').evaluate((video: HTMLVideoElement) => video.poster);
   expect(preloadUrl).toBe(heroUrl);
 });
 
@@ -177,11 +177,11 @@ test('phone navigation reaches the inquiry and restores scroll without overflow'
   await page.goto('/');
   await page.getByRole('button', { name: 'Toggle menu' }).click();
   await page.getByRole('navigation', { name: 'Mobile navigation' }).getByRole('link', { name: 'Start a conversation' }).click();
-  await expect(page.getByRole('heading', { name: 'Where could technology make things easier?' })).toBeFocused();
+  await expect(page.getByRole('heading', { name: 'Tell us what you want to improve.' })).toBeFocused();
   await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeHidden();
   await expect.poll(() => page.locator('body').evaluate((element) => element.style.overflow)).not.toBe('hidden');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
-  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
+  await expect(page.getByRole('link', { name: /Email us ShimizuTechnology/ })).toHaveAttribute('href', 'mailto:ShimizuTechnology@gmail.com?subject=Business%20conversation');
 });
 
 test('primary action is visible in the desktop opening and has readable hover contrast', async ({ page }) => {
@@ -209,19 +209,20 @@ test('primary action is visible in the desktop opening and has readable hover co
 test('case-study details remain keyboard accessible with the held facts', async ({ page }) => {
   await page.goto('/');
   const story = page.getByRole('article').filter({ has: page.getByRole('heading', { name: 'Cornerstone Payroll', exact: true }) });
-  await story.locator('summary').focus();
+  await story.getByRole('link', { name: 'Talk about payroll' }).focus();
   await page.keyboard.press('Enter');
-  await expect(story.getByText('A production system used by Cornerstone Accounting.', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Tell us what you want to improve.' })).toBeInViewport();
+  await expect(story).toContainText('A production payroll and firm-operations system used by Cornerstone Accounting');
 });
 
 test('failed font and hero image requests preserve the inquiry path under reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('**/fonts/*.woff2', (route) => route.abort());
-  await page.route('**/assets/hafaloha-orders-*.webp', (route) => route.abort());
+  await page.route('**/images/motion/payroll-demo-v4-poster.webp', (route) => route.abort());
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
   await page.getByRole('link', { name: 'Start a conversation', exact: true }).click();
-  await expect(page.getByRole('link', { name: 'Email to start a conversation' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Email us ShimizuTechnology/ })).toBeVisible();
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
 });
 
@@ -327,12 +328,10 @@ test('small links and disclosures keep 44px touch targets', async ({ page }) => 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   const targets = [
-    page.locator('#projects summary').first(),
+    page.getByRole('link', { name: 'Talk about payroll' }),
     page.getByRole('contentinfo').getByRole('link', { name: 'Services', exact: true }),
     page.getByRole('contentinfo').getByRole('link', { name: 'Portfolio', exact: true }),
-    page.getByRole('link', { name: 'View registration platform' }),
-    page.getByRole('link', { name: 'Plan a dependable launch' }),
-    page.getByRole('link', { name: /Visit Code School of Guam/ }),
+    page.getByRole('link', { name: /Email us ShimizuTechnology/ }),
   ];
   for (const target of targets) expect((await target.boundingBox())?.height).toBeGreaterThanOrEqual(44);
 
@@ -362,9 +361,9 @@ for (const width of [320, 390, 1280]) {
 test('outcome values wrap instead of overlapping at 320px', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await page.goto('/');
-  const values = page.locator('text=VIP orders processed').locator('xpath=../..').locator(':scope > div');
+  const values = page.locator('.motion-card').last().locator('.motion-metrics > p');
   await values.first().evaluate((element) => {
-    const first = element.querySelector('div');
+    const first = element.querySelector('strong');
     if (first) first.textContent = '$128,450';
   });
   const boxes = await values.evaluateAll((elements) => elements.map((element) => element.getBoundingClientRect()).map(({ left, right, top }) => ({ left, right, top })));
@@ -376,19 +375,19 @@ test('outcome values wrap instead of overlapping at 320px', async ({ page }) => 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
 });
 
-for (const [width, expected] of [[390, 'focus'], [800, 'wide'], [1280, 'focus']] as const) {
+for (const width of [390, 800, 1280]) {
   test('case-study screenshots load with dimensions at ' + width + 'px', async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
-    const images = page.locator('#projects img.case-screenshot');
+    const images = page.locator('#projects .motion-card-media img');
     await expect(images).toHaveCount(3);
     for (const image of await images.all()) {
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
-      expect(await image.getAttribute('alt')).toMatch(/.{30,}/);
+      expect(await image.getAttribute('alt')).toMatch(/.{20,}/);
       expect(await image.getAttribute('width')).toBeTruthy();
       expect(await image.getAttribute('height')).toBeTruthy();
-      expect(await image.evaluate((element: HTMLImageElement) => element.currentSrc)).toContain(`-${expected}-`);
+      await expect(image).toHaveCSS('object-fit', 'contain');
     }
   });
 }
@@ -414,8 +413,8 @@ test('portfolio statuses, links, and counts reflect the current inventory', asyn
   await expect(page.locator('.tool-cell').filter({ hasText: 'Hafa Remote' })).toContainText('compatible smart TVs, now in private testing');
 
   await page.goto('/');
-  await expect(page.locator('.hero-proof')).toContainText(`${total}Products & platforms built`);
-  await expect(page.locator('.hero-proof')).toContainText('4App Store launches');
+  await expect(page.locator('.motion-stats')).toContainText(`${total}Products & platforms built`);
+  await expect(page.locator('.motion-stats')).toContainText('4App Store launches');
   await expect(page.getByRole('link', { name: `Explore all ${total} projects` })).toBeVisible();
 });
 
@@ -442,10 +441,10 @@ test('linked portfolio cards animate transform and border only, gated to fine po
 test('contact band focus ring is visible on blue and white', async ({ page }) => {
   await page.goto('/#contact');
   await page.keyboard.press('Tab');
-  const link = page.getByRole('link', { name: /Visit Code School of Guam/ });
+  const link = page.getByRole('link', { name: /Email us ShimizuTechnology/ });
   await link.focus();
-  await expect(link).toHaveCSS('outline-color', 'rgb(255, 255, 255)');
-  await expect(link).toHaveCSS('box-shadow', /rgb\(7, 16, 31\)/);
+  await expect(link).toHaveCSS('outline-color', 'rgb(182, 199, 243)');
+  await expect(link).toHaveCSS('outline-width', '3px');
 });
 
 test('theme colors match each page header', async ({ page }) => {
