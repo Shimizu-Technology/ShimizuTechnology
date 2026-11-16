@@ -599,3 +599,13 @@
 .motion-home .motion-service-row:focus-visible > .font-mono-label { color: white; }
 .motion-contact-links small { color: var(--accent-on-dark); }
 .motion-about blockquote { border-left: 2px solid var(--accent-detail); padding-left: 24px; }
+
+/* Navy rhythm: readable at every scroll position, including before JS loads. */
+.motion-grid { background-image: linear-gradient(#bac8d73b 1px, transparent 1px), linear-gradient(90deg, #bac8d73b 1px, transparent 1px); background-size: 80px 80px; opacity: .35; }
+.motion-logos, .motion-contact { background: var(--surface-dark); }
+.logo-band-label { color: var(--accent-on-dark); }
+.motion-statement, .motion-home #process { background: var(--surface-dark); color: #f8fafc; --text-muted: #b8c4d4; --accent-detail: #b8dfe5; --action-primary: #b8dfe5; --border-subtle: #435063; }
+.motion-statement { --statement-muted: #8d9095; --statement-filled: #f8fafc; color: var(--statement-filled); }
+.motion-home #process :is(h3, .text-slate-600) { color: #b8c4d4; }
+.motion-home #process .motion-step h3 { color: #f8fafc; }
+.motion-product { background: linear-gradient(180deg, transparent 55%, #e4edf2); }

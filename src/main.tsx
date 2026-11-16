@@ -4,8 +4,6 @@ import HomeSite from './components/HomeSite.tsx';
 import HomeSiteErrorBoundary from './components/HomeSiteErrorBoundary.tsx';
 import { initAnalytics } from './lib/analytics.ts';
 import './index.css';
-import { initializeDirection } from './lib/designDirection';
-initializeDirection();
 
 // Netlify serves product routes from their dedicated HTML entries.
 // This fallback keeps them working where that rewrite is unavailable, such as vite preview.

@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-import DirectionSwitcher from './components/DirectionSwitcher';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import HomeWork, { ClientLogos, Statement } from './components/HomeWork';
 import useHomeMotion from './hooks/useHomeMotion';
 import './home-motion.css';
-import './design-directions.css';
 import Process from './components/Process';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -44,7 +42,6 @@ function App() {
     <div className="motion-home min-h-screen">
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
-      <DirectionSwitcher />
       <main id="main-content" tabIndex={-1}>
       <Hero />
       <ClientLogos />
