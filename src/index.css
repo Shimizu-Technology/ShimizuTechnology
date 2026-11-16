@@ -35,19 +35,24 @@
 }
 
 @theme {
-  --color-shimizu-blue: #1d4ed8;
+  --color-shimizu-blue: var(--action-primary);
   --color-shimizu-dark: #1a1f2e;
 }
 
 :root {
-  --surface-page: #ffffff;
-  --surface-soft: #f5f6f8;
-  --surface-dark: #151b26;
+  --surface-page: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-alt: #edf2f6;
+  --accent-detail: #285b65;
+  --accent-on-dark: #b8dfe5;
+  --surface-ocean: #10151f;
+  --surface-soft: #eef3f6;
+  --surface-dark: #10151f;
   --text-primary: #171d27;
   --text-muted: #536070;
   --border-subtle: #dce1e8;
-  --action-primary: #2455d6;
-  --action-hover: #1944b4;
+  --action-primary: #285b65;
+  --action-hover: #204a53;
   --action-on-primary: #ffffff;
 }
 
@@ -161,7 +166,7 @@
   .site-section { padding-block: clamp(52px, 6vw, 80px); }
   .section-title { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 750; line-height: 1.12; }
   .section-intro { max-width: 62ch; color: var(--text-muted); font-size: 1.0625rem; line-height: 1.7; }
-  .section-label { color: var(--action-primary); font-size: 0.6875rem; }
+  .section-label { color: var(--accent-detail); font-size: 0.6875rem; }
 
   .button-primary, .button-secondary {
     display: inline-flex;
@@ -181,7 +186,7 @@
   .button-primary { background: var(--action-primary); color: var(--action-on-primary); }
   .button-secondary { border-color: var(--border-subtle); color: var(--text-primary); background: white; }
 
-  .site-header { border-bottom: 1px solid var(--border-subtle); background: #fff; color: var(--text-primary); }
+  .site-header { border-bottom: 1px solid var(--border-subtle); background: var(--surface-page); color: var(--text-primary); }
   .nav-link { border-radius: 5px; padding: 10px 12px; color: var(--text-muted); font-size: .8125rem; font-weight: 650; transition: background-color 150ms ease, color 150ms ease; }
   .nav-link[aria-current] { background: var(--surface-soft); color: var(--action-primary); }
   .hero-layout { display: grid; align-items: center; gap: 44px; padding-block: 56px 44px; }
@@ -222,25 +227,25 @@
 
   @media (hover: hover) and (pointer: fine) {
     .button-primary:hover { background: var(--action-hover); }
-    .button-secondary:hover { border-color: var(--action-primary); background: var(--surface-soft); }
+    .button-secondary:hover { border-color: var(--accent-detail); background: var(--surface-soft); }
     .nav-link:hover { background: var(--surface-soft); color: var(--action-primary); }
-    .text-link:hover { color: #1e40af; }
+    .text-link:hover { color: var(--action-hover); }
     .case-details summary:hover { color: var(--action-hover); }
     .portfolio-card.is-linked:hover { transform: translateY(-2px); border-color: #bfdbfe; }
-    .portfolio-card.is-linked:hover .card-arrow, .tool-cell:has(.card-link):hover .card-arrow { color: #2563eb; }
+    .portfolio-card.is-linked:hover .card-arrow, .tool-cell:has(.card-link):hover .card-arrow { color: var(--action-primary); }
     .tool-cell:has(.card-link):hover { background: var(--surface-soft); }
   }
 
   /* Touch press feedback: colors and a slight scale only. After :hover so a press always shows. */
-  .button-primary:active { background: #163a99; transform: scale(0.97); }
+  .button-primary:active { background: var(--action-hover); transform: scale(0.97); }
   .button-secondary:active { border-color: var(--action-primary); background: #e9edf5; transform: scale(0.97); }
   .nav-link:active { background: #e9edf5; color: var(--action-primary); }
-  .text-link:active { color: #1e3a8a; }
+  .text-link:active { color: var(--action-hover); }
   .portfolio-card.is-linked:active, .tool-cell:has(.card-link):active { transform: scale(0.99); border-color: #93c5fd; }
   .tool-cell:has(.card-link):active { background: var(--surface-soft); }
-  .case-details summary:active { color: #1e3a8a; }
+  .case-details summary:active { color: var(--action-hover); }
 
-  /* The cobalt contact band needs a ring that shows on both blue and white. */
+  /* Contact focus stays visible against both dark and light surfaces. */
   #contact :is(a, button, summary):focus-visible {
     outline: 3px solid #ffffff;
     outline-offset: 4px;

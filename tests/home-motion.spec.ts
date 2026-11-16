@@ -4,7 +4,7 @@ for (const width of [390, 1280]) {
     await page.setViewportSize({ width, height: width === 390 ? 844 : 800 });
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
-    await page.goto("/");
+    await page.goto('/');
     const video = page.locator("video");
     await video.scrollIntoViewIfNeeded();
     await expect
@@ -54,7 +54,7 @@ for (const width of [390, 1280]) {
     expect(errors).toEqual([]);
   });
 }
-test("reduced motion uses only the poster and responds to preference changes", async ({
+test(`reduced motion uses poster and preference changes`, async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
@@ -62,7 +62,7 @@ test("reduced motion uses only the poster and responds to preference changes", a
   page.on("request", (req) => {
     if (/\.(mp4|webm)/.test(req.url())) mediaRequests.push(req.url());
   });
-  await page.goto("/");
+  await page.goto('/');
   await expect(page.locator("video")).toHaveCount(0);
   const poster = page.getByRole("img", {
     name: "Cornerstone Payroll demo with fictional payroll data",
@@ -84,9 +84,9 @@ test("reduced motion uses only the poster and responds to preference changes", a
   await expect.poll(transforms).toEqual(["", "", ""]);
 });
 
-test("phone About navigation transfers keyboard focus to its heading", async ({ page }) => {
+test(`phone About keyboard focus`, async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto('/');
   await page.getByRole("button", { name: "Toggle menu" }).click();
   const about = page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "About", exact: true });
   await about.focus();

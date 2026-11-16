@@ -59,8 +59,8 @@ export default function useHomeMotion() {
           words.forEach((word, i) => {
             word.style.color =
               i / words.length < p
-                ? "var(--text-primary)"
-                : "var(--text-muted)";
+                ? "var(--statement-filled)"
+                : "var(--statement-muted)";
           });
         }
         if (process && line) {

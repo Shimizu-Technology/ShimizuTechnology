@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <div className="motion-home min-h-screen bg-white">
+    <div className="motion-home min-h-screen">
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
       <main id="main-content" tabIndex={-1}>
