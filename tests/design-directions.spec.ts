@@ -1,5 +1,10 @@
 import { expect, test } from '@playwright/test';
 
+// Host emulation forwards media too; drain those requests before closing the page.
+test.afterEach(async ({ page }) => {
+  await page.unrouteAll({ behavior: 'wait' });
+});
+
 for (const direction of ['a', 'b', 'c']) {
   for (const width of [390, 1280]) {
     test(`direction ${direction} visual journey ${width}`, async ({ page }) => {
@@ -65,3 +70,20 @@ test('deploy-preview host allows choices; invalid query defaults to A; Back rest
   await page.goBack();
   await expect(page.locator('html')).toHaveAttribute('data-direction', 'a');
 });
+
+for (const width of [390, 1280]) {
+  test(`preview choices stay clickable above a deployment toolbar at ${width}`, async ({ page }) => {
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 800 });
+    await page.goto('/?direction=a');
+    // Simulate the hosting toolbar that is absent from local builds.
+    await page.evaluate(() => {
+      const toolbar = document.createElement('div');
+      toolbar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;height:72px;z-index:2147483647;background:white';
+      document.body.append(toolbar);
+    });
+    for (const name of ['B: Soft glow', 'C: Ink & silver', 'A: Dark rhythm']) {
+      await page.getByRole('button', { name, exact: true }).click();
+      await expect(page.locator('html')).toHaveAttribute('data-direction', name[0].toLowerCase());
+    }
+  });
+}

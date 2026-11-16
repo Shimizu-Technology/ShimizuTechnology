@@ -80,3 +80,11 @@ Built candidate, same CSS viewport sizes, paused demo for deterministic section 
 White/action contrast: A 7.57:1, B 7.68:1, C 9.68:1. Ice/navy contrast: A 12.81:1, B 11.82:1, C 12.66:1. Gradient endpoints tested against the darkest hero glow at ≥4.5:1.
 
 WebKit: 80/80 passed on the ASUS Linux runner against the final source after the shared lock became available. Real Safari/iPhone hardware and Leon/Kami’s final visual acceptance remain not run. No merge authorized.
+
+### Deployed toolbar regression (requires corrective publication)
+
+Final deployed head bb182cde0e07dba1b5e0de3748384af6ad2631ae passed CI, but deployed Chromium had 76 passed, 3 failed and 1 not run: Netlify’s injected Drawer intercepted phone switcher taps for A/B/C. This is a material preview usability failure, despite the passing local suites. Netlify’s connected app requires reauthentication and its dashboard is logged out, so the documented collaboration setting could not be changed. No hosting configuration was modified.
+
+A local correction raises the floating switcher above a 72px hosting toolbar while preserving the safe-area inset. A regression overlays a real blocking toolbar and clicks all three choices at both widths; all 48 screenshots have been refreshed. This change is held locally because the user authorized a single push batch, which was already used. A second corrective push needs explicit authorization. Recheck the real deployed Drawer interaction after publication; do not mark that deployed case passed from local simulation alone.
+
+Corrective candidate gate: lint, types, production build pass; Chromium 82/82 and ASUS WebKit 82/82 pass, including the blocking-toolbar interaction at both widths. Forwarded-request teardown now drains before page close. Logs: `/tmp/shimizu-toolbar-chromium-final.log`, `/tmp/shimizu-toolbar-webkit-final.log`. Deployed retest remains blocked until authorization/publication; no second push made.
