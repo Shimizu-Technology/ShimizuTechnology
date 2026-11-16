@@ -451,7 +451,7 @@ test('contact band focus ring is visible on blue and white', async ({ page }) =>
 
 test('theme colors match each page header', async ({ page }) => {
   await page.goto('/work/');
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#faf8f4');
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#f8fafc');
   await page.emulateMedia({ colorScheme: 'dark' });
   await page.goto('/hafa-remote');
   await expect(page.locator('meta[name="theme-color"][media="(prefers-color-scheme: dark)"]')).toHaveAttribute('content', '#1c292b');
