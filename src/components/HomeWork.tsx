@@ -1,3 +1,4 @@
+import SectionMark from "./SectionMark";
 import type { CSSProperties } from "react";
 import { portfolioCounts, projects } from "../data";
 const selection = [
@@ -38,8 +39,8 @@ export function ClientLogos() {
       aria-label="Organizations we have built for"
     >
       <div className="site-container">
-        <p className="font-mono-label text-slate-600">
-          Built with teams across Guam
+        <p className="font-mono-label logo-band-label">
+          <SectionMark />Built with teams across Guam
         </p>
         <ul>
           {logos.map(([src, alt, theme]) => (
@@ -65,7 +66,7 @@ export default function HomeWork() {
       <div className="site-container">
         <div className="motion-head">
           <div>
-            <p className="font-mono-label section-label">Selected work</p>
+            <p className="font-mono-label section-label marked-label"><SectionMark />Selected work</p>
             <h2 className="section-title mt-4">
               Products with real users and real stakes.
             </h2>

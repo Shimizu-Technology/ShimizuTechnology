@@ -39,7 +39,7 @@
   animation: headline-rise 800ms var(--motion-ease) both;
 }
 .motion-accent {
-  color: var(--action-primary);
+  color: var(--accent-warm);
 }
 @keyframes headline-rise {
   from {
@@ -164,7 +164,8 @@
 }
 .motion-logos {
   padding: 44px 0;
-  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-ocean);
+  color: white;
 }
 .motion-logos ul {
   display: grid;
@@ -181,6 +182,7 @@
   padding: 12px 18px;
   border: 1px solid var(--border-subtle);
   border-radius: 14px;
+  background: var(--surface-card);
 }
 .motion-logos img {
   width: 100%;
@@ -447,7 +449,7 @@
   align-self: center;
 }
 .motion-home :focus-visible {
-  outline: 3px solid #2455d6;
+  outline: 3px solid var(--accent-warm);
   outline-offset: 4px;
 }
 .motion-home .motion-contact :focus-visible {
@@ -578,3 +580,22 @@
     background: var(--action-primary);
   }
 }
+
+/* Restrained warmth: ivory canvas, cool work surface, and one ocean proof band.
+   These static accents leave the existing motion and reduced-motion paths intact. */
+.motion-home { background: var(--surface-page); }
+.motion-home #projects { background: var(--surface-soft); }
+.motion-home #about { background: var(--surface-warm); }
+.motion-home #services { background: var(--surface-page); }
+.motion-statement { background: var(--surface-warm); }
+.section-mark { width: 28px; height: 20px; flex: none; }
+.marked-label, .logo-band-label { display: flex; align-items: center; gap: 12px; }
+.logo-band-label { color: #ffffff; font-size: 12px; }
+.logo-band-label .section-mark { color: var(--accent-on-dark); }
+.motion-home .motion-service-row > .font-mono-label { color: var(--accent-warm); }
+@media (hover: hover) and (pointer: fine) {
+  .motion-home .motion-service-row:hover > .font-mono-label { color: white; }
+}
+.motion-home .motion-service-row:focus-visible > .font-mono-label { color: white; }
+.motion-contact-links small { color: var(--accent-on-dark); }
+.motion-about blockquote { border-left: 2px solid var(--accent-warm); padding-left: 24px; }

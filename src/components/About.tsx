@@ -1,3 +1,4 @@
+import SectionMark from "./SectionMark";
 export default function About() {
   return (
     <section id="about" className="site-section">
@@ -12,7 +13,7 @@ export default function About() {
           />
         </div>
         <div>
-          <h2 className="font-mono-label section-label">Built in Guam</h2>
+          <h2 className="font-mono-label section-label marked-label"><SectionMark />Built in Guam</h2>
           <blockquote>
             “Local teams deserve software shaped around their real work.”
           </blockquote>

@@ -1,3 +1,4 @@
+import SectionMark from "./SectionMark";
 import { services, techStack } from '../data';
 
 export default function Services() {
@@ -6,7 +7,7 @@ export default function Services() {
       <div className="relative z-10 site-container">
         <div className="grid gap-8 border-b border-slate-200 pb-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
-            <p className="font-mono-label section-label">Capabilities</p>
+            <p className="font-mono-label section-label marked-label"><SectionMark />Capabilities</p>
             <h2 className="mt-4 section-title">
               Useful technology, shaped around your business.
             </h2>

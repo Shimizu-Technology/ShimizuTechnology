@@ -40,8 +40,13 @@
 }
 
 :root {
-  --surface-page: #ffffff;
-  --surface-soft: #f5f6f8;
+  --surface-page: #faf8f4;
+  --surface-card: #ffffff;
+  --surface-warm: #f3eee6;
+  --accent-warm: #a4432b;
+  --accent-on-dark: #efb49c;
+  --surface-ocean: #123e52;
+  --surface-soft: #eef3f6;
   --surface-dark: #151b26;
   --text-primary: #171d27;
   --text-muted: #536070;
@@ -161,7 +166,7 @@
   .site-section { padding-block: clamp(52px, 6vw, 80px); }
   .section-title { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 750; line-height: 1.12; }
   .section-intro { max-width: 62ch; color: var(--text-muted); font-size: 1.0625rem; line-height: 1.7; }
-  .section-label { color: var(--action-primary); font-size: 0.6875rem; }
+  .section-label { color: var(--accent-warm); font-size: 0.6875rem; }
 
   .button-primary, .button-secondary {
     display: inline-flex;
@@ -181,7 +186,7 @@
   .button-primary { background: var(--action-primary); color: var(--action-on-primary); }
   .button-secondary { border-color: var(--border-subtle); color: var(--text-primary); background: white; }
 
-  .site-header { border-bottom: 1px solid var(--border-subtle); background: #fff; color: var(--text-primary); }
+  .site-header { border-bottom: 1px solid var(--border-subtle); background: var(--surface-page); color: var(--text-primary); }
   .nav-link { border-radius: 5px; padding: 10px 12px; color: var(--text-muted); font-size: .8125rem; font-weight: 650; transition: background-color 150ms ease, color 150ms ease; }
   .nav-link[aria-current] { background: var(--surface-soft); color: var(--action-primary); }
   .hero-layout { display: grid; align-items: center; gap: 44px; padding-block: 56px 44px; }
@@ -222,7 +227,7 @@
 
   @media (hover: hover) and (pointer: fine) {
     .button-primary:hover { background: var(--action-hover); }
-    .button-secondary:hover { border-color: var(--action-primary); background: var(--surface-soft); }
+    .button-secondary:hover { border-color: var(--accent-warm); background: var(--surface-soft); }
     .nav-link:hover { background: var(--surface-soft); color: var(--action-primary); }
     .text-link:hover { color: #1e40af; }
     .case-details summary:hover { color: var(--action-hover); }
