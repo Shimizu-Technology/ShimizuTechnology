@@ -6,12 +6,14 @@ const email = 'shimizutechnology@gmail.com';
 const products = {
   workouts: {
     name: 'Håfa Workouts',
-    description: 'Save workouts from videos and other sources, build training plans, and record your sessions. Free while in beta.',
+    homeTitle: 'Håfa Workouts — Workout Plans & Guided Sessions | Shimizu Technology',
+    description: 'Save workouts from videos and other sources, build training plans, and log your sessions on iPhone. Free while in beta from Shimizu Technology.',
     introduction: 'Keep workout sources, review extracted exercises, plan your training, and record what you actually did. Optional AI helps extract workouts and discuss your training.',
   },
   baby: {
     name: 'Håfa Baby',
-    description: 'A private pregnancy and baby-care companion for parents and caregivers: saved sources, a journal, care logs, routines, and optional AI answers.',
+    homeTitle: 'Håfa Baby — Pregnancy & Baby Care Companion | Shimizu Technology',
+    description: 'A private iPhone pregnancy and baby-care companion from Shimizu Technology: saved sources, journal, feeding and sleep logs, routines, and optional AI answers.',
     introduction: 'Keep pregnancy and baby-care sources, write a journal with photos and documents, log feeding, sleep and diapers, and manage routines and reminders. Optional AI answers questions using your saved information.',
   },
 };
@@ -133,11 +135,11 @@ function useMetadata(name: string, description: string, path: string, icon: stri
 
 export default function HafaAppSite({ pathname }: { pathname: string }) {
   const product: Product = pathname === '/hafa-baby' || pathname.startsWith('/hafa-baby/') ? 'baby' : 'workouts';
-  const { name, description, introduction } = products[product];
+  const { name, homeTitle, description, introduction } = products[product];
   const base = '/hafa-' + product;
   const path = pathname.replace(/\/+$/, '');
   const page = path === base ? 'home' : path === base + '/support' ? 'support' : path === base + '/privacy' ? 'privacy' : '404';
-  const title = page === 'home' ? name : page === '404' ? 'Page not found — ' + name : name + (page === 'support' ? ' Support' : ' Privacy Policy');
+  const title = page === 'home' ? homeTitle : page === '404' ? 'Page not found — ' + name : `${name} ${page === 'support' ? 'Support' : 'Privacy Policy'} | Shimizu Technology`;
   const summary = page === 'home' ? description : page === 'support' ? `Getting started, import help, account deletion and contact details for ${name}.` : page === 'privacy' ? `Information collected, optional AI processing, storage, sharing and deletion in ${name}.` : `The requested ${name} page could not be found.`;
   const icon = base + '-icon.png';
   useMetadata(title, summary, page === '404' ? base + '/not-found' : path, icon);

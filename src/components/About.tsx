@@ -1,4 +1,5 @@
 import SectionMark from "./SectionMark";
+
 export default function About() {
   return (
     <section id="about" className="site-section">
@@ -13,16 +14,26 @@ export default function About() {
           />
         </div>
         <div>
-          <h2 className="font-mono-label section-label marked-label"><SectionMark />Built in Guam</h2>
+          <h2 className="font-mono-label section-label marked-label">
+            <SectionMark />Built in Guam
+          </h2>
           <blockquote>
             “Local teams deserve software shaped around their real work.”
           </blockquote>
           <p className="mt-6 text-slate-600">
             <strong className="text-slate-950">Leon Shimizu</strong>
             <br />
-            Founder, Shimizu Technology &amp; Code School of Guam
+            Founder, Shimizu Technology &amp;{" "}
+            <a
+              href="https://codeschoolofguam.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-link inline-flex min-h-11 items-center font-semibold text-[var(--accent-detail)] underline underline-offset-4"
+            >
+              Code School of Guam ↗
+            </a>
           </p>
-          <p className="mt-5 text-slate-600">
+          <p className="mt-4 text-slate-600">
             We help local teams with websites, business software, and the tools
             behind their daily work. We start by understanding what needs to
             improve, then configure, connect, or build a solution with the
