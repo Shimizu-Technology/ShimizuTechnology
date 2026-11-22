@@ -184,7 +184,7 @@ export const caseStudies: Record<CaseStudySlug, CaseStudyData> = {
     },
     result: {
       heading: 'A live production system used for regular Guam payroll.',
-      lead: 'Cornerstone Accounting uses Cornerstone Payroll as its main payroll system instead of QuickBooks for payroll processing.',
+      lead: 'Cornerstone Accounting runs its payroll on Cornerstone Payroll in production.',
       outcomes: [
         'Complex multi-employer payroll follows a consistent operator flow from hours intake through committed runs and archived reports.',
         'Staff review calculations and exception flags before committing pay runs or preparing check packages.',
