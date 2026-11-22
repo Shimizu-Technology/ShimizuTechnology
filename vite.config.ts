@@ -10,6 +10,9 @@ export default defineConfig({
       input: {
         home: fileURLToPath(new URL('./index.html', import.meta.url)),
         work: fileURLToPath(new URL('./work/index.html', import.meta.url)),
+        caseCornerstonePayroll: fileURLToPath(new URL('./work/cornerstone-payroll/index.html', import.meta.url)),
+        caseHafalohaOrders: fileURLToPath(new URL('./work/hafaloha-orders/index.html', import.meta.url)),
+        caseMarianasOpen: fileURLToPath(new URL('./work/marianas-open/index.html', import.meta.url)),
         hafaWorkouts: fileURLToPath(new URL('./hafa-workouts-app.html', import.meta.url)),
         hafaBaby: fileURLToPath(new URL('./hafa-baby-app.html', import.meta.url)),
         hafaRemote: fileURLToPath(new URL('./hafa-remote-app.html', import.meta.url)),
