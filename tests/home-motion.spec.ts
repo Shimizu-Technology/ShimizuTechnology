@@ -65,7 +65,7 @@ test(`reduced motion uses poster and preference changes`, async ({
   await page.goto('/');
   await expect(page.locator("video")).toHaveCount(0);
   const poster = page.getByRole("img", {
-    name: "Cornerstone Payroll demo with fictional payroll data",
+    name: "Cornerstone Payroll pay-run summary showing demo data with fictional company and employee names",
   });
   await poster.scrollIntoViewIfNeeded();
   await expect(poster).toBeVisible();
@@ -95,3 +95,34 @@ test(`phone About keyboard focus`, async ({ page }) => {
   await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeHidden();
   await expect.poll(() => page.locator("body").evaluate(el => el.style.overflow)).not.toBe("hidden");
 });
+
+for (const width of [320, 375, 390, 430]) {
+  test(`homepage has no horizontal overflow at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/");
+    await page.evaluate(() => document.fonts.ready);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    for (const selector of [
+      ".motion-product",
+      "#projects",
+      ".motion-statement",
+      "#services",
+      "#process",
+      "#about",
+      "#contact",
+    ]) {
+      await page.locator(selector).scrollIntoViewIfNeeded();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+        `horizontal overflow at ${width}px near ${selector}`,
+      ).toBe(true);
+    }
+    await expect(page.getByText("Demo data · all names fictional")).toBeVisible();
+  });
+}

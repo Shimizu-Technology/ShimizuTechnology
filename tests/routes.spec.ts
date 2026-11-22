@@ -220,7 +220,7 @@ test('case-study details remain keyboard accessible with the held facts', async 
 test('failed font and hero image requests preserve the inquiry path under reduced motion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.route('**/fonts/*.woff2', (route) => route.abort());
-  await page.route('**/images/motion/payroll-demo-v4-poster.webp', (route) => route.abort());
+  await page.route('**/images/motion/payroll-demo-v5-poster.webp', (route) => route.abort());
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Technology built for how your business actually works.');
   await page.getByRole('link', { name: 'Start a conversation', exact: true }).click();

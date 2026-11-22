@@ -4,8 +4,8 @@ import { portfolioCounts, projects } from "../data";
 const selection = [
   [
     "Cornerstone Payroll",
-    "payroll-demo-v3-checks.webp",
-    "Cornerstone Payroll sample check and pay stub",
+    "payroll-demo-v5-summary.webp",
+    "Cornerstone Payroll pay-run summary and employee table showing demo data with fictional names",
     1600,
     1000,
   ],
