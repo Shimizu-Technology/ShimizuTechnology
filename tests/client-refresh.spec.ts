@@ -42,17 +42,22 @@ test('inline Netlify contact form validates, submits via mocked POST, and handle
   // Submitting empty fields shows an accessible validation alert without posting.
   await form.getByRole('button', { name: 'Send note' }).click();
   await expect(form.getByRole('alert')).toContainText('Please fill in your name');
+  await expect(form.getByLabel('Your name')).toBeFocused();
+  for (const label of ['Your name', 'Email or phone', 'What would you like to improve?']) {
+    await expect(form.getByLabel(label)).toHaveAttribute('aria-invalid', 'true');
+    await expect(form.getByLabel(label)).toHaveAttribute('aria-describedby', 'contact-form-error');
+  }
   expect(requests).toHaveLength(0);
 
   // Fill fields and test error handling (no page reload, typed values preserved).
-  await form.getByLabel('Your name').fill('Maria Cruz');
-  await form.getByLabel('Email or phone').fill('maria@example.gu');
+  await form.getByLabel('Your name').fill('Avery Lindqvist');
+  await form.getByLabel('Email or phone').fill('avery@example.com');
   await form.getByLabel('What would you like to improve?').fill('Replace weekly spreadsheet tracking for our office.');
 
   shouldFail = true;
   await form.getByRole('button', { name: 'Send note' }).click();
   await expect(form.getByRole('alert')).toContainText('ShimizuTechnology@gmail.com');
-  await expect(form.getByLabel('Your name')).toHaveValue('Maria Cruz');
+  await expect(form.getByLabel('Your name')).toHaveValue('Avery Lindqvist');
   expect(requests).toHaveLength(1);
 
   // Retry succeeds with expected url-encoded payload.
@@ -64,8 +69,8 @@ test('inline Netlify contact form validates, submits via mocked POST, and handle
   const submitted = new URLSearchParams(requests[1].body ?? '');
   expect(submitted.get('form-name')).toBe('business-inquiry');
   expect(submitted.get('topic')).toBe('Business Software');
-  expect(submitted.get('name')).toBe('Maria Cruz');
-  expect(submitted.get('contact')).toBe('maria@example.gu');
+  expect(submitted.get('name')).toBe('Avery Lindqvist');
+  expect(submitted.get('contact')).toBe('avery@example.com');
   expect(submitted.get('message')).toContain('spreadsheet tracking');
   expect(submitted.get('bot-field')).toBe('');
 });
@@ -74,7 +79,7 @@ test('/work/ filters switch cleanly between live, in-progress, paused, and all p
   await page.goto('/work/');
   const filterGroup = page.getByRole('group', { name: 'Filter projects by status' });
 
-  const liveBtn = filterGroup.getByRole('button', { name: /^Live & active \(/ });
+  const liveBtn = filterGroup.getByRole('button', { name: /^Live, seasonal, or private \(/ });
   const allBtn = filterGroup.getByRole('button', { name: /^Show all \(/ });
   const progressBtn = filterGroup.getByRole('button', { name: /^In development & prototypes \(/ });
   const pausedBtn = filterGroup.getByRole('button', { name: /^Paused \(/ });

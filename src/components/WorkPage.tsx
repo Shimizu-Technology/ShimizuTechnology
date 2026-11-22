@@ -9,7 +9,7 @@ import { track } from '../lib/analytics';
 import { portfolioCounts, type PortfolioFilter } from '../data';
 
 const filterOptions: { id: PortfolioFilter; label: string; count: number }[] = [
-  { id: 'in-use', label: 'Live & active', count: portfolioCounts.inUse },
+  { id: 'in-use', label: 'Live, seasonal, or private', count: portfolioCounts.inUse },
   { id: 'all', label: 'Show all', count: portfolioCounts.total },
   { id: 'in-progress', label: 'In development & prototypes', count: portfolioCounts.inProgress },
   { id: 'paused', label: 'Paused', count: portfolioCounts.paused },

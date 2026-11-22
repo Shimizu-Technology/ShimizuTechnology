@@ -37,7 +37,7 @@ export default function Testimonials() {
               <SectionMark />Client feedback
             </p>
             <h2 id="client-proof-heading" className="section-title mt-4">
-              What Guam teams say after launch.
+              What Guam teams say.
             </h2>
           </div>
           <p className="section-intro lg:justify-self-end">

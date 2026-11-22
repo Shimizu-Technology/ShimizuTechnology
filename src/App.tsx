@@ -52,7 +52,7 @@ function App() {
         <Services />
         <Process />
         <About />
-        <Contact motion />
+        <Contact />
       </main>
       <Footer />
 

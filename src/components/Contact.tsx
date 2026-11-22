@@ -10,8 +10,9 @@ import {
 
 type SubmitState = "idle" | "submitting" | "success" | "error";
 
-export default function Contact({ motion: _motion = false }: { motion?: boolean }) {
-  void _motion;
+type Field = "name" | "contact" | "message";
+
+export default function Contact() {
   const [topic, setTopic] = useState<ContactTopic | "">(() => {
     if (typeof window === "undefined") return "";
     const params = new URLSearchParams(window.location.search);
@@ -21,6 +22,12 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
   const [contactInfo, setContactInfo] = useState("");
   const [message, setMessage] = useState("");
   const [validationError, setValidationError] = useState("");
+  const [invalidFields, setInvalidFields] = useState<Field[]>([]);
+  const fieldRefs = {
+    name: useRef<HTMLInputElement>(null),
+    contact: useRef<HTMLInputElement>(null),
+    message: useRef<HTMLTextAreaElement>(null),
+  };
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
   const statusRef = useRef<HTMLDivElement>(null);
 
@@ -41,10 +48,22 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
     const trimmedContact = contactInfo.trim();
     const trimmedMessage = message.trim();
 
-    if (!trimmedName || !trimmedContact || !trimmedMessage) {
+    const missing = (
+      [
+        ["name", trimmedName],
+        ["contact", trimmedContact],
+        ["message", trimmedMessage],
+      ] as const
+    )
+      .filter(([, value]) => !value)
+      .map(([field]) => field);
+    setInvalidFields(missing);
+
+    if (missing.length > 0) {
       setValidationError(
         "Please fill in your name, how to reach you, and a short note about what you want to improve.",
       );
+      fieldRefs[missing[0]].current?.focus();
       return;
     }
 
@@ -208,13 +227,16 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
                     </label>
                     <input
                       id="contact-name"
+                      ref={fieldRefs.name}
+                      aria-invalid={invalidFields.includes("name") || undefined}
+                      aria-describedby={invalidFields.includes("name") ? "contact-form-error" : undefined}
                       name="name"
                       type="text"
                       required
                       autoComplete="name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      placeholder="Maria Cruz"
+                      placeholder="First and last name"
                       className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-base text-slate-950 placeholder:text-slate-500"
                     />
                   </div>
@@ -227,6 +249,9 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
                     </label>
                     <input
                       id="contact-info"
+                      ref={fieldRefs.contact}
+                      aria-invalid={invalidFields.includes("contact") || undefined}
+                      aria-describedby={invalidFields.includes("contact") ? "contact-form-error" : undefined}
                       name="contact"
                       type="text"
                       required
@@ -248,6 +273,9 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
                   </label>
                   <textarea
                     id="contact-message"
+                    ref={fieldRefs.message}
+                    aria-invalid={invalidFields.includes("message") || undefined}
+                    aria-describedby={invalidFields.includes("message") ? "contact-form-error" : undefined}
                     name="message"
                     required
                     rows={3}
@@ -260,6 +288,7 @@ export default function Contact({ motion: _motion = false }: { motion?: boolean 
 
                 {validationError && (
                   <div
+                    id="contact-form-error"
                     role="alert"
                     className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-950"
                   >
