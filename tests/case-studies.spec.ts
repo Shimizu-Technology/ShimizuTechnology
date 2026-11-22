@@ -151,6 +151,21 @@ test('Cornerstone Payroll workflow diagram is click- and keyboard-operable with 
   // Click control button to advance
   await explorer.getByRole('button', { name: 'Next step' }).click();
   await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+
+  // Keyboard users keep focus on the step buttons as the step changes.
+  const next = explorer.getByRole('button', { name: 'Next step' });
+  const previous = explorer.getByRole('button', { name: 'Previous step' });
+  await next.focus();
+  await page.keyboard.press('Enter');
+  await expect(tabs.nth(2)).toHaveAttribute('aria-selected', 'true');
+  await expect(next).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(tabs.nth(3)).toHaveAttribute('aria-selected', 'true');
+  await expect(next).toBeDisabled();
+  await expect(previous).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(tabs.nth(2)).toHaveAttribute('aria-selected', 'true');
+  await expect(previous).toBeFocused();
 });
 
 test('Cornerstone Payroll page respects reduced motion for hero media and workflow diagram', async ({ page }) => {

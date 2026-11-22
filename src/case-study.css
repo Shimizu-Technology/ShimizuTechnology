@@ -549,6 +549,9 @@ html[data-case-study] :is(button, [role='tab'], .cs-btn, .cs-nav-link) {
   border: 1px solid var(--cs-dark-border);
   background: #0d131d;
   padding: clamp(20px, 3vw, 28px);
+}
+
+.cs-workflow-panel-body {
   animation: cs-panel-in 180ms var(--cs-ease-out);
 }
 
@@ -725,7 +728,7 @@ html[data-case-study] :is(button, [role='tab'], .cs-btn, .cs-nav-link) {
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .cs-workflow-rail-fill,
-  .cs-workflow-panel,
+  .cs-workflow-panel-body,
   .cs-btn,
   .cs-step-btn,
   .cs-related-card {

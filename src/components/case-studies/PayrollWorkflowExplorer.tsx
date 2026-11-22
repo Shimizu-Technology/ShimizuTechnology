@@ -6,6 +6,8 @@ import { payrollWorkflowSteps } from '../../data/caseStudies';
 export default function PayrollWorkflowExplorer() {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const previousRef = useRef<HTMLButtonElement | null>(null);
+  const nextRef = useRef<HTMLButtonElement | null>(null);
   const activeStep = payrollWorkflowSteps[activeIndex];
   const progressScale = activeIndex / (payrollWorkflowSteps.length - 1);
 
@@ -16,6 +18,16 @@ export default function PayrollWorkflowExplorer() {
       requestAnimationFrame(() => {
         tabRefs.current[clamped]?.focus();
       });
+    }
+  };
+
+  // The step buttons stay mounted across steps; when one becomes disabled at
+  // either end, hand focus to the other so keyboard users keep their place.
+  const stepBy = (delta: number) => {
+    const target = Math.max(0, Math.min(payrollWorkflowSteps.length - 1, activeIndex + delta));
+    selectStep(target);
+    if (target === 0 || target === payrollWorkflowSteps.length - 1) {
+      requestAnimationFrame(() => (target === 0 ? nextRef : previousRef).current?.focus());
     }
   };
 
@@ -101,13 +113,13 @@ export default function PayrollWorkflowExplorer() {
           </div>
 
           <div
-            key={activeStep.id}
             role="tabpanel"
             id={`workflow-panel-${activeStep.id}`}
             aria-labelledby={`workflow-tab-${activeStep.id}`}
             tabIndex={0}
             className="cs-workflow-panel"
           >
+            <div key={activeStep.id} className="cs-workflow-panel-body">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="font-mono-label text-xs text-[#b8dfe5]">
                 Step {activeStep.number} of 0{payrollWorkflowSteps.length} · {activeStep.stageLabel}
@@ -174,11 +186,14 @@ export default function PayrollWorkflowExplorer() {
               </ol>
             </div>
 
+            </div>
+
             <div className="cs-workflow-controls">
               <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={() => selectStep(activeIndex - 1)}
+                  ref={previousRef}
+                  onClick={() => stepBy(-1)}
                   disabled={activeIndex === 0}
                   className="cs-btn cs-btn-outline-dark cs-btn-compact"
                 >
@@ -187,7 +202,8 @@ export default function PayrollWorkflowExplorer() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => selectStep(activeIndex + 1)}
+                  ref={nextRef}
+                  onClick={() => stepBy(1)}
                   disabled={activeIndex === payrollWorkflowSteps.length - 1}
                   className="cs-btn cs-btn-on-dark cs-btn-compact"
                 >
