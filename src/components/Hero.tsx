@@ -79,8 +79,8 @@ function PayrollDemo() {
             {reduced ? (
               <img
                 className="motion-video"
-                src="/images/motion/payroll-demo-v4-poster.webp"
-                alt="Cornerstone Payroll demo with fictional payroll data"
+                src="/images/motion/payroll-demo-v5-poster.webp"
+                alt="Cornerstone Payroll pay-run summary showing demo data with fictional company and employee names"
                 width="1600"
                 height="1000"
               />
@@ -95,8 +95,8 @@ function PayrollDemo() {
                 loop
                 playsInline
                 preload="none"
-                poster="/images/motion/payroll-demo-v4-poster.webp"
-                aria-label="Cornerstone Payroll demo with fictional data: enter hours, calculate, approve and commit payroll, then view a pay stub"
+                poster="/images/motion/payroll-demo-v5-poster.webp"
+                aria-label="Cornerstone Payroll demo with fictional data (all names fictional): enter hours, calculate, review, approve, commit payroll, and prepare checks"
                 onPlay={() => {
                   // A late play event must never undo an explicit user pause.
                   if (userPaused.current) video.current?.pause();
@@ -104,11 +104,11 @@ function PayrollDemo() {
                 }}
               >
                 <source
-                  src="/images/motion/payroll-demo-v4.mp4"
+                  src="/images/motion/payroll-demo-v5.mp4"
                   type="video/mp4"
                 />
                 <source
-                  src="/images/motion/payroll-demo-v4.webm"
+                  src="/images/motion/payroll-demo-v5.webm"
                   type="video/webm"
                 />
               </video>
@@ -127,7 +127,7 @@ function PayrollDemo() {
             <strong>Cornerstone Payroll</strong> · Guam payroll and firm
             operations, live for Cornerstone Accounting
           </p>
-          <p>Illustrative data shown</p>
+          <p>Demo data · all names fictional</p>
         </div>
       </div>
     </section>
