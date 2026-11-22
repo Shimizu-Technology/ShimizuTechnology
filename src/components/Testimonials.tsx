@@ -1,76 +1,87 @@
-import { ArrowUpRight, CheckCircle, Quote } from 'lucide-react';
+import { ArrowUpRight, Quote } from 'lucide-react';
+import SectionMark from './SectionMark';
 
-const outcomes = [
-  ['850+', 'VIP orders processed'],
-  ['100%', 'Fulfillment completed'],
-  ['Zero', 'Event-day downtime'],
-];
+const clientQuotes = [
+  {
+    quote:
+      '“It was incredible seeing what was only a discussion of an idea come to life. The online ordering option is a valuable perk and adds to the VIP experience.”',
+    author: 'Hafaloha',
+    context: 'Owner feedback after the concert launch',
+    link: { href: '/work/hafaloha-orders/', label: 'Read the Hafaloha case study →', external: false },
+  },
+  {
+    quote:
+      '“Your technical expertise and attention to detail ensured the process was user-friendly for our registrants and efficient for our team.”',
+    author: 'Guam International Airport Authority',
+    context: 'Annual Memorial Golf Tournament',
+    link: { href: 'https://giaa-tournament.com', label: 'View registration platform', external: true },
+  },
+  {
+    quote: '“The staff are raving about the training.”',
+    author: 'Office of the Senior Vice President & Provost',
+    context: 'University of Guam · Tailored AI workshop',
+    link: null,
+  },
+] as const;
 
 export default function Testimonials() {
   return (
-    <section className="relative overflow-hidden bg-[var(--surface-dark)] site-section text-white">
-      <div className="relative site-container">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <section
+      aria-labelledby="client-proof-heading"
+      className="site-section border-y border-[var(--border-subtle)] bg-white"
+    >
+      <div className="site-container">
+        <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
-            <p className="font-mono-label text-xs text-blue-300">Client outcomes</p>
-            <h2 className="mt-4 section-title">Built for the moments when the system has to work.</h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-300">
-              Hafaloha used its custom ordering platform to manage a high-volume concert VIP experience without downtime or fulfillment gaps.
+            <p className="font-mono-label section-label marked-label">
+              <SectionMark />Client feedback
             </p>
-
-            <div className="mt-9 flex flex-wrap gap-x-4 gap-y-5 border-y border-white/10 py-6">
-              {outcomes.map(([value, label]) => (
-                <div key={label} className="min-w-20 flex-1 pr-3">
-                  <div className="text-2xl font-bold text-blue-300 [overflow-wrap:anywhere] md:text-3xl">{value}</div>
-                  <div className="mt-1 text-xs leading-tight text-slate-400">{label}</div>
-                </div>
-              ))}
-            </div>
-
-            <a href="#contact" className="mt-8 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-white hover:text-blue-300 active:text-blue-300">
-              Plan a dependable launch <ArrowUpRight className="h-4 w-4" />
-            </a>
+            <h2 id="client-proof-heading" className="section-title mt-4">
+              What Guam teams say.
+            </h2>
           </div>
-
-          <div className="rounded-xl border border-white/10 bg-white/4 p-6 sm:p-8 lg:p-10">
-            <Quote className="h-8 w-8 text-blue-400" />
-            <blockquote className="mt-6 text-xl font-medium leading-relaxed text-slate-100 md:text-2xl">
-              “It was incredible seeing what was only a discussion of an idea come to life. The online ordering option is a valuable perk and adds to the VIP experience.”
-            </blockquote>
-            <div className="mt-8 border-t border-white/10 pt-5">
-              <p className="font-bold">Hafaloha</p>
-              <p className="text-sm text-slate-400">Owner feedback after the concert launch</p>
-            </div>
-
-            <div className="mt-8 rounded-lg bg-white/4 p-5">
-              <p className="font-mono-label text-xs text-slate-400">Additional client proof</p>
-              <p className="mt-3 leading-relaxed text-slate-300">
-                “Your technical expertise and attention to detail ensured the process was user-friendly for our registrants and efficient for our team.”
-              </p>
-              <p className="mt-3 text-sm font-semibold text-white">Guam International Airport Authority</p>
-              <a href="https://giaa-tournament.com" target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-blue-300">
-                View registration platform <ArrowUpRight className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
+          <p className="section-intro lg:justify-self-end">
+            Direct feedback from local business owners, event organizers, and university leadership we have built and trained with.
+          </p>
         </div>
 
-        <div className="mt-20 grid gap-10 border-t border-white/10 pt-16 lg:grid-cols-2 lg:items-center">
-          <div className="overflow-hidden rounded-xl">
-            <img src="/images/uog-intro-to-ai.jpeg" alt="University of Guam staff attending an AI workshop" loading="lazy" decoding="async" className="aspect-4/3 w-full object-cover" />
-          </div>
-          <div>
-            <p className="font-mono-label text-xs text-blue-300">AI enablement</p>
-            <h3 className="mt-4 text-3xl font-bold">Technology is more valuable when the team understands it.</h3>
-            <p className="mt-5 leading-relaxed text-slate-300">We also help organizations build practical AI fluency through tailored workshops covering use cases, limitations, privacy, and responsible adoption.</p>
-            <ul className="mt-6 space-y-3 text-sm text-slate-300">
-              {['Practical workflows for daily work', 'Clear guidance on risk and privacy', 'Training tailored to the organization'].map((item) => (
-                <li key={item} className="flex items-center gap-3"><CheckCircle className="h-4 w-4 text-blue-400" />{item}</li>
-              ))}
-            </ul>
-            <blockquote className="mt-7 border-l-2 border-blue-400 pl-5 text-lg italic text-white">“The staff are raving about the training.”</blockquote>
-            <p className="mt-2 pl-5 text-xs text-slate-400">Office of the Senior Vice President &amp; Provost, University of Guam</p>
-          </div>
+        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          {clientQuotes.map((item) => (
+            <figure
+              key={item.author}
+              className="flex flex-col justify-between rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-page)] p-6 sm:p-7"
+            >
+              <div>
+                <Quote className="h-6 w-6 text-[var(--accent-detail)]" aria-hidden="true" />
+                <blockquote className="mt-4 text-base font-medium leading-relaxed text-slate-900 sm:text-[1.0625rem]">
+                  {item.quote}
+                </blockquote>
+              </div>
+              <figcaption className="mt-6 border-t border-[var(--border-subtle)] pt-4">
+                <p className="font-bold text-slate-950">{item.author}</p>
+                <p className="mt-0.5 text-xs text-slate-600">{item.context}</p>
+                {item.link && (
+                  item.link.external ? (
+                    <a
+                      href={item.link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-link mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-[var(--accent-detail)]"
+                    >
+                      {item.link.label} <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                    </a>
+                  ) : (
+                    <a
+                      href={item.link.href}
+                      className="text-link mt-2 inline-flex min-h-11 items-center gap-1 text-sm font-bold text-[var(--accent-detail)]"
+                    >
+                      {item.link.label}
+                    </a>
+                  )
+                )}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>

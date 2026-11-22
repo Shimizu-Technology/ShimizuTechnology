@@ -149,14 +149,14 @@ export default function Hero() {
               .map((word, i) => (
                 <Fragment key={i}>
                   <span className="motion-word">
-                    <span style={{ animationDelay: `${i * 35}ms` }}>
+                    <span style={{ animationDelay: `${i * 30}ms` }}>
                       {word}
                     </span>
                   </span>{" "}
                 </Fragment>
               ))}
             <span className="motion-accent motion-word">
-              <span style={{ animationDelay: "245ms" }}>actually works.</span>
+              <span style={{ animationDelay: "210ms" }}>actually works.</span>
             </span>
           </h1>
           <div className="motion-hero-row">

@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import HomeWork, { ClientLogos, Statement } from './components/HomeWork';
+import Testimonials from './components/Testimonials';
 import useHomeMotion from './hooks/useHomeMotion';
 import './home-motion.css';
 import Process from './components/Process';
@@ -43,25 +44,27 @@ function App() {
       <a href="#main-content" className="skip-link">Skip to content</a>
       <Navbar />
       <main id="main-content" tabIndex={-1}>
-      <Hero />
-      <ClientLogos />
-      <HomeWork />
-      <Statement />
-      <Services />
-      <Process />
-      <About />
-      <Contact motion />
+        <Hero />
+        <ClientLogos />
+        <HomeWork />
+        <Testimonials />
+        <Statement />
+        <Services />
+        <Process />
+        <About />
+        <Contact />
       </main>
       <Footer />
 
-      {/* Back to Top Button */}
+      {/* Back to Top Button (desktop/tablet only so it never covers content on phones) */}
       {showBackToTop && (
         <button
+          type="button"
           onClick={scrollToTop}
-          className="button-primary fixed bottom-6 right-6 z-50 !rounded-full !p-3 shadow-lg"
+          className="button-primary fixed bottom-6 right-6 z-40 hidden !min-h-11 !min-w-11 !rounded-full !p-3 shadow-lg md:inline-flex"
           aria-label="Back to top"
         >
-          <ArrowRight className="w-5 h-5 -rotate-90" />
+          <ArrowRight className="w-5 h-5 -rotate-90" aria-hidden="true" />
         </button>
       )}
     </div>

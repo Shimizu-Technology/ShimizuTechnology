@@ -46,6 +46,7 @@ export interface Project {
   imageStyle?: string;
   gradientBg?: string;
   link?: string;
+  caseStudyPath?: string;
   appStoreLink?: string;
   /** Released on the App Store at some point (paused apps keep this but show no link). */
   launchedOnAppStore?: boolean;
@@ -164,13 +165,14 @@ export const projects: Project[] = [
     subtitle: "Live Guam Payroll & Firm Operations",
     description: "A production payroll and firm-operations system used by Cornerstone Accounting, translating Guam tax and filing rules into dependable calculations and audited workflows.",
     image: "/images/cornerstone-payroll-cp.svg",
-    imageStyle: "object-contain bg-blue-50 p-8",
+    imageStyle: "object-contain bg-slate-50 p-8",
     caseImage: {
       alt: "Cornerstone Payroll home page with an illustrative pay period review showing employee, check, and filing status",
       focus: { small: payrollFocus560, large: payrollFocus1120, width: 1120, height: 840 },
       wide: { small: payrollWide800, large: payrollWide1600, width: 1600, height: 1000 },
     },
     link: "https://payroll.shimizu-technology.com",
+    caseStudyPath: "/work/cornerstone-payroll/",
     icon: <BookOpen className="w-5 h-5" />,
     accentColor: "bg-amber-700",
     features: [
@@ -230,6 +232,7 @@ export const projects: Project[] = [
       wide: { small: moWide800, large: moWide1600, width: 1600, height: 1000 },
     },
     link: "https://marianasopen.com",
+    caseStudyPath: "/work/marianas-open/",
     icon: <Swords className="w-5 h-5" />,
     accentColor: "bg-red-600",
     features: [
@@ -262,10 +265,11 @@ export const projects: Project[] = [
   {
     title: "Hafaloha Orders",
     subtitle: "Online Ordering & VIP",
-    description: "Ordering, retail, and VIP platform for Hawaiian businesses, used seasonally for concert sales and fulfillment — including Hafaloha's June 2026 event.",
+    description: "Ordering, retail, and VIP platform for Hafaloha, a Guam business, used seasonally for concert sales and fulfillment — including Hafaloha's June 2026 event.",
     image: hafalohaProduct,
     imageStyle: "object-cover",
     link: "https://hafaloha-orders.com",
+    caseStudyPath: "/work/hafaloha-orders/",
     icon: <ShoppingCart className="w-5 h-5" />,
     accentColor: "bg-cyan-500",
     features: [
@@ -385,7 +389,7 @@ export const projects: Project[] = [
     title: "TraceBuddy",
     subtitle: "Camera-Assisted Drawing Practice",
     description: "A live mobile-friendly drawing tool created from a real family need, now used by its intended first user to trace references onto paper with a device camera.",
-    gradientBg: "from-amber-100 via-orange-100 to-stone-200",
+    gradientBg: "from-amber-700 via-orange-700 to-stone-900",
     link: "https://tracebuddy-gu.netlify.app",
     appStoreLink: "https://apps.apple.com/us/app/tracebuddy-gu/id6779658138",
     launchedOnAppStore: true,
@@ -450,6 +454,7 @@ export const projects: Project[] = [
     subtitle: "Workout Plans & Guided Sessions",
     description: "A companion to Håfa Recipes that turns workout sources into plans, guided sessions, and workout history.",
     gradientBg: "from-orange-700 via-rose-800 to-slate-950",
+    link: "/hafa-workouts",
     icon: <Dumbbell className="w-5 h-5" />,
     accentColor: "bg-orange-700",
     features: [
@@ -495,23 +500,28 @@ export const projects: Project[] = [
   }
 ];
 
-const IN_USE: ProjectStatus[] = ["Live", "Live pilot", "Live demo", "Seasonal", "Private deployment"];
-const IN_PROGRESS: ProjectStatus[] = ["In development", "Prototype"];
+export const IN_USE_STATUSES: ProjectStatus[] = ["Live", "Live pilot", "Live demo", "Seasonal", "Private deployment"];
+export const IN_PROGRESS_STATUSES: ProjectStatus[] = ["In development", "Prototype"];
+
+export type PortfolioFilter = "in-use" | "all" | "in-progress" | "paused";
+
+export function matchesPortfolioFilter(status: ProjectStatus | undefined, filter: PortfolioFilter): boolean {
+  if (filter === "all") return true;
+  if (!status) return false;
+  if (filter === "in-use") return IN_USE_STATUSES.includes(status);
+  if (filter === "in-progress") return IN_PROGRESS_STATUSES.includes(status);
+  return status === "Paused";
+}
 
 export const portfolioCounts = {
   total: projects.length,
-  inUse: projects.filter((project) => project.status && IN_USE.includes(project.status)).length,
-  inProgress: projects.filter((project) => project.status && IN_PROGRESS.includes(project.status)).length,
+  inUse: projects.filter((project) => project.status && IN_USE_STATUSES.includes(project.status)).length,
+  inProgress: projects.filter((project) => project.status && IN_PROGRESS_STATUSES.includes(project.status)).length,
   paused: projects.filter((project) => project.status === "Paused").length,
   appStoreLaunches: projects.filter((project) => project.launchedOnAppStore).length,
 };
 
 export const projectGroups = [
-  {
-    title: "AI, Education & Local Culture",
-    description: "Learning platforms, language tools, and student-friendly software built for Guam.",
-    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "Hafa Workouts", "TraceBuddy"].includes(project.title))
-  },
   {
     title: "Business Operations & Finance",
     description: "Production systems that help local teams replace spreadsheets, paper workflows, and tools that were never designed for Guam.",
@@ -519,18 +529,23 @@ export const projectGroups = [
   },
   {
     title: "Commerce, Payments & Ordering",
-    description: "Ordering, retail, marketplace, and financial-decision applications for businesses, partners, and local customers.",
+    description: "Ordering, retail, marketplace, and local commerce applications for businesses, partners, and customers.",
     projects: projects.filter((project) => ["Hafaloha Orders", "Three Squares Grill", "Guahan Grocer", "Hafa Homes"].includes(project.title))
-  },
-  {
-    title: "Civic, Membership & Community Systems",
-    description: "Role-aware engagement, caregiving, ticketing, alumni, and community platforms with clear operational boundaries.",
-    projects: projects.filter((project) => ["Civic Engagement & Campaign Operations", "Flex and Care", "FD Alumni Hub", "HafaPass"].includes(project.title))
   },
   {
     title: "Events & Sports",
     description: "Registration, operations, and live-event platforms for tournaments, charities, and major community events.",
-    projects: projects.filter((project) => ["Golf for Wishes", "Marianas Open", "GIAA Golf Tournament"].includes(project.title))
+    projects: projects.filter((project) => ["Marianas Open", "Golf for Wishes", "GIAA Golf Tournament"].includes(project.title))
+  },
+  {
+    title: "AI, Education & Local Culture",
+    description: "Learning platforms, language tools, and student-friendly software built for Guam.",
+    projects: projects.filter((project) => ["HafaGPT", "Hafa Code", "CSG Learning Hub", "Hafa Recipes", "Hafa Workouts", "TraceBuddy"].includes(project.title))
+  },
+  {
+    title: "Civic, Membership & Community Systems",
+    description: "Role-aware engagement, caregiving, ticketing, alumni, and community platforms with clear operational boundaries.",
+    projects: projects.filter((project) => ["Civic Engagement & Campaign Operations", "HafaPass", "FD Alumni Hub", "Flex and Care"].includes(project.title))
   }
 ];
 
@@ -595,8 +610,8 @@ export const services: Service[] = [
     icon: <Code2 className="w-7 h-7" />,
     title: "Business Software",
     description: "Give your team a clearer way to manage requests, records, approvals, and daily work. We can improve an existing application or build a focused tool around your process.",
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600"
+    iconBg: "bg-slate-100",
+    iconColor: "text-[var(--accent-detail)]"
   },
   {
     icon: <Settings className="w-7 h-7" />,
@@ -609,8 +624,8 @@ export const services: Service[] = [
     icon: <Smartphone className="w-7 h-7" />,
     title: "Mobile Applications",
     description: "Build useful iPhone and Android experiences for customers or staff. We handle design, development, testing, and release, with maintenance agreed as part of the scope.",
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600"
+    iconBg: "bg-slate-100",
+    iconColor: "text-[var(--accent-detail)]"
   },
   {
     icon: <Brain className="w-7 h-7" />,

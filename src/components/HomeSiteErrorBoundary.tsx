@@ -26,9 +26,9 @@ export default class HomeSiteErrorBoundary extends Component<
     if (!this.state.hasError) return this.props.children;
 
     return (
-      <main className="grid min-h-screen place-items-center bg-[#07101f] px-5 text-center text-white">
+      <main className="grid min-h-screen place-items-center bg-[#10151f] px-5 text-center text-white">
         <div role="alert" className="max-w-lg">
-          <p className="font-mono-label text-xs text-blue-300">Connection interrupted</p>
+          <p className="font-mono-label text-xs text-[var(--accent-on-dark)]">Connection interrupted</p>
           <h1 className="mt-4 text-4xl font-bold">We couldn’t load the site.</h1>
           <p className="mt-5 leading-relaxed text-slate-300">
             Check your connection and try again. Your request was not submitted.
