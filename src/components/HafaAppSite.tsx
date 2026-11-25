@@ -18,8 +18,8 @@ const products = {
   },
 };
 
-function Contact({ name }: { name: string }) {
-  return <a href={`mailto:${email}?subject=${encodeURIComponent(name + ' support')}`}>{email}</a>;
+function Contact({ name, subject = name + ' support' }: { name: string; subject?: string }) {
+  return <a href={`mailto:${email}?subject=${encodeURIComponent(subject)}`}>{email}</a>;
 }
 
 function Deletion({ product }: { product: Product }) {
@@ -30,6 +30,7 @@ function Deletion({ product }: { product: Product }) {
       <p>In Workouts, tap your account icon to open Settings, then choose Account data and deletion. Choose <strong>Review Workouts-only removal</strong> to remove training data while keeping your Håfa login, Recipes and Baby data. Choose <strong>Review whole-account deletion</strong> to delete the shared account, then read and confirm the deletion.</p>
       <p>Workouts removal clears local drafts and pending training first. If the server request fails, those local drafts stay erased; retry the saved-data deletion. Follow any device-cleanup retry instructions shown in the app.</p>
       <p>Neither option deletes workouts already saved in Apple Health. Manage those in the Health app on your iPhone. To export your saved Workouts records first, use <strong>Export saved Workouts records</strong> on the same screen; it creates a JSON file you can save or share.</p>
+      <p>The <a href="/hafa-workouts/delete-account">account deletion page</a> has step-by-step instructions and lists what each option deletes and keeps.</p>
     </> : <p>In Baby, open More, then Profiles &amp; settings. <strong>Delete my Baby data</strong> removes Baby records, files, conversations and child profiles while keeping Recipes, Workouts and your Håfa login. <strong>Delete my entire Håfa account</strong> asks you to confirm permanent deletion across the Håfa apps.</p>}
     <p>Deleting the app from your phone does not delete your server account. Account deletion erases saved account data and queues cleanup of associated uploaded files and Clerk sign-in accounts. External cleanup can finish later. Deletion cannot recall exports, screenshots or independent copies another person has already saved. Limited deletion-status records and hashed sign-in identifiers remain to complete cleanup and prevent deleted identities from being reused.</p>
     <p>If you cannot use the app, contact <Contact name={products[product].name} /> with the account email and whether you want only this product’s data removed or the entire Håfa account deleted. Do not send passwords or sign-in codes. We may need to verify account ownership before acting.</p>
@@ -71,7 +72,7 @@ function Support({ product }: { product: Product }) {
 function Privacy({ product }: { product: Product }) {
   const { name } = products[product];
   return <>
-    <p>Last updated: {product === 'workouts' ? 'November 24, 2026' : 'October 24, 2026'}. Shimizu Technology, in Guam, develops {name}. This policy describes the {product === 'workouts' ? 'iPhone and Apple Watch apps' : 'app'} and these product pages. Questions or requests: <Contact name={name} />.</p>
+    <p>Last updated: {product === 'workouts' ? 'November 26, 2026' : 'October 24, 2026'}. Shimizu Technology, in Guam, develops {name}. This policy describes the {product === 'workouts' ? 'iPhone and Apple Watch apps' : 'app'} and these product pages. Questions or requests: <Contact name={name} />.</p>
     {product === 'workouts' && <p>The short version: we use your information to run the app’s fitness features. We do not show ads, we do not sell your information, and we never use Apple Health data for advertising or marketing. See also the <a href="/hafa-workouts/terms">terms of use</a>.</p>}
     <h2>One Håfa account</h2>
     <p>Håfa Recipes, Håfa Workouts and Håfa Baby use the same account. Clerk processes sign-in information such as your email address and authentication identifiers. Our API links your sign-in to a stable Håfa account so your saved data belongs to that account.</p>
@@ -98,9 +99,9 @@ function Privacy({ product }: { product: Product }) {
       <h2 id="health" tabIndex={-1}>Apple Health and Apple Watch</h2>
       <p>Health data is used only to provide the app’s fitness features: recording your classes, showing your training history and avoiding duplicate workouts. We never use Health data for advertising or marketing, we never sell it, and we do not share it with data brokers or advertisers. Håfa Workouts does not store Health data in iCloud. Health data is never sent to OpenAI or Coach, and it is never shown in Discover or in sharing links.</p>
       <p><strong>Apple Watch app.</strong> The watch app asks for Health permission before your first class. During a class it reads your heart rate and active energy during the class and saves the class to Apple Health as a workout, with your heart rate and active energy. The watch shows your heart rate live and keeps only the average and maximum heart rate for the class and each part. The watch does not connect to our servers. It sends the result to your iPhone over Apple’s watch connection: times, parts, rounds, scores, the average and maximum heart rate, and the ID Apple Health gave the workout. Your iPhone sends the watch your planned classes for the next few days so you can start them there.</p>
-      <p><strong>What reaches our server from the watch.</strong> When the phone saves a watch class to your account, it sends the times, parts, scores and results, the fact that it was recorded on the watch, and the Apple Health workout ID, which we use to avoid saving the same class twice. Heart rate stays on your iPhone and is not sent to our server.</p>
+      <p><strong>What reaches our server from the watch.</strong> When the phone saves a watch class to your account, it sends the times, parts, scores and results, the fact that it was recorded on the watch, and the Apple Health workout ID, which we use to avoid saving the same class twice. Unless you turn on heart-rate summaries (below), heart rate stays on your iPhone and is not sent to our server.</p>
       <p><strong>Health connections on iPhone.</strong> Settings → Health connections is a separate, optional connection. Until it is available for your account, the iPhone app does not ask for Apple Health access. When you connect, you choose separately whether Workouts may read workouts from Health on your phone, upload them to your account, and save your completed Håfa sessions to Health. Reading covers only workouts: their start and end time, duration, activity type and the app that recorded them, not heart rate, calories, routes or body measurements. Uploaded workouts are kept in your account so you can see them alongside your training. Workouts the iPhone saves to Health contain the session’s time and activity type, without heart rate, calories or routes. Disconnecting stops new access and removes the uploaded copies from our server.</p>
-      <p><strong>Heart-rate summaries.</strong> Settings → Heart-rate summaries is off unless you turn it on. Only if it is on may we save the average and maximum heart rate for a workout and its parts with your results, never a continuous heart-rate trace. Turning it off stops new summaries, and you can choose to delete every saved summary.</p>
+      <p><strong>Heart-rate summaries.</strong> Settings → Heart-rate summaries is off unless you turn it on. When it is on, the app can send the average and maximum heart rate for a workout and each part to our server, where they are saved with your results in your account. We never save a continuous heart-rate trace. Turning it off stops new summaries, and you can choose to delete every saved summary.</p>
       <p>You can change Health permissions at any time in the Health app or in your iPhone’s Settings. Removing Workouts data or your account does not delete workouts already saved in Apple Health; manage those in the Health app.</p>
       <h2>Public Discover, reporting and blocking</h2>
       <p>Discover is a feed of workouts that members chose to share. Only people signed in to Håfa Workouts can see it. Link imports start as Public in Discover, and other imports start as private; you can change this before saving, and the app shows what will be shared before your first post. Only complete workouts can be shared.</p>
@@ -143,16 +144,16 @@ function Privacy({ product }: { product: Product }) {
 function Terms() {
   const name = products.workouts.name;
   return <>
-    <p>Last updated: November 24, 2026. These terms cover your use of the {name} iPhone and Apple Watch apps and these pages, made by Shimizu Technology in Guam. By creating an account or using {name}, you agree to them. If you do not agree, please do not use {name}.</p>
+    <p>Last updated: November 26, 2026. These terms cover your use of the {name} iPhone and Apple Watch apps and these pages, made by Shimizu Technology in Guam. By creating an account or using {name}, you agree to them. If you do not agree, please do not use {name}.</p>
     <h2>Who can use it</h2>
-    <p>You must be 18 or older. {name} uses the same Håfa account as Håfa Recipes and Håfa Baby. Keep your sign-in details to yourself; you are responsible for what happens under your account. You can delete your Workouts data or your whole account at any time in Settings → Account data and deletion.</p>
+    <p>You must be 18 or older. {name} uses the same Håfa account as Håfa Recipes and Håfa Baby. Keep your sign-in details to yourself; you are responsible for what happens under your account. You can delete your Workouts data or your whole account at any time in Settings → Account data and deletion. The <a href="/hafa-workouts/delete-account">account deletion page</a> explains how.</p>
     <h2>Not medical advice</h2>
     <p>{name} is for general fitness. It is not medical advice and it does not diagnose, treat or clear you to exercise. Check with a doctor before you start a new exercise program, especially if you have a health condition, an injury, are pregnant, or have not exercised in a while. Stop and get help if you feel pain, dizziness, chest pain or shortness of breath.</p>
     <p>You choose the workouts, weights and effort that are right for you. You use the app and do any workout at your own risk.</p>
     <h2>AI features can be wrong</h2>
     <p>{name} uses AI to pull workouts out of videos, posts, photos and documents, and to answer questions in Coach. AI can miss or misread details, and Coach suggestions can be wrong or unsuitable for you. Check an imported workout against the original source and use your own judgment before training. Coach is not a personal trainer or a clinician.</p>
     <h2>Your workouts</h2>
-    <p>Workouts you import or write are private unless you share them. Importing a workout does not give you any rights to the creator’s video, post or text.</p>
+    <p>Link imports start as <strong>Public in Discover</strong>. To keep a link import to yourself, choose Private before you save it. Other imports and workouts you write yourself start as private. Importing a workout does not give you any rights to the creator’s video, post or text.</p>
     <p>When you share a workout to Discover, other signed-in members can find it, view it and save their own copy. You allow us to show it, with the details listed when you share, inside {name} for as long as it stays in Discover. You can remove it at any time; copies other people already saved stay with them. A sharing link lets anyone who has it view that workout or program until it expires or you revoke it.</p>
     <h2>What isn’t allowed</h2>
     <p>{name} has no tolerance for objectionable content or abusive users. Do not share, publish or upload:</p>
@@ -175,6 +176,53 @@ function Terms() {
     <p>The <a href="/hafa-workouts/privacy">privacy policy</a> explains what we collect, including Apple Health data, and how we use it.</p>
     <h2>Contact</h2>
     <p>Questions about these terms or content in Discover: <Contact name={name} />.</p>
+  </>;
+}
+
+function DeleteAccount() {
+  const name = products.workouts.name;
+  return <>
+    <p>Last updated: November 26, 2026. You can delete your data in the app at any time. If you can’t open the app, email us and we will delete it for you.</p>
+    <h2 id="choices" tabIndex={-1}>Two choices</h2>
+    <p>Håfa Recipes, Håfa Workouts and Håfa Baby share one Håfa account. You can:</p>
+    <ul>
+      <li><strong>Remove only your Workouts data.</strong> You keep your Håfa login and your Recipes and Baby data.</li>
+      <li><strong>Delete your whole Håfa account.</strong> This erases your data in all three apps and your sign-in, then signs you out.</li>
+    </ul>
+    <p>Deleting the app from your phone does not delete your account or the data saved in it.</p>
+    <h2 id="in-app" tabIndex={-1}>Delete in the app</h2>
+    <ol>
+      <li>Open {name} and tap your account picture or initial at the top of the screen to open Settings.</li>
+      <li>Under Privacy, tap <strong>Account data and deletion</strong>. You can also get there from Settings → Håfa apps → <strong>Export or remove account data</strong>.</li>
+      <li>To keep a copy first, use <strong>Export saved Workouts records</strong> on that screen to save a JSON file.</li>
+      <li>Tap <strong>Review Workouts-only removal</strong> or <strong>Review whole-account deletion</strong>.</li>
+      <li>Tick the confirmation, then tap <strong>Erase my Workouts data</strong> or <strong>Delete my whole Håfa account</strong>.</li>
+    </ol>
+    <p>The app first clears drafts, unsynced training and reminders from your phone, then asks our server to delete your saved data. If the connection fails, the phone’s drafts are already gone; open the same screen and try again. If the app says device cleanup is unfinished, tap <strong>Retry device cleanup</strong>.</p>
+    <h2 id="workouts-only" tabIndex={-1}>What removing Workouts data deletes</h2>
+    <p>From our server: your training profile and measurements, saved workouts with their sources and cover images, plans, sessions and results (including any heart-rate summaries), Coach conversations and photos, your AI and data-connection permissions, workouts uploaded from Apple Health, and imports still in progress. Workouts you shared are removed from Discover, and your sharing links stop working.</p>
+    <p>From your phone and Apple Watch: drafts, unsynced training, workout reminders and watch results waiting to sync.</p>
+    <p>What stays: your Håfa login and your Recipes and Baby data. We keep a small record that your Workouts data was removed, so an old phone that comes back online can’t quietly restore it. Records that count imports toward the daily limit stay for up to 48 hours. They hold no source text, images or workout content.</p>
+    <h2 id="whole-account" tabIndex={-1}>What deleting the whole account deletes</h2>
+    <p>Everything listed above from our server, plus all your Håfa Recipes and Håfa Baby data, your account and the link to your sign-in. This happens in one step: if the request fails, nothing is deleted and you can try again.</p>
+    <p>Our server then deletes your uploaded files, such as cover images and photos, from Amazon S3, and deletes your sign-in account at Clerk, our sign-in provider. This can take a little longer. If a step fails, the server retries it automatically.</p>
+    <p>What stays:</p>
+    <ul>
+      <li>A cleanup record that lets the server finish those steps. It holds no workouts, training or Health data.</li>
+      <li>A one-way hash of your sign-in ID, so an old sign-in can’t reopen the deleted account.</li>
+      <li>Reports you sent about Discover content, without the link to your account, and records of moderation actions we took.</li>
+    </ul>
+    <p>These records have no set expiry. Copies in our service providers’ logs and backups follow those providers’ retention, and we don’t promise a fixed deletion time for them.</p>
+    <h2 id="not-deleted" tabIndex={-1}>What neither option deletes</h2>
+    <ul>
+      <li>Workouts already saved in Apple Health. Delete those in the Health app on your iPhone.</li>
+      <li>Copies other people already saved from Discover or a sharing link.</li>
+      <li>Exports, screenshots and files you saved or shared yourself.</li>
+      <li>Content OpenAI already processed for imports or Coach. Its retention follows OpenAI’s policies.</li>
+    </ul>
+    <h2 id="email" tabIndex={-1}>If you can’t use the app</h2>
+    <p>Email <Contact name={name} subject={name + ' account deletion'} /> from the email address on your Håfa account. Say whether you want only your Workouts data removed or your whole Håfa account deleted. Don’t send passwords or sign-in codes. We may ask you to confirm the account is yours before we delete anything, and we will reply when it’s done.</p>
+    <p>The <a href="/hafa-workouts/privacy">privacy policy</a> explains what we collect and how long we keep it. For other help, see <a href="/hafa-workouts/support">support</a>.</p>
   </>;
 }
 
@@ -211,17 +259,18 @@ export default function HafaAppSite({ pathname }: { pathname: string }) {
   const base = '/hafa-' + product;
   const path = pathname.replace(/\/+$/, '');
   const hasTerms = product === 'workouts';
-  const page = path === base ? 'home' : path === base + '/support' ? 'support' : path === base + '/privacy' ? 'privacy' : hasTerms && path === base + '/terms' ? 'terms' : '404';
-  const pageName = { support: 'Support', privacy: 'Privacy Policy', terms: 'Terms of Use' } as Record<string, string>;
+  const page = path === base ? 'home' : path === base + '/support' ? 'support' : path === base + '/privacy' ? 'privacy' : hasTerms && path === base + '/terms' ? 'terms' : hasTerms && path === base + '/delete-account' ? 'delete-account' : '404';
+  const pageName = { support: 'Support', privacy: 'Privacy Policy', terms: 'Terms of Use', 'delete-account': 'Account Deletion' } as Record<string, string>;
   const title = page === 'home' ? homeTitle : page === '404' ? 'Page not found — ' + name : `${name} ${pageName[page]} | Shimizu Technology`;
-  const summary = page === 'home' ? description : page === 'support' ? `Getting started, import help, account deletion and contact details for ${name}.` : page === 'privacy' ? `Information collected, optional AI processing, storage, sharing and deletion in ${name}.` : page === 'terms' ? `Rules for using ${name}, sharing workouts to Discover, and training safely.` : `The requested ${name} page could not be found.`;
+  const summary = page === 'home' ? description : page === 'support' ? `Getting started, import help, account deletion and contact details for ${name}.` : page === 'privacy' ? `Information collected, optional AI processing, storage, sharing and deletion in ${name}.` : page === 'terms' ? `Rules for using ${name}, sharing workouts to Discover, and training safely.` : page === 'delete-account' ? `How to delete your ${name} data or your whole Håfa account, and what is deleted or kept.` : `The requested ${name} page could not be found.`;
   const icon = base + '-icon.png';
   useMetadata(title, summary, page === '404' ? base + '/not-found' : path, icon);
-  const heading = page === 'home' ? name : page === 'support' ? name + ' support' : page === 'privacy' ? name + ' privacy policy' : page === 'terms' ? name + ' terms of use' : 'Page not found';
+  const heading = page === 'home' ? name : page === 'support' ? name + ' support' : page === 'privacy' ? name + ' privacy policy' : page === 'terms' ? name + ' terms of use' : page === 'delete-account' ? name + ' account deletion' : 'Page not found';
   let content: ReactNode;
   if (page === 'support') content = <Support product={product} />;
   else if (page === 'privacy') content = <Privacy product={product} />;
   else if (page === 'terms') content = <Terms />;
+  else if (page === 'delete-account') content = <DeleteAccount />;
   else if (page === '404') content = <a className="hafa-button" href={base}>Return to {name}</a>;
   else content = <>
     <h2>{product === 'workouts' ? 'Save a workout. Make it your routine.' : 'Keep your sources and daily observations together.'}</h2>
@@ -242,10 +291,10 @@ export default function HafaAppSite({ pathname }: { pathname: string }) {
     <main id="hafa-main" tabIndex={-1}>
       <section className="hafa-document-heading"><div className="hafa-document-width">
         {page !== 'home' && <a href={base} className="hafa-back-link"><ArrowLeft size={16} aria-hidden="true" /> {name}</a>}
-        <p className="hafa-eyebrow">{page === 'home' ? 'By Shimizu Technology' : page === '404' ? '404' : page === 'privacy' ? 'Privacy policy' : page === 'terms' ? 'Terms of use' : 'Support'}</p><h1>{heading}</h1><p>{summary}</p>
+        <p className="hafa-eyebrow">{page === 'home' ? 'By Shimizu Technology' : page === '404' ? '404' : page === 'privacy' ? 'Privacy policy' : page === 'terms' ? 'Terms of use' : page === 'delete-account' ? 'Account deletion' : 'Support'}</p><h1>{heading}</h1><p>{summary}</p>
       </div></section>
       <div className="hafa-document-width hafa-document-wrap"><article className="hafa-document">{content}</article></div>
     </main>
-    <footer className="hafa-footer"><div className="hafa-footer-inner"><a href="/">Shimizu Technology</a><nav aria-label="Product information"><a href={base}>{name}</a><a href={base + '/support'}>Support</a><a href={base + '/privacy'}>Privacy</a>{hasTerms && <a href={base + '/terms'}>Terms</a>}</nav><small>© {new Date().getFullYear()} Shimizu Technology</small></div></footer>
+    <footer className="hafa-footer"><div className="hafa-footer-inner"><a href="/">Shimizu Technology</a><nav aria-label="Product information"><a href={base}>{name}</a><a href={base + '/support'}>Support</a><a href={base + '/privacy'}>Privacy</a>{hasTerms && <><a href={base + '/terms'}>Terms</a><a href={base + '/delete-account'}>Delete account</a></>}</nav><small>© {new Date().getFullYear()} Shimizu Technology</small></div></footer>
   </div>;
 }
