@@ -17,6 +17,10 @@
 /hafa-workouts/support/  /hafa-workouts-app.html 200
 /hafa-workouts/privacy   /hafa-workouts-app.html 200
 /hafa-workouts/privacy/  /hafa-workouts-app.html 200
+/hafa-workouts/terms     /hafa-workouts-app.html 200
+/hafa-workouts/terms/    /hafa-workouts-app.html 200
+/hafa-workouts/delete-account   /hafa-workouts-app.html 200
+/hafa-workouts/delete-account/  /hafa-workouts-app.html 200
 /hafa-workouts/*         /hafa-workouts-app.html 404
 
 /hafa-baby           /hafa-baby-app.html 200

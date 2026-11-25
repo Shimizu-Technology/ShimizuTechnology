@@ -506,7 +506,7 @@ for (const [slug, name, homeTitle, homeDesc] of [
     'workouts',
     'Håfa Workouts',
     'Håfa Workouts — Workout Plans & Guided Sessions | Shimizu Technology',
-    'Save workouts from videos and other sources, build training plans, and log your sessions on iPhone. Free while in beta from Shimizu Technology.',
+    'Save workouts from videos and other sources, build training plans, and log your sessions on iPhone and Apple Watch. From Shimizu Technology.',
   ],
   [
     'baby',
@@ -516,33 +516,41 @@ for (const [slug, name, homeTitle, homeDesc] of [
   ],
 ]) {
   const base = `/hafa-${slug}`;
-  for (const suffix of ['', '/support', '/privacy']) {
+  const pages: Record<string, [string, string, string]> = {
+    '/support': ['Support', ' support', `Getting started, import help, account deletion and contact details for ${name}.`],
+    '/privacy': ['Privacy Policy', ' privacy policy', `Information collected, optional AI processing, storage, sharing and deletion in ${name}.`],
+    '/terms': ['Terms of Use', ' terms of use', `Rules for using ${name}, sharing workouts to Discover, and training safely.`],
+    '/delete-account': ['Account Deletion', ' account deletion', `How to delete your ${name} data or your whole Håfa account, and what is deleted or kept.`],
+  };
+  const navLabel: Record<string, string> = { '/support': 'Support', '/privacy': 'Privacy', '/terms': 'Terms' };
+  for (const suffix of ['', '/support', '/privacy', ...(slug === 'workouts' ? ['/terms', '/delete-account'] : [])]) {
     test(`${base}${suffix} renders product content, metadata and navigation`, async ({ page }) => {
       const response = await page.goto(base + suffix);
       expect(response?.ok()).toBeTruthy();
-      const title = suffix === '/support'
-        ? `${name} Support | Shimizu Technology`
-        : suffix === '/privacy'
-          ? `${name} Privacy Policy | Shimizu Technology`
-          : homeTitle;
+      const title = suffix ? `${name} ${pages[suffix][0]} | Shimizu Technology` : homeTitle;
       await expect(page).toHaveTitle(title);
-      await expect(page.getByRole('heading', { level: 1 })).toHaveText(name + (suffix === '/support' ? ' support' : suffix === '/privacy' ? ' privacy policy' : ''));
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(name + (suffix ? pages[suffix][1] : ''));
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://shimizu-technology.com' + base + suffix);
       await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
-      const description = suffix === '/support' ? `Getting started, import help, account deletion and contact details for ${name}.`
-        : suffix === '/privacy' ? `Information collected, optional AI processing, storage, sharing and deletion in ${name}.`
-          : homeDesc;
+      const description = suffix ? pages[suffix][2] : homeDesc;
       await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', description);
       await expect(page.locator('meta[property="og:description"]')).toHaveAttribute('content', description);
       const nav = page.getByRole('navigation', { name, exact: true });
       await expect(nav.getByRole('link', { name: 'Support', exact: true })).toHaveAttribute('href', base + '/support');
       await expect(nav.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', base + '/privacy');
+      if (slug === 'workouts') await expect(nav.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', base + '/terms');
+      else await expect(nav.getByRole('link', { name: 'Terms', exact: true })).toHaveCount(0);
+      const footer = page.getByRole('navigation', { name: 'Product information' });
+      if (slug === 'workouts') await expect(footer.getByRole('link', { name: 'Delete account', exact: true })).toHaveAttribute('href', base + '/delete-account');
+      else await expect(footer.getByRole('link', { name: 'Delete account', exact: true })).toHaveCount(0);
       if (suffix) {
-        await expect(nav.getByRole('link', { name: suffix === '/support' ? 'Support' : 'Privacy', exact: true })).toHaveAttribute('aria-current', 'page');
+        if (navLabel[suffix]) await expect(nav.getByRole('link', { name: navLabel[suffix], exact: true })).toHaveAttribute('aria-current', 'page');
         await expect(page.getByRole('link', { name: 'shimizutechnology@gmail.com' }).first()).toHaveAttribute('href', /^mailto:shimizutechnology@gmail.com\?subject=/);
-        await expect(page.getByRole('heading', { name: 'Account and data deletion' })).toBeVisible();
+        if (suffix === '/terms') await expect(page.getByRole('heading', { name: 'What isn’t allowed' })).toBeVisible();
+        else if (suffix === '/delete-account') await expect(page.getByRole('heading', { name: 'Delete in the app' })).toBeVisible();
+        else await expect(page.getByRole('heading', { name: 'Account and data deletion' })).toBeVisible();
       } else {
-        await expect(page.getByText(/no public App Store download yet/)).toBeVisible();
+        await expect(page.getByText(/no (public )?App Store download (link here )?yet/)).toBeVisible();
         expect(await page.locator('a[href*="apps.apple.com"]').count()).toBe(0);
         expect(await contrastOf(page, '.hafa-document .hafa-button')).toBeGreaterThanOrEqual(4.5);
         expect(await contrastOf(page, '.hafa-document .hafa-button-secondary')).toBeGreaterThanOrEqual(4.5);
@@ -567,8 +575,53 @@ for (const [slug, name, homeTitle, homeDesc] of [
     await expect(page).toHaveTitle(`${name} Privacy Policy | Shimizu Technology`);
     await page.goto(base + '/privacy#deletion');
     await expect(page.getByRole('heading', { name: 'Account and data deletion' })).toBeFocused();
+    if (slug === 'baby') {
+      for (const suffix of ['/terms', '/delete-account']) {
+        await page.goto(base + suffix);
+        await expect(page).toHaveTitle('Page not found — ' + name);
+      }
+    }
   });
 }
+
+test('Workouts privacy covers Apple Health and the terms cover shared content', async ({ page }) => {
+  await page.goto('/hafa-workouts/privacy#health');
+  const health = page.getByRole('heading', { name: 'Apple Health and Apple Watch' });
+  await expect(health).toBeFocused();
+  const policy = page.locator('.hafa-document');
+  await expect(policy).toContainText('We never use Health data for advertising or marketing, we never sell it');
+  await expect(policy).toContainText('does not store Health data in iCloud');
+  await expect(policy).toContainText('Unless you turn on heart-rate summaries (below), heart rate stays on your iPhone and is not sent to our server.');
+  await expect(policy).not.toContainText(/\bbeta\b|testers/i);
+  await policy.getByRole('link', { name: 'terms of use' }).click();
+  await expect(page).toHaveTitle('Håfa Workouts Terms of Use | Shimizu Technology');
+  const terms = page.locator('.hafa-document');
+  await expect(terms).toContainText('Check with a doctor before you start a new exercise program');
+  await expect(terms).toContainText('Coach suggestions can be wrong');
+  await expect(terms).toContainText('suspend or close accounts');
+  await expect(terms.getByRole('link', { name: 'privacy policy' })).toHaveAttribute('href', '/hafa-workouts/privacy');
+  await page.goto('/hafa-workouts/support');
+  await expect(page.locator('.hafa-document').getByRole('link', { name: 'terms of use' }).first()).toHaveAttribute('href', '/hafa-workouts/terms');
+  await expect(page.locator('.hafa-document')).not.toContainText(/\bbeta\b|testers/i);
+});
+
+test('Workouts account deletion explains both in-app paths and the email fallback', async ({ page }) => {
+  for (const source of ['/hafa-workouts/support', '/hafa-workouts/privacy', '/hafa-workouts/terms']) {
+    await page.goto(source);
+    await expect(page.locator('.hafa-document').getByRole('link', { name: 'account deletion page' }).first()).toHaveAttribute('href', '/hafa-workouts/delete-account');
+  }
+  await page.goto('/hafa-workouts/delete-account/');
+  await expect(page).toHaveTitle('Håfa Workouts Account Deletion | Shimizu Technology');
+  const document = page.locator('.hafa-document');
+  for (const label of ['Account data and deletion', 'Review Workouts-only removal', 'Review whole-account deletion', 'Erase my Workouts data', 'Delete my whole Håfa account']) {
+    await expect(document.getByText(label, { exact: true }).first()).toBeVisible();
+  }
+  await expect(document).toContainText('Workouts already saved in Apple Health');
+  await expect(document).toContainText('stay for up to 48 hours');
+  await expect(document.getByRole('link', { name: 'shimizutechnology@gmail.com' })).toHaveAttribute('href', 'mailto:shimizutechnology@gmail.com?subject=H%C3%A5fa%20Workouts%20account%20deletion');
+  await page.goto('/hafa-workouts/delete-account#email');
+  await expect(page.getByRole('heading', { name: 'If you can’t use the app' })).toBeFocused();
+});
 
 test('new product deployment entries and sitemap match the route contract', async () => {
   const rules = readFileSync('dist/_redirects', 'utf8').split('\n').map((line) => line.trim().split(/\s+/));
@@ -576,7 +629,7 @@ test('new product deployment entries and sitemap match the route contract', asyn
   for (const slug of ['workouts', 'baby']) {
     const base = `/hafa-${slug}`;
     expect(readFileSync(`dist/hafa-${slug}-app.html`, 'utf8')).toContain('Håfa ' + (slug === 'baby' ? 'Baby' : 'Workouts'));
-    for (const suffix of ['', '/support', '/privacy']) {
+    for (const suffix of ['', '/support', '/privacy', ...(slug === 'workouts' ? ['/terms', '/delete-account'] : [])]) {
       expect(sitemap).toContain(`<loc>https://shimizu-technology.com${base}${suffix}</loc>`);
       for (const slash of ['', '/']) expect(rules.find((rule) => rule[0] === base + suffix + slash)).toEqual([base + suffix + slash, `${base}-app.html`, '200']);
     }
