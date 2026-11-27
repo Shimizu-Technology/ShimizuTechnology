@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { createAnalyticsQueue, type AnalyticsProperties } from '../src/lib/analyticsQueue';
+import { buildPostHogInitOptions, createAnalyticsQueue, DEFAULT_POSTHOG_HOST, type AnalyticsProperties } from '../src/lib/analyticsQueue';
 
 function fakeClient() {
   const sent: Array<[string, AnalyticsProperties | undefined]> = [];
@@ -33,4 +33,18 @@ test('caps the queue and drops events when analytics is unavailable', () => {
   queue.ready(client);
   queue.track('contact_phone_clicked');
   expect(sent).toEqual([]);
+});
+
+test('builds PostHog init options with masked session replay and default/custom host', () => {
+  expect(buildPostHogInitOptions()).toEqual({
+    api_host: DEFAULT_POSTHOG_HOST,
+    disable_session_recording: false,
+    session_recording: { maskAllInputs: true },
+  });
+
+  expect(buildPostHogInitOptions('  https://eu.i.posthog.com  ')).toEqual({
+    api_host: 'https://eu.i.posthog.com',
+    disable_session_recording: false,
+    session_recording: { maskAllInputs: true },
+  });
 });

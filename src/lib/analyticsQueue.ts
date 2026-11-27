@@ -1,3 +1,15 @@
+export const DEFAULT_POSTHOG_HOST = 'https://us.i.posthog.com';
+
+export function buildPostHogInitOptions(host?: string) {
+  return {
+    api_host: host?.trim() || DEFAULT_POSTHOG_HOST,
+    disable_session_recording: false,
+    session_recording: {
+      maskAllInputs: true,
+    },
+  };
+}
+
 export type AnalyticsProperties = Record<string, unknown>;
 
 export type AnalyticsClient = {
