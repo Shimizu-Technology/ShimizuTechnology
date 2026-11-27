@@ -1,4 +1,4 @@
-import { createAnalyticsQueue, type AnalyticsProperties } from './analyticsQueue';
+import { buildPostHogInitOptions, createAnalyticsQueue, type AnalyticsProperties } from './analyticsQueue';
 
 const queue = createAnalyticsQueue();
 let started = false;
@@ -32,13 +32,7 @@ export function initAnalytics() {
   whenIdleAfterLoad(() => {
     import('posthog-js')
       .then(({ default: posthog }) => {
-        posthog.init(apiKey, {
-          api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
-          disable_session_recording: false,
-          session_recording: {
-            maskAllInputs: true,
-          },
-        });
+        posthog.init(apiKey, buildPostHogInitOptions(import.meta.env.VITE_PUBLIC_POSTHOG_HOST));
         queue.ready(posthog);
       })
       .catch(() => queue.disable());
