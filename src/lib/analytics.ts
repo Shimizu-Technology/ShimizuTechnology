@@ -32,7 +32,13 @@ export function initAnalytics() {
   whenIdleAfterLoad(() => {
     import('posthog-js')
       .then(({ default: posthog }) => {
-        posthog.init(apiKey, { api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST });
+        posthog.init(apiKey, {
+          api_host: import.meta.env.VITE_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com',
+          disable_session_recording: false,
+          session_recording: {
+            maskAllInputs: true,
+          },
+        });
         queue.ready(posthog);
       })
       .catch(() => queue.disable());
